@@ -81,7 +81,6 @@ fun SessionScreen(
     sessionId: SessionId,
     onBack: () -> Unit,
     onSpeaker: (SpeakerId) -> Unit,
-    onPrivacyNoticeNeeded: () -> Unit,
     onNavigateToMap: (String) -> Unit,
     onWatchVideo: (String) -> Unit,
     viewModel: SessionViewModel =
@@ -130,7 +129,6 @@ fun SessionScreen(
                 SlidesLink(session)
                 VideoLink(session, onWatchVideo)
                 SessionActions(session, exporter)
-                Feedback(session, onPrivacyNoticeNeeded)
                 Speakers(speakers, onSpeaker)
                 RoomSection(session.locationLine, onNavigateToMap)
                 Description(session.description)
@@ -147,7 +145,6 @@ fun SessionScreen(
                 SlidesLink(session)
                 VideoLink(session, onWatchVideo)
                 SessionActions(session, exporter)
-                Feedback(session, onPrivacyNoticeNeeded)
                 if (session.description.isNotBlank()) {
                     Speakers(speakers, onSpeaker)
                 }
@@ -180,21 +177,6 @@ private fun Speakers(
             photoUrl = speaker.photoUrl,
             modifier = Modifier.padding(vertical = 12.dp).fillMaxWidth(),
             onClick = { onSpeaker(speaker.id) }
-        )
-    }
-}
-
-@Composable
-private fun Feedback(
-    session: SessionCardView,
-    onPrivacyNoticeNeeded: () -> Unit,
-) {
-    if (ActiveEvent.hasBackend && session.state != SessionState.Upcoming) {
-        FeedbackPanel(
-            sessionId = session.id,
-            tags = session.tags,
-            onPrivacyNoticeNeeded = onPrivacyNoticeNeeded,
-            modifier = Modifier.padding(bottom = 20.dp),
         )
     }
 }
@@ -257,9 +239,7 @@ private fun PersonalSection(viewModel: SessionViewModel) {
     val addingMedia by viewModel.addingMedia.collectAsStateWithLifecycle()
     val picker = rememberMediaPicker()
     Column(Modifier.padding(top = 24.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
-        if (!ActiveEvent.hasBackend) {
-            RatingBlock(rating = rating, onThumb = viewModel::setThumb, onTakeaway = viewModel::setTakeaway)
-        }
+        RatingBlock(rating = rating, onThumb = viewModel::setThumb, onTakeaway = viewModel::setTakeaway)
         NoteBlock(stored = note, onSave = viewModel::setNote)
         if (picker != null) {
             MediaBlock(
