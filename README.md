@@ -86,6 +86,21 @@ the changes made in this fork are listed below and in the git history.
 - The Sessionize sync client is tested against a mock server with the requests and responses of the real web app.
 - The GitHub Actions workflow runs the core and app tests and the iOS build for each conference profile.
 
+## Android
+
+The Android app is `com.muschenetz.agntcon` ("AGNTCon", icon from the AGNTCon mark on indigo). Needs the Android SDK
+(platform 37, build tools 37) and JDK 21; put `sdk.dir=<path>` in `local.properties`.
+
+```bash
+./gradlew :app:androidApp:assembleDebug     # app/androidApp/build/outputs/apk/debug/androidApp-debug.apk
+adb install -r app/androidApp/build/outputs/apk/debug/androidApp-debug.apk
+adb shell am start -n com.muschenetz.agntcon/org.jetbrains.kotlinconf.android.MainActivity
+```
+
+Checked on an Android 17 (arm64) emulator: the schedule loads, session pages open, bookmarks work, and "Add to calendar"
+and "Share" open the system share sheet with the `.ics` file. A release build needs a signing key, which is not in this
+repository.
+
 ## Building for a conference
 
 1. [Set up your environment](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-setup.html) for
