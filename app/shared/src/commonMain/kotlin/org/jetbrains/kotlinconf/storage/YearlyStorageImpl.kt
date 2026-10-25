@@ -18,6 +18,7 @@ import org.jetbrains.kotlinconf.GoldenKodeeData
 import org.jetbrains.kotlinconf.NotificationSettings
 import org.jetbrains.kotlinconf.SessionId
 import org.jetbrains.kotlinconf.SpeakerId
+import org.jetbrains.kotlinconf.personal.Attachment
 import org.jetbrains.kotlinconf.personal.PersonalNotes
 import org.jetbrains.kotlinconf.personal.SessionRating
 import org.jetbrains.kotlinconf.VoteInfo
@@ -59,6 +60,7 @@ class YearlyStorageImpl(
     val NOTES = key("notes")
     val MET_SPEAKERS = key("metSpeakers")
     val RATINGS = key("ratings")
+    val ATTACHMENTS = key("attachments")
 
     override fun isPolicySigned(): Flow<Boolean> = settings.getBooleanFlow(POLICY_SIGNED, false)
     override suspend fun setPolicySigned(value: Boolean) = settings.set(POLICY_SIGNED, value)
@@ -83,6 +85,9 @@ class YearlyStorageImpl(
 
     override fun getRatings(): Flow<Map<String, SessionRating>> = settings.getStringOrNullFlow(RATINGS).map { it.decodeOrNull<Map<String, SessionRating>>() ?: emptyMap() }
     override suspend fun setRatings(value: Map<String, SessionRating>) = settings.set(RATINGS, json.encodeToString(value))
+
+    override fun getAttachments(): Flow<Map<String, List<Attachment>>> = settings.getStringOrNullFlow(ATTACHMENTS).map { it.decodeOrNull<Map<String, List<Attachment>>>() ?: emptyMap() }
+    override suspend fun setAttachments(value: Map<String, List<Attachment>>) = settings.set(ATTACHMENTS, json.encodeToString(value))
 
     override fun getNotificationSettings(): Flow<NotificationSettings?> = settings.getStringOrNullFlow(NOTIFICATION_SETTINGS).map { it.decodeOrNull<NotificationSettings>() }
     override suspend fun setNotificationSettings(value: NotificationSettings) = settings.set(NOTIFICATION_SETTINGS, json.encodeToString(value))
