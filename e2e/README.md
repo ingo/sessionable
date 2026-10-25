@@ -10,7 +10,7 @@ adb install -r app/androidApp/build/outputs/apk/debug/androidApp-debug.apk
 maestro test e2e/flows                                  # all flows; or one file
 ```
 
-The flows use the app id `com.muschenetz.agntcon` and the session "OpenAI MCPCon Happy Hour", which is in the event's
+The flows use the app id `com.muschenetz.sessionize` and the session "OpenAI MCPCon Happy Hour", which is in the event's
 feed. If the event removes it, pick another session title in `bookmark-persists.yaml`,
 `rating-and-takeaway-persist.yaml` and `add-to-calendar.yaml`. Every flow starts from a fresh install (`shared/start.yaml`).
 

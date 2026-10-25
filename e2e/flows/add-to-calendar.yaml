@@ -1,5 +1,5 @@
 # "Add to calendar" hands a .ics file for the session to the system share sheet.
-appId: com.muschenetz.agntcon
+appId: com.muschenetz.sessionize
 ---
 - runFlow: ../shared/start.yaml
 - tapOn: "Schedule"

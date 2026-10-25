@@ -32,7 +32,7 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.muschenetz.agntcon"
+        applicationId = "com.muschenetz.sessionize"
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
         versionCode = 1

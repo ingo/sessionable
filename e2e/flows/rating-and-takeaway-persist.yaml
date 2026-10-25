@@ -1,5 +1,5 @@
 # A private rating and one-line takeaway are saved on the device and are still there after a restart.
-appId: com.muschenetz.agntcon
+appId: com.muschenetz.sessionize
 ---
 - runFlow: ../shared/start.yaml
 - tapOn: "Schedule"

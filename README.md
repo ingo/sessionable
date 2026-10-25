@@ -86,15 +86,23 @@ the changes made in this fork are listed below and in the git history.
 - The Sessionize sync client is tested against a mock server with the requests and responses of the real web app.
 - The GitHub Actions workflow runs the core and app tests and the iOS build for each conference profile.
 
+## Publishing to TestFlight
+
+This repository's iOS beta is its own app in App Store Connect, **Sessionize Schedule** (bundle id
+`com.muschenetz.sessionize`, team `4M7MX9FB66`), so its builds never mix with the AGNTCon app, which is published from
+[ingo/agntcon-app](https://github.com/ingo/agntcon-app). `scripts/testflight.sh --upload` archives and uploads it; it
+needs an App Store Connect API key (`ASC_KEY_ID`, `ASC_ISSUER_ID` and the `.p8` key), see the header of
+[`scripts/ios-testflight.sh`](scripts/ios-testflight.sh).
+
 ## Android
 
-The Android app is `com.muschenetz.agntcon` ("AGNTCon", icon from the AGNTCon mark on indigo). Needs the Android SDK
+The Android app is `com.muschenetz.sessionize` ("Sessionize", icon from the AGNTCon mark on indigo). Needs the Android SDK
 (platform 37, build tools 37) and JDK 21; put `sdk.dir=<path>` in `local.properties`.
 
 ```bash
 ./gradlew :app:androidApp:assembleDebug     # app/androidApp/build/outputs/apk/debug/androidApp-debug.apk
 adb install -r app/androidApp/build/outputs/apk/debug/androidApp-debug.apk
-adb shell am start -n com.muschenetz.agntcon/org.jetbrains.kotlinconf.android.MainActivity
+adb shell am start -n com.muschenetz.sessionize/org.jetbrains.kotlinconf.android.MainActivity
 ```
 
 Checked on an Android 17 (arm64) emulator: the schedule loads, session pages open, bookmarks work, and "Add to calendar"

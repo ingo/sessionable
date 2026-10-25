@@ -2,7 +2,7 @@
 # Archives the iOS app for one conference and (optionally) uploads it to TestFlight.
 #
 #   scripts/ios-testflight.sh <event-id> <bundle-id> <display-name> <team-id> [--upload]
-#   scripts/ios-testflight.sh agntcon-mcpcon-na-2026 com.muschenetz.agntcon AGNTCon 4M7MX9FB66 --upload
+#   scripts/ios-testflight.sh agntcon-mcpcon-na-2026 com.muschenetz.sessionize Sessionize 4M7MX9FB66 --upload
 #
 # The event id is a profile in app/shared/.../event/EventProfiles.kt. Signing is automatic with the
 # Apple account signed in to Xcode; it registers the bundle id if needed. Uploading needs an app

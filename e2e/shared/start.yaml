@@ -1,5 +1,5 @@
 # Fresh install: clear the app's data, get past the notifications screen, end on the Now tab.
-appId: com.muschenetz.agntcon
+appId: com.muschenetz.sessionize
 ---
 - launchApp:
     clearState: true
