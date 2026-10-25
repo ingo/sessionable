@@ -327,7 +327,6 @@ private fun EntryProviderScope<AppRoute>.screens(
     entry<MyScheduleScreen>(metadata = noAnimationMetadata) {
         MyScheduleScreen(
             onSession = { navigator.add(SessionScreen(it)) },
-            onTripReport = { navigator.add(TripReportScreen) },
             onSync = if (ActiveEvent.sessionizeAppUrl != null) { { navigator.add(SessionizeSyncScreen) } } else null,
         )
     }
