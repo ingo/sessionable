@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.getAndUpdate
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -46,10 +47,16 @@ import org.jetbrains.kotlinconf.flags.FlagsManager
 import org.jetbrains.kotlinconf.media.Fingerprint
 import org.jetbrains.kotlinconf.media.MediaDuplicates
 import org.jetbrains.kotlinconf.media.MediaFiles
+import org.jetbrains.kotlinconf.media.MoveTargets
+import org.jetbrains.kotlinconf.media.PhotoCleanUp
+import org.jetbrains.kotlinconf.media.cleanUpProgress
 import org.jetbrains.kotlinconf.media.cleanUpScreenPhoto
 import org.jetbrains.kotlinconf.media.makeThumbnail
+import org.jetbrains.kotlinconf.media.recognizeText
+import org.jetbrains.kotlinconf.media.removeStoredDuplicates
 import org.jetbrains.kotlinconf.media.screenCleanUpAvailable
 import org.jetbrains.kotlinconf.media.SCREEN_CLEAN_UP_VERSION
+import org.jetbrains.kotlinconf.personal.CleanUpMode
 import org.jetbrains.kotlinconf.personal.MediaKind
 import org.jetbrains.kotlinconf.media.PickedMedia
 import org.jetbrains.kotlinconf.personal.Attachment
@@ -57,6 +64,8 @@ import org.jetbrains.kotlinconf.personal.PersonalNotes
 import org.jetbrains.kotlinconf.personal.SessionRating
 import org.jetbrains.kotlinconf.personal.withAdded
 import org.jetbrains.kotlinconf.personal.withMet
+import org.jetbrains.kotlinconf.personal.withCleanUpMode
+import org.jetbrains.kotlinconf.personal.withMoved
 import org.jetbrains.kotlinconf.personal.withRemoved
 import org.jetbrains.kotlinconf.personal.withUpdated
 import org.jetbrains.kotlinconf.personal.withRating
@@ -204,7 +213,7 @@ class ConferenceService(
         var duplicates = 0
         savePersonal { storage ->
             val all = storage.getAttachments().first()
-            val seen = MediaDuplicates(all.values.flatten())
+            val seen = MediaDuplicates(withContentHashes(media, all.values.flatten()))
             val added = picked.mapIndexedNotNull { index, item ->
                 val hash = media.hashOf(item.path)
                 if (seen.isDuplicate(Fingerprint(item.sourceId, hash))) {
@@ -235,15 +244,42 @@ class ConferenceService(
      */
     suspend fun findDuplicates(picked: List<PickedMedia>): Set<Int> {
         val media = mediaFiles ?: return emptySet()
-        val existing = attachments.value.values.flatten().map { attachment ->
-            // Files added before fingerprints were kept: hash them now, once, for the comparison
-            if (attachment.contentHash != null || attachment.sourceId != null) attachment
-            else attachment.copy(contentHash = media.hashOf(media.path(attachment.file)))
-        }
-        val seen = MediaDuplicates(existing)
+        val seen = MediaDuplicates(withContentHashes(media, attachments.value.values.flatten()))
         return picked.indices.filterTo(mutableSetOf()) { i ->
             seen.isDuplicate(Fingerprint(picked[i].sourceId, media.hashOf(picked[i].path)))
         }
+    }
+
+    /** Files added before fingerprints were kept: hashed now, for the comparison, so a copy of one is recognised. */
+    private suspend fun withContentHashes(media: MediaFiles, list: List<Attachment>): List<Attachment> = list.map {
+        if (it.contentHash != null) it else it.copy(contentHash = media.hashOf(media.path(it.file)))
+    }
+
+    // The media folder whose stored duplicates were already removed in this run of the app
+    private var duplicatesRemovedFor: MediaFiles? = null
+
+    /**
+     * Removes photos and videos that older versions of the app stored more than once, and their files (the cleaned-up
+     * copy and preview too; the originals stay in the photo library). Gives every attachment without a content hash one
+     * on the way, so the next check is quick. Once per run of the app and event.
+     */
+    private suspend fun removeStoredDuplicatesOnce() {
+        val media = mediaFiles?.takeIf { it.isSupported } ?: return
+        if (duplicatesRemovedFor === media) return
+        val hashes = attachments.value.values.flatten()
+            .filter { it.contentHash == null }
+            .mapNotNull { attachment -> media.hashOf(media.path(attachment.file))?.let { attachment.id to it } }
+            .toMap()
+        var unused = emptyList<String>()
+        savePersonal { storage ->
+            val all = storage.getAttachments().first()
+            val result = removeStoredDuplicates(all, hashes)
+            if (result.kept != all) storage.setAttachments(result.kept)
+            val stillUsed = result.kept.values.flatten().flatMapTo(mutableSetOf()) { it.files }
+            unused = result.removed.flatMap { it.files }.filterNot { it in stillUsed }
+        }
+        unused.forEach { media.delete(it) }
+        duplicatesRemovedFor = media
     }
 
     private suspend fun discardNow(media: MediaFiles, item: PickedMedia) {
@@ -255,29 +291,35 @@ class ConferenceService(
 
     /**
      * Straightens and cleans up photos of screens and whiteboards that have not been looked at yet, or were looked at by
-     * an older clean-up, one at a time in the background; the originals are kept. Does nothing where the platform has
-     * no clean-up.
+     * an older clean-up, one at a time in the background; the originals are kept. Removes copies stored twice first.
+     * Only that is done where the platform has no clean-up.
      */
     fun cleanUpScreenPhotos() {
-        if (!screenCleanUpAvailable) return
         scope.launch(Dispatchers.Default) {
             if (!cleaning.tryLock()) return@launch
             try {
+                removeStoredDuplicatesOnce()
+                if (!screenCleanUpAvailable) return@launch
                 while (true) {
                     val media = mediaFiles ?: return@launch
                     val next = attachments.value.values.flatten().firstOrNull { it.needsCleanUp() } ?: return@launch
                     // Photos looked at by the current clean-up before previews existed only need the preview
                     val redo = next.needsNewCleanUp()
                     val name = media.newName("jpg")
-                    val cleaned = name.takeIf { redo && cleanUpScreenPhoto(media.path(next.file), media.path(name)) }
+                    val cleaned = name.takeIf {
+                        redo && next.cleanMode != CleanUpMode.ORIGINAL && cleanUpScreenPhoto(media.path(next.file), media.path(name), next.cleanMode)
+                    }
                     // A preview of what lists should show: the cleaned-up photo if there is one, else the original
+                    val shown = cleaned ?: next.cleaned.takeUnless { redo } ?: next.file
                     val previewName = media.newName("jpg")
                     val preview = if (redo || next.thumbnail == null) {
-                        val shown = cleaned ?: next.cleaned.takeUnless { redo } ?: next.file
                         previewName.takeIf { makeThumbnail(media.path(shown), media.path(previewName)) }
                     } else {
                         null
                     }
+                    // The words on the photo, read once, from the cleaned-up copy where there is one: straighter and
+                    // clearer than the original. Kept with the photo, so nothing has to read it again.
+                    val text = if (next.textChecked) null else recognizeText(media.path(shown))
                     savePersonal { storage ->
                         val all = storage.getAttachments().first()
                         val current = all.values.flatten().firstOrNull { it.id == next.id }
@@ -291,16 +333,19 @@ class ConferenceService(
                             storage.setAttachments(all.withUpdated(next.id) {
                                 it.copy(
                                     cleaned = if (redo) cleaned else it.cleaned,
-                                    cleanChecked = true,
+                                    // Done, unless the attendee chose another clean-up while this one was running
+                                    cleanChecked = it.cleanMode == next.cleanMode,
                                     cleanVersion = if (redo) SCREEN_CLEAN_UP_VERSION else it.cleanVersion,
                                     previewChecked = true,
                                     thumbnail = preview ?: it.thumbnail,
+                                    text = if (next.textChecked) it.text else text,
+                                    textChecked = true,
                                 )
                             })
                         }
                     }
                     // Wait for the stored list to show the change before looking for the next one
-                    attachments.first { list -> list.values.flatten().none { it.id == next.id && it.needsCleanUp() } }
+                    attachments.first { list -> list.values.flatten().none { it.id == next.id && it.cleanMode == next.cleanMode && it.needsCleanUp() } }
                 }
             } finally {
                 cleaning.unlock()
@@ -308,9 +353,29 @@ class ConferenceService(
         }
     }
 
+    /**
+     * Chooses how a photo is cleaned up (null: the app decides). The new copy is made in the background and replaces
+     * the old one; with [CleanUpMode.ORIGINAL] the photo is shown as it was taken.
+     */
+    suspend fun setCleanUpMode(attachmentId: String, mode: CleanUpMode?) {
+        savePersonal { storage ->
+            storage.setAttachments(storage.getAttachments().first().withUpdated(attachmentId) { it.withCleanUpMode(mode) })
+        }
+        cleanUpScreenPhotos()
+    }
+
+    /**
+     * How far the background clean-up of the photos has got, so the trip report can show it; null where this platform
+     * has no clean-up or there is no photo.
+     */
+    val photoCleanUp: Flow<PhotoCleanUp?>
+        get() = attachments.map { all ->
+            if (!screenCleanUpAvailable) null else cleanUpProgress(all.values.flatten()) { it.needsCleanUp() }
+        }.distinctUntilChanged()
+
     private fun Attachment.needsNewCleanUp() = !cleanChecked || cleanVersion < SCREEN_CLEAN_UP_VERSION
 
-    private fun Attachment.needsCleanUp() = kind == MediaKind.PHOTO && (needsNewCleanUp() || !previewChecked)
+    private fun Attachment.needsCleanUp() = kind == MediaKind.PHOTO && (needsNewCleanUp() || !previewChecked || !textChecked)
 
     // Photos and videos picked on the trip report page, waiting to be matched to sessions on the review screen
     private val pendingImport = MutableStateFlow<List<PickedMedia>>(emptyList())
@@ -350,6 +415,15 @@ class ConferenceService(
             attachment.cleaned?.let { media.delete(it) }
         }
     }
+
+    /** Moves a photo or video to another session, e.g. one that landed on the wrong talk; its files stay as they are. */
+    suspend fun moveAttachment(from: SessionId, to: SessionId, attachment: Attachment) {
+        savePersonal { it.setAttachments(it.getAttachments().first().withMoved(from, to, attachment.id)) }
+    }
+
+    /** The sessions a photo or video on [sessionId] can be moved to. */
+    fun moveTargetsFlow(sessionId: SessionId): Flow<MoveTargets> =
+        sessionCards.map { MoveTargets.of(sessionId, it) }
 
     val conferenceInfo: StateFlow<ConferenceInfo?> =
         currentYearlyStorage.flatMapLatest { it.getConferenceInfoCache() }

@@ -7,6 +7,13 @@ import org.jetbrains.kotlinconf.SessionId
 enum class MediaKind { PHOTO, VIDEO }
 
 /**
+ * How the attendee wants a photo of a screen cleaned up, when the app's own choice (no mode, [Attachment.cleanMode]
+ * null) is not right. [ORIGINAL] leaves the photo as it was taken.
+ */
+@Serializable
+enum class CleanUpMode { ORIGINAL, DARK, LIGHT, COLOURFUL }
+
+/**
  * A photo, screenshot or video the attendee attached to a session. [file] and [thumbnail] are names
  * inside the event's media folder (see [org.jetbrains.kotlinconf.media.MediaFiles]), never absolute
  * paths: on iOS the app's folder moves with every update.
@@ -32,13 +39,26 @@ data class Attachment(
     val cleanVersion: Int = 0,
     /** True once a small preview was made (or tried) for this photo. */
     val previewChecked: Boolean = false,
+    /** The attendee's choice of clean-up for this photo; null lets the app decide. */
+    val cleanMode: CleanUpMode? = null,
+    /** The words on a photo of a slide, read on the device from the cleaned-up copy where there is one; null if none. */
+    val text: String? = null,
+    /** True once the text was read (or tried), so it is read only once. */
+    val textChecked: Boolean = false,
 ) {
     /** The picture to show in a list: the small preview, else the photo itself (cleaned up where there is one). */
     val preview: String? get() = if (kind == MediaKind.VIDEO) thumbnail else thumbnail ?: cleaned ?: file
 
     /** The files to show in the viewer, best first: the cleaned-up photo, then the original. */
     val viewFiles: List<String> get() = listOfNotNull(cleaned, file)
+
+    /** Every file stored for it: the original, the cleaned-up copy and the preview. */
+    val files: List<String> get() = listOfNotNull(file, cleaned, thumbnail)
 }
+
+/** The same photo with another clean-up chosen: it is cleaned up again, and the new copy replaces the old one. */
+fun Attachment.withCleanUpMode(mode: CleanUpMode?): Attachment =
+    if (mode == cleanMode) this else copy(cleanMode = mode, cleanChecked = false)
 
 /** Replaces one attachment wherever it is, e.g. when its cleaned-up copy is ready. */
 fun Map<String, List<Attachment>>.withUpdated(attachmentId: String, transform: (Attachment) -> Attachment): Map<String, List<Attachment>> =
@@ -55,4 +75,14 @@ fun Map<String, List<Attachment>>.withAdded(id: SessionId, added: List<Attachmen
 fun Map<String, List<Attachment>>.withRemoved(id: SessionId, attachmentId: String): Map<String, List<Attachment>> {
     val list = this[id.id].orEmpty().filterNot { it.id == attachmentId }
     return if (list.isEmpty()) this - id.id else this + (id.id to list)
+}
+
+/**
+ * Moves one attachment to another session, e.g. a photo that landed on the wrong talk. Its files stay as they are;
+ * a session left with none is removed. Unchanged if [from] does not have it or [to] is [from].
+ */
+fun Map<String, List<Attachment>>.withMoved(from: SessionId, to: SessionId, attachmentId: String): Map<String, List<Attachment>> {
+    if (from == to) return this
+    val attachment = this[from.id]?.find { it.id == attachmentId } ?: return this
+    return withRemoved(from, attachmentId).withAdded(to, listOf(attachment))
 }

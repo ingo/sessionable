@@ -21,8 +21,10 @@ import org.jetbrains.kotlinconf.ConferenceService
 import org.jetbrains.kotlinconf.SessionCardView
 import org.jetbrains.kotlinconf.SessionId
 import org.jetbrains.kotlinconf.Speaker
+import org.jetbrains.kotlinconf.media.MoveTargets
 import org.jetbrains.kotlinconf.media.PickedMedia
 import org.jetbrains.kotlinconf.personal.Attachment
+import org.jetbrains.kotlinconf.personal.CleanUpMode
 import org.jetbrains.kotlinconf.personal.SessionRating
 import org.jetbrains.kotlinconf.personal.Thumb
 import org.jetbrains.kotlinconf.utils.ErrorLoadingState
@@ -111,6 +113,19 @@ class SessionViewModel(
 
     fun removeMedia(attachment: Attachment) {
         viewModelScope.launch { service.removeAttachment(sessionId, attachment) }
+    }
+
+    /** The sessions a photo or video on this session can be moved to. */
+    val moveTargets: StateFlow<MoveTargets> = service.moveTargetsFlow(sessionId)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MoveTargets(emptyList(), emptyList()))
+
+    fun moveMedia(attachment: Attachment, to: SessionId) {
+        viewModelScope.launch { service.moveAttachment(sessionId, to, attachment) }
+    }
+
+    /** Chooses how a photo is cleaned up (null: the app decides); the new copy is made in the background. */
+    fun setCleanUp(attachment: Attachment, mode: CleanUpMode?) {
+        viewModelScope.launch { service.setCleanUpMode(attachment.id, mode) }
     }
 
     /** The rooms with a pin on the venue map, to offer "Find on map". */

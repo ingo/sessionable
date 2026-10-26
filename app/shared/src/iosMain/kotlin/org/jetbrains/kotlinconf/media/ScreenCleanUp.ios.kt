@@ -14,6 +14,7 @@ import kotlinx.cinterop.useContents
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
+import org.jetbrains.kotlinconf.personal.CleanUpMode
 import platform.CoreGraphics.CGAffineTransformMakeScale
 import platform.CoreGraphics.CGColorSpaceCreateDeviceRGB
 import platform.CoreGraphics.CGImageGetHeight
@@ -67,13 +68,6 @@ private const val MIN_TEXT_LINES = 4
 /** Pixels on the long side of the copy the colours are measured on. */
 private const val STAT_PIXELS = 256.0
 
-/** A colour cast is never stronger than this ratio between channels; past it, the "white" is a coloured shape. */
-private const val MAX_CAST = 2.5
-private const val MAX_GAIN = 8.0
-
-/** Median brightness (linear) above which a slide counts as light: dark text on a light background. */
-private const val LIGHT_MEDIAN = 0.3
-
 /**
  * Vision finds the screen, monitor or whiteboard: the clearest four-sided shape, or the outline of a slide that fills
  * most of the frame. CoreImage maps it to a flat rectangle. A photo with no edges to find but plenty of text is a slide
@@ -81,9 +75,11 @@ private const val LIGHT_MEDIAN = 0.3
  * the brightest part is stretched to white and the darkest to black, and light slides get their uneven lighting
  * evened out and faint lines darkened. Everything is sharpened.
  */
-actual suspend fun cleanUpScreenPhoto(input: String, output: String): Boolean = withContext(Dispatchers.IO) {
+actual suspend fun cleanUpScreenPhoto(input: String, output: String, mode: CleanUpMode?): Boolean = withContext(Dispatchers.IO) {
+    // No clean-up at all is the attendee's choice to keep the photo as it was taken
+    if (mode == CleanUpMode.ORIGINAL) return@withContext false
     try {
-        autoreleasepool { cleanUp(input, output) }
+        autoreleasepool { cleanUp(input, output, mode) }
     } catch (_: Throwable) {
         false
     }
@@ -92,7 +88,7 @@ actual suspend fun cleanUpScreenPhoto(input: String, output: String): Boolean = 
 /** What to clean up: the screen's corners (normalised, origin bottom left), or the whole photo. */
 private class Found(val corners: List<Pair<Double, Double>>?)
 
-private fun cleanUp(input: String, output: String): Boolean {
+private fun cleanUp(input: String, output: String, mode: CleanUpMode?): Boolean {
     // The screen is found on a small copy; only a photo that has one is opened at full size
     val found = findScreen(input) ?: return false
     val image = CIImage(
@@ -109,7 +105,7 @@ private fun cleanUp(input: String, output: String): Boolean {
         setValue(NSNumber(1.0), forKey = "inputAspectRatio")
     } ?: flat
 
-    val enhanced = enhance(sized, context)
+    val enhanced = enhance(sized, context, mode)
     val sharp = filter("CIUnsharpMask", enhanced) {
         setValue(NSNumber(2.0), forKey = "inputRadius")
         setValue(NSNumber(0.5), forKey = "inputIntensity")
@@ -212,50 +208,22 @@ private val VNRectangleObservation.area: Double
         return abs(sum) / 2
     }
 
-private fun enhance(image: CIImage, context: CIContext): CIImage {
-    val (balanced, median) = balance(image, context)
-    return if (median > LIGHT_MEDIAN) lightSlide(balanced) else darkSlide(balanced)
+private fun enhance(image: CIImage, context: CIContext, mode: CleanUpMode?): CIImage {
+    val levels = measureScreenLevels(samplePixels(image, context), mode) ?: return darkSlide(image)
+    val balanced = balance(image, levels)
+    return if (levels.light) lightSlide(balanced) else darkSlide(balanced)
 }
 
-/** A pixel in linear light. */
-private class Rgb(val r: Double, val g: Double, val b: Double) {
-    val luminance: Double get() = 0.2126 * r + 0.7152 * g + 0.0722 * b
-    val saturation: Double get() {
-        val max = maxOf(r, g, b)
-        return if (max > 0) (max - minOf(r, g, b)) / max else 0.0
-    }
-}
-
-/**
- * Removes the colour cast and stretches the levels; returns the result and its median brightness. The white of a
- * slide is the least coloured of its brightest pixels (the background of a light slide, the text of a dark one), so
- * its tint is the cast and is taken out per channel. A coloured slide keeps its colours because its white text or
- * frame sets the balance, not its background. Then one black point for all channels, so nothing shifts hue.
- */
-private fun balance(image: CIImage, context: CIContext): Pair<CIImage, Double> {
-    val pixels = samplePixels(image, context)
-    if (pixels.isEmpty()) return image to 0.0
-    val bright = percentile(pixels.map { it.luminance }, 0.9)
-    val candidates = pixels.filter { it.luminance >= bright && it.luminance > 0.02 }
-    val neutral = candidates.sortedBy { it.saturation }.take(maxOf(1, candidates.size / 3))
-    if (neutral.isEmpty()) return image to percentile(pixels.map { it.luminance }, 0.5)
-    val white = listOf(neutral.sumOf { it.r }, neutral.sumOf { it.g }, neutral.sumOf { it.b }).map { it / neutral.size }
-    val top = white.max()
-    val tint = white.map { top / maxOf(it, top / MAX_CAST, 1e-4) }
-
-    // The brightest 1.5 % become white once the cast is gone; the darkest 1 % black, within reason
-    val corrected = pixels.map { Rgb(it.r * tint[0], it.g * tint[1], it.b * tint[2]).luminance }
-    val high = percentile(corrected, 0.985)
-    val black = percentile(corrected, 0.01).coerceIn(0.0, high * 0.3)
-    val k = 1 / maxOf(high - black, 0.02)
-    val gains = tint.map { minOf(it * k, MAX_GAIN) }
-    val balanced = filter("CIColorMatrix", image) {
+/** Removes the colour cast and stretches the levels, as measured by [measureScreenLevels]. */
+private fun balance(image: CIImage, levels: ScreenLevels): CIImage {
+    val gains = levels.gains
+    val biases = levels.biases
+    return filter("CIColorMatrix", image) {
         setValue(CIVector(x = gains[0], Y = 0.0, Z = 0.0, W = 0.0), forKey = "inputRVector")
         setValue(CIVector(x = 0.0, Y = gains[1], Z = 0.0, W = 0.0), forKey = "inputGVector")
         setValue(CIVector(x = 0.0, Y = 0.0, Z = gains[2], W = 0.0), forKey = "inputBVector")
-        setValue(CIVector(x = -black * k, Y = -black * k, Z = -black * k, W = 0.0), forKey = "inputBiasVector")
-    }?.imageByCroppingToRect(image.extent) ?: return image to percentile(pixels.map { it.luminance }, 0.5)
-    return balanced to (percentile(corrected, 0.5) - black) * k
+        setValue(CIVector(x = -biases[0], Y = -biases[1], Z = -biases[2], W = 0.0), forKey = "inputBiasVector")
+    }?.imageByCroppingToRect(image.extent) ?: image
 }
 
 /** The pixels of a small copy, in the linear working space CoreImage filters see. */
@@ -280,11 +248,6 @@ private fun samplePixels(image: CIImage, context: CIContext): List<Rgb> {
         )
         List(width * height) { i -> Rgb(buffer[i * 4].toDouble(), buffer[i * 4 + 1].toDouble(), buffer[i * 4 + 2].toDouble()) }
     }
-}
-
-private fun percentile(values: List<Double>, p: Double): Double {
-    val sorted = values.sorted()
-    return sorted[(sorted.size * p).toInt().coerceIn(0, sorted.lastIndex)]
 }
 
 /**
