@@ -42,3 +42,6 @@ android-build
 app/desktopApp/files
 /tmp/
 .junie
+
+# Local secrets (App Store Connect API key variables)
+.env
