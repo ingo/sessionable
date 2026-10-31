@@ -33,6 +33,13 @@ the build appears for your internal testers when processing finishes. External t
 
 Each upload gets the version code `1000 + run number`. Testers join the internal track from a link in the Play Console.
 
+## Store listing
+
+- Support URL: https://thunderclatter.com/
+- Privacy policy URL: the policy page (`docs/site/privacy.html`) published under thunderclatter.com once its DNS is live.
+  The page must return 200 before it is entered in App Store Connect and Play Console.
+- Say in the description that the app is unofficial and not affiliated with Sessionize.
+
 ## By hand
 
 ```bash

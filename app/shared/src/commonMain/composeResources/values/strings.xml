@@ -266,9 +266,11 @@ Please try again.</string>
     <string name="connect_zone_help">The schedule is shown in this time zone. Type to search, for example Berlin or Los_Angeles.</string>
     <string name="connect_zone_unknown">Unknown time zone</string>
     <string name="connect_open">Open the conference</string>
-    <string name="connect_examples">Try an example</string>
     <string name="connect_saved">Your conferences</string>
     <string name="connect_forget">Remove</string>
+    <string name="connect_forget_named">Forget %1$s</string>
+    <string name="connect_forget_confirm">Delete the bookmarks, notes and photos of %1$s from this device?</string>
+    <string name="connect_cancel">Cancel</string>
     <string name="connect_privacy">The app only downloads the public schedule from Sessionize. Your bookmarks and notes stay on this device.</string>
     <string name="info_link_report_problem">Report a problem</string>
     <string name="info_link_switch_conference">Switch conference</string>
