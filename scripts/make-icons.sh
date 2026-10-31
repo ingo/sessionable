@@ -29,6 +29,25 @@ if source.width != source.height or source.width < 1024:
 def size(px):
     return source.resize((px, px), Image.LANCZOS)
 
+# The launch screens are one solid color with the badge on it: the white part of the icon (without the
+# lanyard, which runs off the top edge), on transparent
+LAUNCH = "#00a99d"
+rgb = np.asarray(source, dtype=np.float32)
+white = np.clip((rgb.min(axis=2) - 170) / 85, 0, 1)
+white[: int(source.height * 0.265)] = 0
+rows, cols = np.where(white > 0.05)
+box = (cols.min(), rows.min(), cols.max() + 1, rows.max() + 1)
+cut = np.zeros((source.height, source.width, 4), dtype=np.uint8)
+cut[..., :3] = 255
+cut[..., 3] = (white * 255).astype(np.uint8)
+badge_full = Image.fromarray(cut, "RGBA").crop(box)
+side = max(badge_full.size)
+badge_square = Image.new("RGBA", (side, side), (255, 255, 255, 0))
+badge_square.paste(badge_full, ((side - badge_full.width) // 2, (side - badge_full.height) // 2))
+
+def badge(px):
+    return badge_square.resize((px, px), Image.LANCZOS)
+
 def save(image, path):
     path.parent.mkdir(parents=True, exist_ok=True)
     image.save(path)
@@ -55,10 +74,19 @@ if composer.exists():
 # iOS launch image shown while the app starts
 launch = ios / "Assets.xcassets/launch-glyph.imageset"
 for scale in (1, 2, 3):
-    save(size(120 * scale), launch / f"launch-glyph@{scale}x.png")
+    save(badge(120 * scale), launch / f"launch-glyph@{scale}x.png")
 (launch / "launch-glyph.svg").unlink(missing_ok=True)
 (launch / "Contents.json").write_text(json.dumps({
     "images": [{"filename": f"launch-glyph@{s}x.png", "idiom": "universal", "scale": f"{s}x"} for s in (1, 2, 3)],
+    "info": {"author": "xcode", "version": 1},
+}, indent=2) + "\n")
+
+background_set = ios / "Assets.xcassets/launch-background.colorset"
+background_set.mkdir(parents=True, exist_ok=True)
+r, g, b = (int(LAUNCH[i:i + 2], 16) / 255 for i in (1, 3, 5))
+(background_set / "Contents.json").write_text(json.dumps({
+    "colors": [{"idiom": "universal", "color": {"color-space": "srgb", "components": {
+        "red": f"{r:.3f}", "green": f"{g:.3f}", "blue": f"{b:.3f}", "alpha": "1.000"}}}],
     "info": {"author": "xcode", "version": 1},
 }, indent=2) + "\n")
 
@@ -74,12 +102,14 @@ background = np.asarray(blurred).copy()
 background[pad:pad + inner, pad:pad + inner] = art.astype(np.uint8)
 save(Image.fromarray(background), res / "drawable-nodpi/ic_launcher_background.png")
 # Themed icon: the white badge as a silhouette
-badge = (art.min(axis=2) > 235).astype(np.uint8) * 255
+silhouette = (art.min(axis=2) > 235).astype(np.uint8) * 255
 mono = np.zeros((canvas, canvas, 4), dtype=np.uint8)
-mono[pad:pad + inner, pad:pad + inner, 3] = badge
+mono[pad:pad + inner, pad:pad + inner, 3] = silhouette
 save(Image.fromarray(mono, "RGBA"), res / "drawable-nodpi/ic_launcher_mono.png")
 (res / "drawable-nodpi/ic_launcher_foreground.png").unlink(missing_ok=True)
-save(size(432), res / "drawable-nodpi/splash_icon.png")
+save(badge(432), res / "drawable-nodpi/splash_icon.png")
+(res / "values/colors.xml").write_text('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="splash_background">%s</color>\n</resources>\n' % LAUNCH.upper())
+(res / "values-night/colors.xml").write_text((res / "values/colors.xml").read_text())
 (res / "drawable/ic_launcher.xml").write_text(
     '<?xml version="1.0" encoding="utf-8"?>\n'
     '<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">\n'
@@ -91,14 +121,13 @@ save(size(432), res / "drawable-nodpi/splash_icon.png")
 save(size(512), root / "app/androidApp/src/main/ic_launcher-playstore.png")
 
 # Web: icons and splash screens
-def splash(background):
+def splash():
     buffer = io.BytesIO()
-    size(256).save(buffer, "PNG")
+    badge(256).save(buffer, "PNG")
     data = base64.b64encode(buffer.getvalue()).decode()
     return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512">'
-            f'<rect width="512" height="512" fill="{background}"/>'
-            f'<clipPath id="r"><rect x="128" y="128" width="256" height="256" rx="58"/></clipPath>'
-            f'<image x="128" y="128" width="256" height="256" clip-path="url(#r)" href="data:image/png;base64,{data}"/></svg>\n')
+            f'<rect width="512" height="512" fill="{LAUNCH}"/>'
+            f'<image x="128" y="128" width="256" height="256" href="data:image/png;base64,{data}"/></svg>\n')
 
 targets = [root / "app/webApp/src/webMain/resources"]
 branding = root / "app/webApp/branding"
@@ -107,7 +136,7 @@ for target in targets:
     images = target / "images"
     for name, px in (("icon-192", 192), ("icon-360", 360), ("icon-512", 512), ("apple-touch-icon", 180)):
         save(size(px), images / f"{name}.png")
-    (images / "splash-light.svg").write_text(splash("#f4faf9"))
-    (images / "splash-dark.svg").write_text(splash("#0b2a30"))
+    (images / "splash-light.svg").write_text(splash())
+    (images / "splash-dark.svg").write_text(splash())
 print("Icons written from branding/icon.png")
 PY

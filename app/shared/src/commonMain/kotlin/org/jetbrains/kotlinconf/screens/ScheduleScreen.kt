@@ -547,5 +547,6 @@ private fun SessionCard(
         onClick = { onSession(session.id) },
         modifier = modifier,
         onFindOnMap = onFindOnMap,
+        plenary = session.isPlenary,
     )
 }

@@ -293,4 +293,6 @@ Please try again.</string>
     <string name="connect_organiser_title">Organising an event?</string>
     <string name="connect_organiser_text">Create a free test event on Sessionize, add a few sessions, switch on its API under API / embed, and paste the link above.</string>
     <string name="connect_organiser_button">Try Sessionize</string>
+    <string name="session_watch_live">Watch live</string>
+    <string name="now_first_up">First up</string>
 </resources>

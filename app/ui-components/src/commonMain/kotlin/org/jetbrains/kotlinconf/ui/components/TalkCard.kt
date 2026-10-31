@@ -54,6 +54,7 @@ import org.jetbrains.kotlinconf.ui.generated.resources.bookmark_24
 import org.jetbrains.kotlinconf.ui.generated.resources.bookmark_24_fill
 import org.jetbrains.kotlinconf.ui.generated.resources.lightning_16_fill
 import org.jetbrains.kotlinconf.ui.generated.resources.location_16
+import org.jetbrains.kotlinconf.ui.generated.resources.talk_card_plenary
 import org.jetbrains.kotlinconf.ui.generated.resources.lightning_talk
 import org.jetbrains.kotlinconf.ui.generated.resources.session_codelab
 import org.jetbrains.kotlinconf.ui.generated.resources.session_education
@@ -112,6 +113,8 @@ fun TalkCard(
     modifier: Modifier = Modifier,
     /** Shows a pin next to the room that opens it on the venue map; null when the room has no pin. */
     onFindOnMap: (() -> Unit)? = null,
+    /** A session for everyone, such as a keynote: labelled so it stands out from the parallel talks. */
+    plenary: Boolean = false,
 ) {
     val backgroundColor by animateColorAsState(
         if (status == TalkStatus.Past) AppTheme.colors.cardBackgroundPast
@@ -151,6 +154,7 @@ fun TalkCard(
             speakers = speakers,
             speakerHighlights = speakerHighlights,
             status = status,
+            plenary = plenary,
         )
         // TODO BLOCKER double-check if removing this weight is correct
         HorizontalDivider(
@@ -182,11 +186,19 @@ private fun TopBlock(
     speakers: String,
     speakerHighlights: List<IntRange>,
     status: TalkStatus,
+    plenary: Boolean,
 ) {
     Column(
         modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+        if (plenary) {
+            Text(
+                text = stringResource(UiRes.string.talk_card_plenary),
+                color = AppTheme.colors.accentText,
+                style = AppTheme.typography.h4,
+            )
+        }
         Row {
             TalkTitle(
                 title = buildHighlightedString(title, titleHighlights),

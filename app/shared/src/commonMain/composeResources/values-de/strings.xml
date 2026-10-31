@@ -293,4 +293,6 @@ Bitte versuchen Sie es erneut.</string>
     <string name="connect_organiser_title">Du organisierst eine Veranstaltung?</string>
     <string name="connect_organiser_text">Lege auf Sessionize kostenlos eine Testveranstaltung an, füge ein paar Sessions hinzu, aktiviere die API unter API / Einbetten und füge den Link oben ein.</string>
     <string name="connect_organiser_button">Sessionize ausprobieren</string>
+    <string name="session_watch_live">Live ansehen</string>
+    <string name="now_first_up">Zuerst</string>
 </resources>

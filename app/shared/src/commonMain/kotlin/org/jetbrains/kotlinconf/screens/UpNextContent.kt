@@ -1,6 +1,7 @@
 package org.jetbrains.kotlinconf.screens
 
 import org.jetbrains.kotlinconf.generated.resources.now_starting_next
+import org.jetbrains.kotlinconf.generated.resources.now_first_up
 import org.jetbrains.kotlinconf.generated.resources.now_on_now
 import org.jetbrains.kotlinconf.generated.resources.now_after
 import org.jetbrains.kotlinconf.generated.resources.now_between
@@ -97,8 +98,10 @@ internal fun UpNextContent(
 
         if (upNext.nothingBookmarked) {
             // Nothing planned yet: what's going on across the conference, to pick from
+            // Before the event or between its days nothing is on "now": these are the first sessions of the day shown
+            val live = upNext.moment == ConferenceMoment.Today
             if (upNext.happening.isNotEmpty()) {
-                SectionTitle(stringResource(Res.string.now_on_now))
+                SectionTitle(stringResource(if (live) Res.string.now_on_now else Res.string.now_first_up))
                 upNext.happening.forEach { BrowseRow(it, onSession, onBookmark) }
             }
             val nextRound = upNext.startingNext.firstOrNull()

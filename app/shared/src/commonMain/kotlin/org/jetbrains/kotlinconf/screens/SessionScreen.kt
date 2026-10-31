@@ -55,6 +55,7 @@ import org.jetbrains.kotlinconf.generated.resources.session_room_state_descripti
 import org.jetbrains.kotlinconf.generated.resources.session_screen_error
 import org.jetbrains.kotlinconf.generated.resources.session_slides
 import org.jetbrains.kotlinconf.generated.resources.session_title
+import org.jetbrains.kotlinconf.generated.resources.session_watch_live
 import org.jetbrains.kotlinconf.generated.resources.session_watch_video
 import org.jetbrains.kotlinconf.generated.resources.slides
 import org.jetbrains.kotlinconf.ui.AdaptiveDetailLayout
@@ -125,11 +126,12 @@ fun SessionScreen(
                 Title(session, viewModel, Modifier.padding(bottom = 24.dp))
             },
             unifiedContent = {
+                LiveLink(session)
                 SlidesLink(session)
                 VideoLink(session, onWatchVideo)
                 SessionActions(session, exporter)
                 Speakers(speakers, onSpeaker)
-                RoomSection(session.locationLine, onNavigateToMap)
+                if (session.locationLine.isNotBlank()) RoomSection(session.locationLine, onNavigateToMap)
                 Description(session.description)
                 PersonalSection(viewModel)
             },
@@ -141,13 +143,14 @@ fun SessionScreen(
                 }
             },
             largeSideContent = {
+                LiveLink(session)
                 SlidesLink(session)
                 VideoLink(session, onWatchVideo)
                 SessionActions(session, exporter)
                 if (session.description.isNotBlank()) {
                     Speakers(speakers, onSpeaker)
                 }
-                RoomSection(session.locationLine, onNavigateToMap)
+                if (session.locationLine.isNotBlank()) RoomSection(session.locationLine, onNavigateToMap)
                 PersonalSection(viewModel)
             },
             onBack = onBack,
@@ -194,6 +197,19 @@ private fun VideoLink(
             modifier = Modifier.padding(bottom = 12.dp),
         )
     }
+}
+
+@Composable
+private fun LiveLink(session: SessionCardView) {
+    val liveUrl = session.liveUrl ?: return
+    val uriHandler = LocalUriHandler.current
+    PageMenuItem(
+        label = stringResource(Res.string.session_watch_live),
+        onClick = { uriHandler.openUri(liveUrl) },
+        drawableStart = Res.drawable.play_video,
+        drawableEnd = Res.drawable.arrow_up_right_24,
+        modifier = Modifier.padding(bottom = 12.dp),
+    )
 }
 
 @Composable
