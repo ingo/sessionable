@@ -6,7 +6,7 @@ import kotlinx.coroutines.CancellationException
 import org.jetbrains.kotlinconf.Conference
 import org.jetbrains.kotlinconf.ConferenceInfo
 import org.jetbrains.kotlinconf.di.YearScope
-import org.jetbrains.kotlinconf.event.ActiveEvent
+import org.jetbrains.kotlinconf.event.EventProfile
 import org.jetbrains.kotlinconf.event.toConferenceInfo
 import org.jetbrains.kotlinconf.sessionize.toConference
 import org.jetbrains.kotlinconf.utils.Logger
@@ -17,11 +17,10 @@ import org.jetbrains.kotlinconf.utils.tagged
 @SingleIn(YearScope::class)
 class YearlyApi(
     private val sessionizeFeed: SessionizeFeed,
+    private val event: EventProfile,
     logger: Logger,
 ) {
     private val taggedLogger = logger.tagged("YearlyApi")
-
-    private val event = ActiveEvent
 
     suspend fun downloadConferenceData(): Conference? = safeApiCall {
         sessionizeFeed.get(event.sessionizeUrl).toConference(event.timeZone, event.sessionizeRules)
