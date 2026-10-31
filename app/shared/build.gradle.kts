@@ -141,9 +141,9 @@ kotlin {
     jvmToolchain(21)
 }
 
-// The conference this build is for, chosen with -Pevent=<id> (see EventProfiles.kt)
+// The conference this build is branded for, chosen with -Pevent=<id> (see EventProfiles.kt); empty builds the generic app
 val generateActiveEvent by tasks.registering {
-    val event = providers.gradleProperty("event").orElse("agntcon-mcpcon-na-2026")
+    val event = providers.gradleProperty("event").orElse("")
     val outputDir = layout.buildDirectory.dir("generated/activeEvent/kotlin")
     inputs.property("event", event)
     outputs.dir(outputDir)

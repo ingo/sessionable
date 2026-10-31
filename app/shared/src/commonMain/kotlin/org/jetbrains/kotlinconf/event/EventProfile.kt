@@ -11,8 +11,11 @@ data class EventProfile(
     /** Matches the `event` Gradle property. */
     val id: String,
     val name: String,
-    /** Scopes the locally stored bookmarks, notes and caches of this conference. */
-    val year: Int,
+    /**
+     * Scopes the locally stored bookmarks, notes and caches of this conference. Changing it for an
+     * event that has shipped makes installed apps lose their data for it.
+     */
+    val storageScope: String,
     /** IANA zone id of the venue, e.g. "America/Los_Angeles". */
     val timeZoneId: String,
     /** The id in `https://sessionize.com/api/v2/{id}/view/All`. */

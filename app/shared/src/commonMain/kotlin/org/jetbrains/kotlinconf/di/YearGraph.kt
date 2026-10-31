@@ -15,7 +15,7 @@ interface YearGraph {
     @ContributesTo(AppScope::class)
     @GraphExtension.Factory
     interface Factory {
-        fun create(@Provides @Year year: Int): YearGraph
+        fun create(@Provides @StorageScope scope: String): YearGraph
     }
 }
 

@@ -18,7 +18,7 @@ import org.jetbrains.kotlinconf.SessionId
 import org.jetbrains.kotlinconf.SpeakerId
 import org.jetbrains.kotlinconf.personal.PersonalNotes
 import org.jetbrains.kotlinconf.personal.SessionRating
-import org.jetbrains.kotlinconf.di.Year
+import org.jetbrains.kotlinconf.di.StorageScope
 import org.jetbrains.kotlinconf.di.YearScope
 
 
@@ -26,7 +26,7 @@ import org.jetbrains.kotlinconf.di.YearScope
 @SingleIn(YearScope::class)
 @OptIn(ExperimentalSettingsApi::class)
 class YearlyStorageImpl(
-    @Year private val year: Int,
+    @StorageScope private val scope: String,
     private val settings: ObservableSettings,
 ) : YearlyStorage {
     private val json = Json {
@@ -42,7 +42,7 @@ class YearlyStorageImpl(
         }
     }
 
-    private fun key(name: String): String = "${year}_$name"
+    private fun key(name: String): String = "${scope}_$name"
 
     val CONFERENCE_CACHE = key("conferenceCache")
     val CONFERENCE_INFO_CACHE = key("conferenceInfoCache")
@@ -52,6 +52,10 @@ class YearlyStorageImpl(
     val NOTES = key("notes")
     val MET_SPEAKERS = key("metSpeakers")
     val RATINGS = key("ratings")
+
+    override suspend fun clear() {
+        settings.keys.filter { it.startsWith("${scope}_") }.forEach { settings.remove(it) }
+    }
 
     override fun getConferenceCache(): Flow<Conference?> = settings.getStringOrNullFlow(CONFERENCE_CACHE).map { it.decodeOrNull<Conference>() }
     override suspend fun setConferenceCache(value: Conference) = settings.set(CONFERENCE_CACHE, json.encodeToString(value))

@@ -37,7 +37,13 @@ import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.kotlinconf.LocalNotificationId.Type
 import org.jetbrains.kotlinconf.di.YearGraph
-import org.jetbrains.kotlinconf.event.ActiveEvent
+import org.jetbrains.kotlinconf.EVENT_TIME_ZONE
+import org.jetbrains.kotlinconf.event.EventProfile
+import org.jetbrains.kotlinconf.event.EventSelection
+import org.jetbrains.kotlinconf.event.FeedSummary
+import org.jetbrains.kotlinconf.event.FixedEvent
+import org.jetbrains.kotlinconf.event.SavedEvent
+import org.jetbrains.kotlinconf.network.SessionizeFeed
 import org.jetbrains.kotlinconf.event.BUNDLED_ASSET_PREFIX
 import org.jetbrains.kotlinconf.event.bundledMapSvg
 import org.jetbrains.kotlinconf.export.ExportSnapshot
@@ -68,6 +74,7 @@ class ConferenceService(
     private val localNotificationService: LocalNotificationService,
     private val flagsManager: FlagsManager,
     private val syncApi: SessionizeSyncApi,
+    private val sessionizeFeed: SessionizeFeed,
     private val scope: CoroutineScope,
     logger: Logger,
 ) {
@@ -81,7 +88,7 @@ class ConferenceService(
     private val currentYearGraph: MutableStateFlow<YearGraph?> = MutableStateFlow(null)
 
     // Declared before init: the sync loop started there uses them
-    private val sessionizeAppUrl: String? = ActiveEvent.sessionizeAppUrl
+    private val sessionizeAppUrl: String? get() = EventSelection.current?.sessionizeAppUrl
     private val syncMutex = Mutex()
     private val syncStateMutex = Mutex()
 
@@ -91,21 +98,86 @@ class ConferenceService(
     init {
         applicationStorage.initialize()
 
-        currentYearGraph.update { yearGraphFactory.create(ActiveEvent.year) }
-        scope.launch { loadConferenceData() }
+        restoreEvent()
 
         scope.launch {
             timeProvider.run()
         }
 
         // Keep bookmarks in step with the event's Sessionize web app while linked
-        if (sessionizeAppUrl != null) scope.launch {
-            currentYearGraph.filterNotNull().first()
+        scope.launch {
             while (true) {
-                if (currentSyncState()?.linked == true) syncFavorites()
+                if (sessionizeAppUrl != null && currentSyncState()?.linked == true) syncFavorites()
                 delay(SYNC_INTERVAL)
             }
         }
+    }
+
+    /** The conference being shown; null on the connect screen of the generic build. */
+    val activeEvent: StateFlow<EventProfile?>
+        field = MutableStateFlow<EventProfile?>(null)
+
+    /** The conferences the attendee connected to, most recent first. */
+    val savedEvents: StateFlow<List<SavedEvent>> =
+        applicationStorage.getSavedEvents().stateIn(scope, SharingStarted.Eagerly, applicationStorage.getSavedEventsBlocking())
+
+    /** Opens the branded build's conference, or the one that was open last time in the generic build. */
+    private fun restoreEvent() {
+        val profile = FixedEvent
+            ?: applicationStorage.getActiveEventIdBlocking()?.let { id ->
+                applicationStorage.getSavedEventsBlocking().find { it.sessionizeId == id }?.toProfile()
+            }
+        if (profile != null) openEvent(profile)
+    }
+
+    private fun openEvent(profile: EventProfile) {
+        EVENT_TIME_ZONE = profile.timeZone
+        EventSelection.current = profile
+        activeEvent.value = profile
+        currentYearGraph.update { yearGraphFactory.create(profile.storageScope) }
+        scope.launch { loadConferenceData() }
+    }
+
+    /** Connects to a conference by its Sessionize id, keeps it for next time and shows it. */
+    suspend fun connectEvent(event: SavedEvent) {
+        val saved = listOf(event) + savedEvents.value.filterNot { it.sessionizeId == event.sessionizeId }
+        applicationStorage.setSavedEvents(saved)
+        applicationStorage.setActiveEventId(event.sessionizeId)
+        openEvent(event.toProfile())
+    }
+
+    /** Opens a conference from [savedEvents] again. */
+    suspend fun switchEvent(sessionizeId: String) {
+        val event = savedEvents.value.find { it.sessionizeId == sessionizeId } ?: return
+        connectEvent(event)
+    }
+
+    /** Back to the connect screen. Bookmarks and notes of the conference stay on the device. */
+    suspend fun leaveEvent() {
+        if (FixedEvent != null) return
+        applicationStorage.setActiveEventId(null)
+        EventSelection.current = null
+        activeEvent.value = null
+        currentYearGraph.update { null }
+    }
+
+    /** Forgets a conference from the list, with its bookmarks and notes. */
+    suspend fun forgetEvent(sessionizeId: String) {
+        val event = savedEvents.value.find { it.sessionizeId == sessionizeId } ?: return
+        if (activeEvent.value?.sessionizeId == sessionizeId) leaveEvent()
+        applicationStorage.setSavedEvents(savedEvents.value - event)
+        yearGraphFactory.create(event.toProfile().storageScope).storage.clear()
+    }
+
+    /** Reads a conference's feed to check the link before connecting; null when it cannot be read or is empty. */
+    suspend fun inspectFeed(sessionizeId: String): FeedSummary? = try {
+        val data = sessionizeFeed.get("https://sessionize.com/api/v2/$sessionizeId/view/All")
+        FeedSummary(data.sessions.size, data.speakers.size).takeIf { data.sessions.isNotEmpty() }
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: Exception) {
+        taggedLogger.log { "Could not read the feed of $sessionizeId: ${e.message}" }
+        null
     }
 
     val agenda: StateFlow<List<Day>> =

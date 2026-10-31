@@ -293,4 +293,25 @@ Please try again.</string>
     </plurals>
     <string name="my_schedule_state_live">Happening now</string>
     <string name="my_schedule_state_past">Ended</string>
+
+    <!-- Connect to a conference (generic build) -->
+    <string name="connect_title">Connect to a conference</string>
+    <string name="connect_intro">Paste the conference's Sessionize link or id. Organisers find it in Sessionize under API / embed, as the link of the "All" endpoint, for example sessionize.com/api/v2/abcd1234/view/All.</string>
+    <string name="connect_link_hint">Sessionize link or id</string>
+    <string name="connect_check">Check</string>
+    <string name="connect_checking">Reading the schedule…</string>
+    <string name="connect_not_found">No schedule found. Check the link, and that the organiser has enabled the API for the "All" endpoint.</string>
+    <string name="connect_not_a_link">That does not look like a Sessionize link or id.</string>
+    <string name="connect_found">Found %1$d sessions and %2$d speakers.</string>
+    <string name="connect_name_label">Name of the conference</string>
+    <string name="connect_name_hint">For example KotlinConf 2026</string>
+    <string name="connect_zone_label">Time zone of the venue</string>
+    <string name="connect_zone_help">The schedule is shown in this time zone. Type to search, for example Berlin or Los_Angeles.</string>
+    <string name="connect_zone_unknown">Unknown time zone</string>
+    <string name="connect_open">Open the conference</string>
+    <string name="connect_examples">Try an example</string>
+    <string name="connect_saved">Your conferences</string>
+    <string name="connect_forget">Remove</string>
+    <string name="connect_privacy">The app only downloads the public schedule from Sessionize. Your bookmarks and notes stay on this device.</string>
+    <string name="info_link_switch_conference">Switch conference</string>
 </resources>

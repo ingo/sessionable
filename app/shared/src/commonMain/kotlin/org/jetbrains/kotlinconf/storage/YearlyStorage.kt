@@ -11,6 +11,9 @@ import org.jetbrains.kotlinconf.personal.PersonalNotes
 import org.jetbrains.kotlinconf.personal.SessionRating
 
 interface YearlyStorage {
+    /** Removes everything stored for this conference. */
+    suspend fun clear()
+
     fun getConferenceCache(): Flow<Conference?>
     suspend fun setConferenceCache(value: Conference)
 

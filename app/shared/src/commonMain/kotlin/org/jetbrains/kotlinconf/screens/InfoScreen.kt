@@ -3,6 +3,7 @@ package org.jetbrains.kotlinconf.screens
 import org.jetbrains.kotlinconf.ui.components.Text
 import org.jetbrains.kotlinconf.event.EventLogo
 import org.jetbrains.kotlinconf.event.ActiveEvent
+import org.jetbrains.kotlinconf.event.FixedEvent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,6 +39,7 @@ import org.jetbrains.kotlinconf.generated.resources.info_link_description_twitte
 import org.jetbrains.kotlinconf.generated.resources.info_link_how_to_find_venue
 import org.jetbrains.kotlinconf.generated.resources.info_link_settings
 import org.jetbrains.kotlinconf.generated.resources.sync_info_link
+import org.jetbrains.kotlinconf.generated.resources.info_link_switch_conference
 import org.jetbrains.kotlinconf.generated.resources.info_title
 import org.jetbrains.kotlinconf.generated.resources.slack
 import org.jetbrains.kotlinconf.generated.resources.twitter
@@ -101,6 +103,12 @@ fun InfoScreen(
             PageMenuItem(stringResource(Res.string.info_link_settings), onClick = onSettings)
             if (onSessionizeSync != null) {
                 PageMenuItem(stringResource(Res.string.sync_info_link), onClick = onSessionizeSync)
+            }
+            if (FixedEvent == null) {
+                PageMenuItem(
+                    stringResource(Res.string.info_link_switch_conference),
+                    onClick = viewModel::switchConference,
+                )
             }
             if (onCodeOfConduct != null) {
                 PageMenuItem(

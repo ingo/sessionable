@@ -1,6 +1,5 @@
 package org.jetbrains.kotlinconf
 
-import org.jetbrains.kotlinconf.event.ActiveEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.kotlinconf.di.AppGraph
@@ -14,7 +13,6 @@ fun initApp(
     appGraph: AppGraph,
     platformLogger: Logger,
 ) {
-    EVENT_TIME_ZONE = ActiveEvent.timeZone
     initFlagsAndLogging(
         appScope = appGraph.scope,
         platformLogger = platformLogger,

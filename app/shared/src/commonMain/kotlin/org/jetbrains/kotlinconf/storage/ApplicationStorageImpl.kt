@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
+import org.jetbrains.kotlinconf.event.SavedEvent
 import org.jetbrains.kotlinconf.flags.Flags
 import org.jetbrains.kotlinconf.Theme
 import org.jetbrains.kotlinconf.utils.Logger
@@ -49,6 +50,17 @@ class ApplicationStorageImpl(
     override fun getFlags(): Flow<Flags?> = settings.getStringOrNullFlow(Keys.FLAGS).map { it.decodeOrNull<Flags>() }
     override suspend fun setFlags(value: Flags) = settings.set(Keys.FLAGS, json.encodeToString(value))
 
+    override fun getSavedEvents(): Flow<List<SavedEvent>> =
+        settings.getStringOrNullFlow(Keys.SAVED_EVENTS).map { it.decodeOrNull<List<SavedEvent>>() ?: emptyList() }
+    override fun getSavedEventsBlocking(): List<SavedEvent> =
+        settings.getStringOrNull(Keys.SAVED_EVENTS).decodeOrNull<List<SavedEvent>>() ?: emptyList()
+    override suspend fun setSavedEvents(value: List<SavedEvent>) = settings.set(Keys.SAVED_EVENTS, json.encodeToString(value))
+
+    override fun getActiveEventIdBlocking(): String? = settings.getStringOrNull(Keys.ACTIVE_EVENT)
+    override suspend fun setActiveEventId(sessionizeId: String?) {
+        if (sessionizeId == null) settings.remove(Keys.ACTIVE_EVENT) else settings.set(Keys.ACTIVE_EVENT, sessionizeId)
+    }
+
     override fun initialize() {
         val version = settings.getInt(Keys.STORAGE_VERSION, 0)
         taggedLogger.log { "Storage version is $version" }
@@ -76,5 +88,7 @@ class ApplicationStorageImpl(
         const val ONBOARDING_COMPLETE = "onboardingComplete"
         const val THEME = "theme"
         const val FLAGS = "flags"
+        const val SAVED_EVENTS = "savedEvents"
+        const val ACTIVE_EVENT = "activeEvent"
     }
 }

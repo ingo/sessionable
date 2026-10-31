@@ -19,8 +19,8 @@ import kotlin.test.assertTrue
 class PersonalStorageTest {
     private val settings: ObservableSettings = MapSettings().makeObservable()
 
-    private fun storage(year: Int = 2026, settings: ObservableSettings = this.settings) =
-        YearlyStorageImpl(year, settings)
+    private fun storage(scope: String = "2026", settings: ObservableSettings = this.settings) =
+        YearlyStorageImpl(scope, settings)
 
     @Test
     fun nothingStoredYetReadsAsEmpty() = runTest {
@@ -91,11 +91,11 @@ class PersonalStorageTest {
 
     @Test
     fun eachEventYearKeepsItsOwnData() = runTest {
-        storage(2025).setNotes(PersonalNotes().withSessionNote(SessionId("s1"), "last year"))
-        storage(2026).setNotes(PersonalNotes().withSessionNote(SessionId("s1"), "this year"))
+        storage("2025").setNotes(PersonalNotes().withSessionNote(SessionId("s1"), "last year"))
+        storage("2026").setNotes(PersonalNotes().withSessionNote(SessionId("s1"), "this year"))
 
-        assertEquals("last year", storage(2025).getNotes().first().sessionNote(SessionId("s1")))
-        assertEquals("this year", storage(2026).getNotes().first().sessionNote(SessionId("s1")))
+        assertEquals("last year", storage("2025").getNotes().first().sessionNote(SessionId("s1")))
+        assertEquals("this year", storage("2026").getNotes().first().sessionNote(SessionId("s1")))
     }
 
     @Test

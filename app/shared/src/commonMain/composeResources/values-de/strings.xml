@@ -293,4 +293,25 @@ Bitte versuchen Sie es erneut.</string>
     </plurals>
     <string name="my_schedule_state_live">Läuft gerade</string>
     <string name="my_schedule_state_past">Beendet</string>
+
+    <!-- Connect to a conference (generic build) -->
+    <string name="connect_title">Mit einer Konferenz verbinden</string>
+    <string name="connect_intro">Füge den Sessionize-Link oder die ID der Konferenz ein. Veranstalter finden ihn in Sessionize unter API / Einbetten als Link des Endpunkts "All", zum Beispiel sessionize.com/api/v2/abcd1234/view/All.</string>
+    <string name="connect_link_hint">Sessionize-Link oder ID</string>
+    <string name="connect_check">Prüfen</string>
+    <string name="connect_checking">Programm wird gelesen…</string>
+    <string name="connect_not_found">Kein Programm gefunden. Prüfe den Link und ob der Veranstalter die API für den Endpunkt "All" aktiviert hat.</string>
+    <string name="connect_not_a_link">Das sieht nicht wie ein Sessionize-Link oder eine ID aus.</string>
+    <string name="connect_found">%1$d Sessions und %2$d Sprecher gefunden.</string>
+    <string name="connect_name_label">Name der Konferenz</string>
+    <string name="connect_name_hint">Zum Beispiel KotlinConf 2026</string>
+    <string name="connect_zone_label">Zeitzone des Veranstaltungsorts</string>
+    <string name="connect_zone_help">Das Programm wird in dieser Zeitzone angezeigt. Tippe zum Suchen, zum Beispiel Berlin oder Los_Angeles.</string>
+    <string name="connect_zone_unknown">Unbekannte Zeitzone</string>
+    <string name="connect_open">Konferenz öffnen</string>
+    <string name="connect_examples">Beispiel ausprobieren</string>
+    <string name="connect_saved">Deine Konferenzen</string>
+    <string name="connect_forget">Entfernen</string>
+    <string name="connect_privacy">Die App lädt nur das öffentliche Programm von Sessionize herunter. Deine Lesezeichen und Notizen bleiben auf diesem Gerät.</string>
+    <string name="info_link_switch_conference">Konferenz wechseln</string>
 </resources>
