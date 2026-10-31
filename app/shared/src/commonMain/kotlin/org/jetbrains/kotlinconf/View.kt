@@ -116,7 +116,10 @@ fun Session.asSessionCard(
             if (diff in 1..30) diff else null
         },
         videoUrl = videoUrl,
+        liveUrl = liveUrl,
         slidesUrl = slidesUrl,
         companies = speakerIds.mapNotNull { speakersById[it]?.company?.takeIf { company -> company.isNotBlank() } }.distinct(),
+        isServiceSession = isServiceSession,
+        isPlenary = isPlenarySession,
     )
 }

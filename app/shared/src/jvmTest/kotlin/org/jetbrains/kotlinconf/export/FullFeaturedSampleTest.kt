@@ -4,7 +4,9 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import org.jetbrains.kotlinconf.Conference
 import org.jetbrains.kotlinconf.SessionId
+import org.jetbrains.kotlinconf.asSessionCard
 import org.jetbrains.kotlinconf.buildAgenda
+import org.jetbrains.kotlinconf.isServiceEvent
 import org.jetbrains.kotlinconf.sessionize.SessionizeData
 import org.jetbrains.kotlinconf.sessionize.SessionizeRules
 import org.jetbrains.kotlinconf.sessionize.parseSessionizeData
@@ -45,9 +47,9 @@ class FullFeaturedSampleTest {
     }
 
     @Test
-    fun aSessionWithoutATimeIsLeftOutAndOneWithoutARoomSaysUnknown() {
+    fun aSessionWithoutATimeIsLeftOutAndOneWithoutARoomHasNoLocation() {
         assertTrue(conference.sessions.none { it.id.id == "t10" }, "not scheduled yet")
-        assertEquals("unknown", session("t9").location)
+        assertEquals("", session("t9").location)
     }
 
     @Test
@@ -72,6 +74,8 @@ class FullFeaturedSampleTest {
     fun linksSlidesAndRecordings() {
         assertEquals("https://youtu.be/sample-t1", session("t1").videoUrl, "surrounding spaces are trimmed")
         assertNull(session("t2").videoUrl)
+        assertEquals("https://live.example/main", session("k1").liveUrl)
+        assertNull(session("t1").liveUrl)
         assertEquals("https://sessionize.com/download/sample-deck.pdf", session("t1").slidesUrl)
         assertNull(session("t6").slidesUrl.takeIf { it?.contains("logo") == true }, "a logo upload is never the slides")
         assertEquals("https://sessionize.com/download/sample-deck.pdf", session("t6").slidesUrl)
@@ -157,10 +161,33 @@ class FullFeaturedSampleTest {
         assertEquals(listOf("Lightning talk", "Session", "Workshop"), info.formats)
         assertEquals(listOf("Introductory and overview", "Intermediate", "Advanced", "Expert"), info.levels)
         assertEquals("https://example.com/recordings/olivia", demo.sessions.single { it.title == "Olivia's Session" }.videoUrl)
-        // Sessionize marks the break, but the app has nowhere to keep that yet: it is listed like a talk
-        val lunch = data.sessions.single { it.isServiceSession }
-        assertEquals("Lunch", lunch.title)
-        assertTrue(lunch.speakers.isEmpty())
-        assertNotNull(demo.sessions.single { it.title == "Lunch" })
+        assertEquals("https://example.com/live/olivia", demo.sessions.single { it.title == "Olivia's Session" }.liveUrl)
+        assertNull(demo.sessions.single { it.title == "Liam's Session" }.liveUrl)
+        val lunch = demo.sessions.single { it.title == "Lunch" }
+        assertTrue(lunch.isServiceSession)
+        assertTrue(lunch.speakerIds.isEmpty())
+    }
+
+    @Test
+    fun breaksAndKeynotesAreMarkedAndTalksAreNot() {
+        assertTrue(session("sv0lun").isServiceSession)
+        assertTrue(session("allday").isServiceSession)
+        assertTrue(session("k1").isPlenarySession)
+        assertTrue(session("k2").isPlenarySession)
+        assertTrue(conference.sessions.filter { it.id.id.startsWith("t") || it.id.id.startsWith("w") }.none { it.isServiceSession || it.isPlenarySession })
+    }
+
+    @Test
+    fun theCardsKnowWhichSessionsAreNotTalks() {
+        val speakers = conference.speakers.associateBy { it.id }
+        val cards = conference.sessions.associate { it.id.id to it.asSessionCard(speakers, LocalDateTime.parse("2027-03-09T10:00"), emptySet()) }
+
+        assertTrue(cards.getValue("sv0lun").isServiceEvent)
+        assertTrue(cards.getValue("k1").isPlenary)
+        assertTrue(!cards.getValue("k1").isServiceEvent)
+        // A session without speakers is a talk when it has categories and is not marked as a break
+        assertTrue(!cards.getValue("t3").isServiceEvent)
+        assertEquals(cards.getValue("t9").shortTimeline, cards.getValue("t9").timelineWithRoom)
+        assertTrue(cards.getValue("t1").timelineWithRoom.endsWith("Room Aurora"))
     }
 }

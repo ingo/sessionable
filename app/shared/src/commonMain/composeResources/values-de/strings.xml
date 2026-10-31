@@ -290,4 +290,5 @@ Bitte versuchen Sie es erneut.</string>
         <item quantity="one">%1$d Foto konnte nicht aus deiner Mediathek gelesen werden. Füge es erneut hinzu.</item>
         <item quantity="other">%1$d Fotos konnten nicht aus deiner Mediathek gelesen werden. Füge sie erneut hinzu.</item>
     </plurals>
+    <string name="session_watch_live">Live ansehen</string>
 </resources>

@@ -92,7 +92,19 @@ class ConferenceService(
 
     private val currentYearGraph: MutableStateFlow<YearGraph?> = MutableStateFlow(null)
 
-    // Declared before init: the sync loop started there uses them
+    // Everything below is declared before init: restoring the open conference and the sync loop started there use it
+
+    // Starts the storage first: a version it does not know is wiped here, before anything is read from it
+    private val storage: ApplicationStorage = applicationStorage.also { it.initialize() }
+
+    /** The conference being shown; null on the connect screen of the generic build. */
+    val activeEvent: StateFlow<EventProfile?>
+        field = MutableStateFlow<EventProfile?>(null)
+
+    /** The conferences the attendee connected to, most recent first. */
+    val savedEvents: StateFlow<List<SavedEvent>> =
+        storage.getSavedEvents().stateIn(scope, SharingStarted.Eagerly, storage.getSavedEventsBlocking())
+
     private val sessionizeAppUrl: String? get() = EventSelection.current?.sessionizeAppUrl
     private val syncMutex = Mutex()
     private val syncStateMutex = Mutex()
@@ -101,8 +113,6 @@ class ConferenceService(
         currentYearGraph.map { it?.storage }.filterNotNull()
 
     init {
-        applicationStorage.initialize()
-
         restoreEvent()
 
         scope.launch {
@@ -117,14 +127,6 @@ class ConferenceService(
             }
         }
     }
-
-    /** The conference being shown; null on the connect screen of the generic build. */
-    val activeEvent: StateFlow<EventProfile?>
-        field = MutableStateFlow<EventProfile?>(null)
-
-    /** The conferences the attendee connected to, most recent first. */
-    val savedEvents: StateFlow<List<SavedEvent>> =
-        applicationStorage.getSavedEvents().stateIn(scope, SharingStarted.Eagerly, applicationStorage.getSavedEventsBlocking())
 
     /** Opens the branded build's conference, or the one that was open last time in the generic build. */
     private fun restoreEvent() {
