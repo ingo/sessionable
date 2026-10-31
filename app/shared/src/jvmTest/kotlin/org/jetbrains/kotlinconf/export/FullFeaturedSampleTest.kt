@@ -129,4 +129,19 @@ class FullFeaturedSampleTest {
         assertEquals(conference.sessions.size, placed.size)
         assertEquals(conference.sessions.map { it.id }.toSet(), placed.map { it.id }.toSet())
     }
+
+    @Test
+    fun aRealSessionizeTestEventWithUtcTimes() {
+        val demo = feed("sessionize-demo-event.json").toConference(TimeZone.of("UTC"))
+
+        assertEquals(10, demo.sessions.size)
+        assertEquals(10, demo.speakers.size)
+        assertEquals(setOf("Room 1", "Room 2", "Room 3"), demo.sessions.map { it.location }.toSet())
+        assertEquals(LocalDateTime.parse("2026-12-30T09:00"), demo.sessions.minOf { it.startsAt })
+        assertEquals(LocalDateTime.parse("2026-12-31T14:20"), demo.sessions.maxOf { it.endsAt })
+        // The same instants shown in another zone, as the app does for a conference elsewhere
+        val berlin = feed("sessionize-demo-event.json").toConference(TimeZone.of("Europe/Berlin"))
+        assertEquals(LocalDateTime.parse("2026-12-30T10:00"), berlin.sessions.minOf { it.startsAt })
+        assertEquals(2, demo.buildAgenda(emptySet(), LocalDateTime.parse("2026-12-30T10:00")).size)
+    }
 }

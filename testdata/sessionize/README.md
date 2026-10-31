@@ -19,3 +19,6 @@ To refresh: download the feed, strip the same fields, keep the file name.
   variants and a logo in the website answer), slides and logo uploads, live and recording links, unicode and very
   long text. The two files hold the same schedule with event-local and UTC times. Made by
   `scripts/make-sample-feed.py`; edit that script, not the JSON.
+- `sessionize-demo-event.json` — id `ope5d1ya`, a Sessionize test event ("Ingo's Demo Event - Augusta 2026") made with
+  Sessionize's own demo data: 10 sessions in 3 rooms over two days, times in UTC, no categories or questions (the
+  endpoint's fields were not switched on). A real feed as Sessionize sends it, taken 2026-10-31.
