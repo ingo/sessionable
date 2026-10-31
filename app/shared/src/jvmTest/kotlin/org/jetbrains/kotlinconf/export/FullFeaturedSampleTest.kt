@@ -166,6 +166,8 @@ class FullFeaturedSampleTest {
         val lunch = demo.sessions.single { it.title == "Lunch" }
         assertTrue(lunch.isServiceSession)
         assertTrue(lunch.speakerIds.isEmpty())
+        assertTrue(demo.sessions.single { it.title == "Mia's Session" }.isPlenarySession)
+        assertTrue(demo.sessions.filter { it.title != "Mia's Session" }.none { it.isPlenarySession })
     }
 
     @Test

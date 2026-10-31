@@ -291,4 +291,5 @@ Please try again.</string>
         <item quantity="other">%1$d photos could not be read from your library. Try adding them again.</item>
     </plurals>
     <string name="session_watch_live">Watch live</string>
+    <string name="now_first_up">First up</string>
 </resources>

@@ -250,7 +250,7 @@
    "startsAt": "2026-12-31T14:00:00Z",
    "endsAt": "2026-12-31T14:20:00Z",
    "isServiceSession": false,
-   "isPlenumSession": false,
+   "isPlenumSession": true,
    "speakers": [
     "00000000-0000-0000-0000-000000000009"
    ],

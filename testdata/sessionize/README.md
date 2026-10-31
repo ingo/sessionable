@@ -21,6 +21,6 @@ To refresh: download the feed, strip the same fields, keep the file name.
   `scripts/make-sample-feed.py`; edit that script, not the JSON.
 - `sessionize-demo-event.json` — id `ope5d1ya`, a Sessionize test event ("Ingo's Demo Event - Augusta 2026") made with
   Sessionize's own demo data and then filled out: 10 sessions in 3 rooms over two days (times in UTC), one service
-  session ("Lunch"), session format / track / level / language categories, speaker links, and live and recording
+  session ("Lunch"), one plenary session, session format / track / level / language categories, speaker links, and live and recording
   links on three sessions. A real feed as Sessionize sends it, taken 2026-10-31. (Sessionize caches a feed for about
   three minutes, and the endpoint must be set to JSON with the fields switched on, or the feed is nearly empty.)
