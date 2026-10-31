@@ -141,7 +141,7 @@ class ConferenceService(
         EVENT_TIME_ZONE = profile.timeZone
         EventSelection.current = profile
         activeEvent.value = profile
-        currentYearGraph.update { yearGraphFactory.create(profile.storageScope) }
+        currentYearGraph.update { yearGraphFactory.create(profile.storageScope, profile) }
         scope.launch { loadConferenceData() }
     }
 
@@ -173,7 +173,8 @@ class ConferenceService(
         val event = savedEvents.value.find { it.sessionizeId == sessionizeId } ?: return
         if (activeEvent.value?.sessionizeId == sessionizeId) leaveEvent()
         applicationStorage.setSavedEvents(savedEvents.value - event)
-        val graph = yearGraphFactory.create(event.toProfile().storageScope)
+        val profile = event.toProfile()
+        val graph = yearGraphFactory.create(profile.storageScope, profile)
         graph.storage.getAttachments().first().values.flatten().flatMap { it.files }.forEach { graph.media.delete(it) }
         graph.storage.clear()
     }
