@@ -89,7 +89,7 @@ import org.jetbrains.kotlinconf.ui.components.Text
 import org.jetbrains.kotlinconf.ui.components.TopMenuButton
 import org.jetbrains.kotlinconf.ui.generated.resources.bookmark_24
 import org.jetbrains.kotlinconf.ui.generated.resources.close_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.DateTimeFormatting
 import org.jetbrains.kotlinconf.utils.bottomInsetPadding
 import org.jetbrains.kotlinconf.utils.topInsetPadding
@@ -123,16 +123,16 @@ fun MyScheduleScreen(
     Column(
         Modifier
             .fillMaxSize()
-            .background(KotlinConfTheme.colors.mainBackground)
+            .background(AppTheme.colors.mainBackground)
             .padding(topInsetPadding())
     ) {
         MainHeaderTitleBar(title = stringResource(Res.string.my_schedule_title))
-        HorizontalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokePale)
+        HorizontalDivider(thickness = 1.dp, color = AppTheme.colors.strokePale)
 
         if (day == null) {
             Text(
                 stringResource(Res.string.my_schedule_no_sessions),
-                color = KotlinConfTheme.colors.noteText,
+                color = AppTheme.colors.noteText,
                 modifier = Modifier.padding(24.dp),
             )
             return@Column
@@ -151,14 +151,14 @@ fun MyScheduleScreen(
         ) {
             Text(
                 stringResource(Res.string.my_schedule_bookmarked, day.booked.size + day.allDay.size),
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.noteText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.noteText,
             )
             if (day.clashCount > 0) {
                 Text(
                     " · " + stringResource(Res.string.my_schedule_clashes, day.clashCount),
-                    style = KotlinConfTheme.typography.text2,
-                    color = KotlinConfTheme.colors.orangeText,
+                    style = AppTheme.typography.text2,
+                    color = AppTheme.colors.orangeText,
                 )
             }
             Spacer(Modifier.weight(1f))
@@ -166,8 +166,8 @@ fun MyScheduleScreen(
                 val linked = viewModel.syncLinked.collectAsStateWithLifecycle().value
                 Text(
                     stringResource(if (linked) Res.string.sync_my_schedule_linked else Res.string.sync_my_schedule_link),
-                    style = KotlinConfTheme.typography.text2,
-                    color = KotlinConfTheme.colors.accentText,
+                    style = AppTheme.typography.text2,
+                    color = AppTheme.colors.accentText,
                     modifier = Modifier.clickable(onClick = onSync),
                 )
             }
@@ -185,8 +185,8 @@ fun MyScheduleScreen(
             ).forEach { (label, action) ->
                 Text(
                     stringResource(label),
-                    style = KotlinConfTheme.typography.text2,
-                    color = KotlinConfTheme.colors.accentText,
+                    style = AppTheme.typography.text2,
+                    color = AppTheme.colors.accentText,
                     // 12dp above and below the text makes each link a 44dp tap target
                     modifier = Modifier.clickable(role = Role.Button, onClick = action).padding(vertical = 12.dp),
                 )
@@ -236,8 +236,8 @@ private fun AllDayStrip(sessions: List<SessionCardView>, onSession: (SessionId) 
     Column(Modifier.padding(bottom = 12.dp)) {
         Text(
             stringResource(Res.string.my_schedule_all_day),
-            style = KotlinConfTheme.typography.text2,
-            color = KotlinConfTheme.colors.noteText,
+            style = AppTheme.typography.text2,
+            color = AppTheme.colors.noteText,
             modifier = Modifier.padding(bottom = 4.dp),
         )
         Row(
@@ -247,13 +247,13 @@ private fun AllDayStrip(sessions: List<SessionCardView>, onSession: (SessionId) 
             sessions.forEach { session ->
                 Column(
                     Modifier
-                        .clip(KotlinConfTheme.shapes.roundedCornerSm)
-                        .background(KotlinConfTheme.colors.tileBackground)
+                        .clip(AppTheme.shapes.roundedCornerSm)
+                        .background(AppTheme.colors.tileBackground)
                         .clickable { onSession(session.id) }
                         .padding(horizontal = 10.dp, vertical = 6.dp)
                 ) {
-                    Text(session.title, style = KotlinConfTheme.typography.text2, maxLines = 1)
-                    Text(session.shortTimeline, style = KotlinConfTheme.typography.text2, color = KotlinConfTheme.colors.noteText)
+                    Text(session.title, style = AppTheme.typography.text2, maxLines = 1)
+                    Text(session.shortTimeline, style = AppTheme.typography.text2, color = AppTheme.colors.noteText)
                 }
             }
         }
@@ -298,12 +298,12 @@ private fun Timeline(
             val y = MinuteHeight * (hour * 60)
             Text(
                 "${(day.startsAt.hour + hour).toString().padStart(2, '0')}:00",
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.noteText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.noteText,
                 modifier = Modifier.offset(y = y - 8.dp),
             )
             HourLine(
-                color = KotlinConfTheme.colors.strokePale,
+                color = AppTheme.colors.strokePale,
                 modifier = Modifier.padding(start = GutterWidth).offset(y = y),
             )
         }
@@ -383,8 +383,8 @@ private fun BookedSlot(block: BookedBlock, lines: Int, onClick: () -> Unit, modi
     val titleLines = if (lines >= 3) 2 else 1
     val showClashLabel = clash && lines >= titleLines + 2
     val showNowLabel = live && !clash && lines >= titleLines + 2
-    val shape = KotlinConfTheme.shapes.roundedCornerSm
-    val colors = KotlinConfTheme.colors
+    val shape = AppTheme.shapes.roundedCornerSm
+    val colors = AppTheme.colors
     // A calm tile with a colored stripe; only clashes get an outline
     val accent = when {
         clash -> colors.orangeText
@@ -418,12 +418,12 @@ private fun BookedSlot(block: BookedBlock, lines: Int, onClick: () -> Unit, modi
             .clickable(onClick = onClick)
             .padding(start = 10.dp, end = 8.dp, top = BlockVerticalPadding, bottom = BlockVerticalPadding)
     ) {
-        Text(block.session.title, style = KotlinConfTheme.typography.text2, maxLines = titleLines)
+        Text(block.session.title, style = AppTheme.typography.text2, maxLines = titleLines)
         if (showTime) {
             Text(
                 "${block.session.shortTimeline} · ${block.session.locationLine}",
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.noteText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.noteText,
                 maxLines = 1,
             )
         }
@@ -431,8 +431,8 @@ private fun BookedSlot(block: BookedBlock, lines: Int, onClick: () -> Unit, modi
         if (showClashLabel) {
             Text(
                 stringResource(Res.string.my_schedule_clash),
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.orangeText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.orangeText,
                 maxLines = 1,
             )
         }
@@ -441,8 +441,8 @@ private fun BookedSlot(block: BookedBlock, lines: Int, onClick: () -> Unit, modi
 
 @Composable
 private fun FreeSlot(free: FreeBlock, past: Boolean, lines: Int, onClick: () -> Unit, modifier: Modifier) {
-    val colors = KotlinConfTheme.colors
-    val shape = KotlinConfTheme.shapes.roundedCornerSm
+    val colors = AppTheme.colors
+    val shape = AppTheme.shapes.roundedCornerSm
     val canBrowse = free.available.isNotEmpty()
     val browseLabel = pluralStringResource(Res.plurals.my_schedule_free_browse, free.available.size, free.available.size)
     val freeLabel = stringResource(Res.string.my_schedule_free, DateTimeFormatting.timeToTime(free.startsAt, free.endsAt))
@@ -457,7 +457,7 @@ private fun FreeSlot(free: FreeBlock, past: Boolean, lines: Int, onClick: () -> 
     if (lines < 2) {
         // One line: time and link side by side
         Row(blockModifier, horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(freeLabel, style = KotlinConfTheme.typography.text2, color = colors.noteText, maxLines = 1, modifier = Modifier.background(colors.mainBackground))
+            Text(freeLabel, style = AppTheme.typography.text2, color = colors.noteText, maxLines = 1, modifier = Modifier.background(colors.mainBackground))
             if (canBrowse) BrowsePill(browseLabel, compact = true)
         }
         return
@@ -465,7 +465,7 @@ private fun FreeSlot(free: FreeBlock, past: Boolean, lines: Int, onClick: () -> 
     Box(blockModifier) {
         Text(
             freeLabel,
-            style = KotlinConfTheme.typography.text2,
+            style = AppTheme.typography.text2,
             color = colors.noteText,
             maxLines = 1,
             modifier = Modifier.align(Alignment.TopStart).background(colors.mainBackground),
@@ -498,16 +498,16 @@ internal fun BoxScope.FreeTimePanel(
             .align(Alignment.BottomCenter)
             .fillMaxWidth()
             .fillMaxHeight(0.6f)
-            .background(KotlinConfTheme.colors.mainBackground)
+            .background(AppTheme.colors.mainBackground)
     ) {
-        HorizontalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokeHalf)
+        HorizontalDivider(thickness = 1.dp, color = AppTheme.colors.strokeHalf)
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 4.dp, top = 4.dp),
         ) {
             Text(
                 stringResource(Res.string.my_schedule_free, DateTimeFormatting.timeToTime(start, end)),
-                style = KotlinConfTheme.typography.h3,
+                style = AppTheme.typography.h3,
                 modifier = Modifier.weight(1f),
             )
             TopMenuButton(
@@ -529,8 +529,8 @@ internal fun BoxScope.FreeTimePanel(
                         Text(session.title, maxLines = 2)
                         Text(
                             "${session.shortTimeline} · ${session.locationLine}",
-                            style = KotlinConfTheme.typography.text2,
-                            color = KotlinConfTheme.colors.noteText,
+                            style = AppTheme.typography.text2,
+                            color = AppTheme.colors.noteText,
                             maxLines = 1,
                         )
                     }
@@ -546,10 +546,10 @@ internal fun BoxScope.FreeTimePanel(
     }
 }
 
-/** Lines of [KotlinConfTheme.typography.text2] that fit in a block of [height], at the user's font size. */
+/** Lines of [AppTheme.typography.text2] that fit in a block of [height], at the user's font size. */
 @Composable
 private fun linesIn(height: Dp): Int {
-    val lineHeight = with(LocalDensity.current) { KotlinConfTheme.typography.text2.lineHeight.toDp() }
+    val lineHeight = with(LocalDensity.current) { AppTheme.typography.text2.lineHeight.toDp() }
     // Block padding (2.dp) plus the inner vertical padding on both sides
     val usable = height - 4.dp - BlockVerticalPadding * 2
     return (usable / lineHeight).toInt().coerceAtLeast(1)
@@ -574,11 +574,11 @@ private fun HourLine(color: Color, modifier: Modifier = Modifier) {
 /** A quiet button to find sessions for free time: tinted, not solid, so it invites without shouting. */
 @Composable
 internal fun BrowsePill(label: String, modifier: Modifier = Modifier, compact: Boolean = false) {
-    val colors = KotlinConfTheme.colors
+    val colors = AppTheme.colors
     val accent = if (colors.isDark) colors.accentText else colors.primaryBackground
     Text(
         "$label  →",
-        style = KotlinConfTheme.typography.text2,
+        style = AppTheme.typography.text2,
         color = accent,
         maxLines = 1,
         modifier = modifier

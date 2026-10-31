@@ -1,36 +1,18 @@
 {
-  "fill" : "system-light",
-  "groups" : [
+  "groups": [
     {
-      "layers" : [
+      "layers": [
         {
-          "image-name" : "Pupil.svg",
-          "name" : "Pupil"
-        },
-        {
-          "glass" : true,
-          "image-name" : "Eye.svg",
-          "name" : "Eye"
-        },
-        {
-          "image-name" : "Head.svg",
-          "name" : "Head"
+          "image-name": "Icon.png",
+          "name": "Icon"
         }
-      ],
-      "shadow" : {
-        "kind" : "neutral",
-        "opacity" : 0.5
-      },
-      "translucency" : {
-        "enabled" : true,
-        "value" : 0.5
-      }
+      ]
     }
   ],
-  "supported-platforms" : {
-    "circles" : [
+  "supported-platforms": {
+    "circles": [
       "watchOS"
     ],
-    "squares" : "shared"
+    "squares": "shared"
   }
 }

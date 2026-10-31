@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -31,7 +31,7 @@ fun Button(
     modifier: Modifier = Modifier,
     primary: Boolean = false,
     enabled: Boolean = true,
-    primaryBackground: Color = KotlinConfTheme.colors.primaryBackground,
+    primaryBackground: Color = AppTheme.colors.primaryBackground,
 ) {
     val backgroundColor by animateColorAsState(
         if (primary) primaryBackground
@@ -39,11 +39,11 @@ fun Button(
     )
     val borderColor by animateColorAsState(
         if (primary) Color.Transparent
-        else KotlinConfTheme.colors.strokeHalf
+        else AppTheme.colors.strokeHalf
     )
     val textColor by animateColorAsState(
-        if (primary) KotlinConfTheme.colors.primaryTextWhiteFixed
-        else KotlinConfTheme.colors.primaryText
+        if (primary) AppTheme.colors.primaryTextWhiteFixed
+        else AppTheme.colors.primaryText
     )
     val alpha by animateFloatAsState(if (enabled) 1f else 0.5f)
 
@@ -60,7 +60,7 @@ fun Button(
     ) {
         Text(
             label,
-            style = KotlinConfTheme.typography.text1,
+            style = AppTheme.typography.text1,
             color = textColor,
         )
     }

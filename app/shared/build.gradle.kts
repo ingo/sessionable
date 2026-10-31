@@ -83,7 +83,6 @@ kotlin {
             implementation(libs.settings.observable)
             implementation(libs.settings.coroutines)
 
-            api(libs.kmpnotifier)
 
             implementation(libs.doistx.normalize)
         }
@@ -109,9 +108,6 @@ kotlin {
 
         val nonWebMain by creating {
             dependsOn(commonMain.get())
-            dependencies {
-                implementation(libs.okio)
-            }
         }
         configure(listOf(androidMain, iosMain, jvmMain)) {
             get().dependsOn(nonWebMain)
@@ -145,9 +141,9 @@ kotlin {
     jvmToolchain(21)
 }
 
-// The conference this build is for, chosen with -Pevent=<id> (see EventProfiles.kt)
+// The conference this build is branded for, chosen with -Pevent=<id> (see EventProfiles.kt); empty builds the generic app
 val generateActiveEvent by tasks.registering {
-    val event = providers.gradleProperty("event").orElse("kotlinconf")
+    val event = providers.gradleProperty("event").orElse("")
     val outputDir = layout.buildDirectory.dir("generated/activeEvent/kotlin")
     inputs.property("event", event)
     outputs.dir(outputDir)

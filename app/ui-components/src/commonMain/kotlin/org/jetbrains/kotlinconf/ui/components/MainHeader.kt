@@ -37,7 +37,7 @@ import org.jetbrains.kotlinconf.ui.generated.resources.main_header_back
 import org.jetbrains.kotlinconf.ui.generated.resources.main_header_search_clear
 import org.jetbrains.kotlinconf.ui.generated.resources.main_header_search_hint
 import org.jetbrains.kotlinconf.ui.generated.resources.search_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 
 @Composable
@@ -53,7 +53,7 @@ fun MainHeaderSearchBar(
         modifier = modifier
             .height(48.dp)
             .fillMaxWidth()
-            .background(KotlinConfTheme.colors.mainBackground),
+            .background(AppTheme.colors.mainBackground),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         TopMenuButton(
@@ -111,7 +111,7 @@ fun MainHeaderTitleBar(
         modifier = modifier
             .height(48.dp)
             .fillMaxWidth()
-            .background(KotlinConfTheme.colors.mainBackground),
+            .background(AppTheme.colors.mainBackground),
         contentAlignment = Alignment.Center,
     ) {
         Row(Modifier.align(Alignment.CenterStart)) {
@@ -120,8 +120,8 @@ fun MainHeaderTitleBar(
         Text(
             text = title,
             modifier = Modifier.align(Alignment.Center).semantics { heading() },
-            style = KotlinConfTheme.typography.h3,
-            color = KotlinConfTheme.colors.primaryText,
+            style = AppTheme.typography.h3,
+            color = AppTheme.colors.primaryText,
         )
         Row(Modifier.align(Alignment.CenterEnd)) {
             endContent()
@@ -150,7 +150,7 @@ fun MainHeaderContainer(
         modifier = modifier
             .height(48.dp)
             .fillMaxWidth()
-            .background(KotlinConfTheme.colors.mainBackground),
+            .background(AppTheme.colors.mainBackground),
     ) { target ->
         when (target) {
             MainHeaderContainerState.Title -> titleContent()

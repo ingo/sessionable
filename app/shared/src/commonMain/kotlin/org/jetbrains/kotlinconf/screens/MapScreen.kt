@@ -64,7 +64,7 @@ import org.jetbrains.kotlinconf.ui.components.Switcher
 import org.jetbrains.kotlinconf.ui.components.TopMenuButton
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.arrow_up_right_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.ErrorLoadingContent
 import org.jetbrains.kotlinconf.utils.LocalWindowSize
 import org.jetbrains.kotlinconf.utils.WindowSize
@@ -121,7 +121,7 @@ private fun MapScreenImpl(
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
 
-    Column(modifier.fillMaxSize().background(color = KotlinConfTheme.colors.mainBackground)) {
+    Column(modifier.fillMaxSize().background(color = AppTheme.colors.mainBackground)) {
         MainHeaderTitleBar(
             title = stringResource(Res.string.map_title),
             startContent = {
@@ -134,7 +134,7 @@ private fun MapScreenImpl(
                 }
             }
         )
-        HorizontalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokePale)
+        HorizontalDivider(thickness = 1.dp, color = AppTheme.colors.strokePale)
 
         ErrorLoadingContent(
             state = state,
@@ -154,7 +154,7 @@ private fun MapScreenImpl(
             val floor = mapData.floors.getOrNull(floorIndex) ?: return@ErrorLoadingContent
 
             val svgPath =
-                if (KotlinConfTheme.colors.isDark) floor.svgPathDark else floor.svgPathLight
+                if (AppTheme.colors.isDark) floor.svgPathDark else floor.svgPathLight
             val svgData = content.svgsByPath[svgPath] ?: return@ErrorLoadingContent
 
             Column(Modifier.fillMaxSize()) {
@@ -201,7 +201,7 @@ fun StaticMap(
 
     val floor = mapData.floors[floorIndex]
     val svgData =
-        svgsByPath[if (KotlinConfTheme.colors.isDark) floor.svgPathDark else floor.svgPathLight]
+        svgsByPath[if (AppTheme.colors.isDark) floor.svgPathDark else floor.svgPathLight]
             ?: return
     val svg = remember(svgData) { Svg(svgData) }
 
@@ -336,7 +336,7 @@ private fun Map(
     /** A room to mark, as fractions of the floor's width and height. */
     marker: Offset? = null,
 ) {
-    val markerColor = KotlinConfTheme.colors.accentText
+    val markerColor = AppTheme.colors.accentText
     val scope = rememberCoroutineScope()
     val spec = remember { tween<Float>(500, easing = EaseOutCubic) }
 

@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import org.jetbrains.kotlinconf.ui.utils.WidePreviewLightDark
@@ -41,8 +41,8 @@ private fun LargeSwitcherItem(
     )
 
     val textColor by animateColorAsState(
-        if (selected) KotlinConfTheme.colors.primaryTextWhiteFixed
-        else KotlinConfTheme.colors.secondaryText,
+        if (selected) AppTheme.colors.primaryTextWhiteFixed
+        else AppTheme.colors.secondaryText,
     )
 
     Row(
@@ -56,22 +56,22 @@ private fun LargeSwitcherItem(
                 role = Role.Tab
             )
             .background(
-                KotlinConfTheme.colors.headerGradient,
+                AppTheme.colors.headerGradient,
                 alpha = gradientAlpha,
             )
-            .background(KotlinConfTheme.colors.tileBackground)
+            .background(AppTheme.colors.tileBackground)
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
     ) {
         Text(
             text = label1,
-            style = KotlinConfTheme.typography.text1,
+            style = AppTheme.typography.text1,
             color = textColor,
         )
         Text(
             text = label2,
-            style = KotlinConfTheme.typography.h3,
+            style = AppTheme.typography.h3,
             color = textColor,
         )
     }

@@ -49,7 +49,7 @@ import org.jetbrains.kotlinconf.ui.components.TopMenuButton
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.arrow_left_24
 import org.jetbrains.kotlinconf.ui.generated.resources.main_header_back
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.ErrorLoadingContent
 import org.jetbrains.kotlinconf.utils.topInsetPadding
 
@@ -71,7 +71,7 @@ fun SpeakerDetailScreen(
     Column(
         Modifier
             .fillMaxSize()
-            .background(color = KotlinConfTheme.colors.mainBackground)
+            .background(color = AppTheme.colors.mainBackground)
             .padding(topInsetPadding())
     ) {
         ErrorLoadingContent(
@@ -94,7 +94,7 @@ fun SpeakerDetailScreen(
                             )
                         }
                     )
-                    HorizontalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokePale)
+                    HorizontalDivider(thickness = 1.dp, color = AppTheme.colors.strokePale)
                 },
                 compactContentHeader = {
                     Name(currentSpeaker, Modifier.padding(vertical = 24.dp))
@@ -132,8 +132,8 @@ private fun Name(
     Column(modifier) {
         Text(
             text = currentSpeaker.name,
-            style = KotlinConfTheme.typography.h2,
-            color = KotlinConfTheme.colors.primaryText,
+            style = AppTheme.typography.h2,
+            color = AppTheme.colors.primaryText,
             selectable = true,
             modifier = Modifier.semantics {
                 heading()
@@ -142,8 +142,8 @@ private fun Name(
         Spacer(Modifier.height(4.dp))
         Text(
             text = currentSpeaker.position,
-            style = KotlinConfTheme.typography.text2,
-            color = KotlinConfTheme.colors.secondaryText,
+            style = AppTheme.typography.text2,
+            color = AppTheme.colors.secondaryText,
             selectable = true,
         )
     }
@@ -174,8 +174,8 @@ private fun Photo(speaker: Speaker) {
 private fun Bio(speaker: Speaker) {
     Text(
         text = speaker.description,
-        style = KotlinConfTheme.typography.text2,
-        color = KotlinConfTheme.colors.longText,
+        style = AppTheme.typography.text2,
+        color = AppTheme.colors.longText,
         selectable = true,
     )
 }
@@ -196,7 +196,7 @@ private fun Contact(
 
     Column(modifier.padding(bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         if (links.isNotEmpty()) {
-            Text(stringResource(Res.string.speaker_links), style = KotlinConfTheme.typography.h3)
+            Text(stringResource(Res.string.speaker_links), style = AppTheme.typography.h3)
             links.forEach { link ->
                 PageMenuItem(
                     label = link.title,
@@ -256,7 +256,6 @@ private fun Talks(
                     stringResource(Res.string.schedule_in_x_minutes, count)
                 },
                 status = TalkStatus.Upcoming,
-                feedbackContent = null,
                 onClick = { onSession(session.id) },
                 modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
             )

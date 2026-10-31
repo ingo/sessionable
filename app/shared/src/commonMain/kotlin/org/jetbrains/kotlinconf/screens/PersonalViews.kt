@@ -51,7 +51,7 @@ import org.jetbrains.kotlinconf.personal.SessionRating
 import org.jetbrains.kotlinconf.personal.Thumb
 import org.jetbrains.kotlinconf.ui.components.Icon
 import org.jetbrains.kotlinconf.ui.components.Text
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 
 private val FieldShape = RoundedCornerShape(12.dp)
 
@@ -100,7 +100,7 @@ fun AutoSaveField(
         modifier
             .fillMaxWidth()
             .clip(FieldShape)
-            .background(KotlinConfTheme.colors.tileBackground)
+            .background(AppTheme.colors.tileBackground)
             .heightIn(min = minHeight)
             .padding(horizontal = 16.dp, vertical = 14.dp),
         contentAlignment = Alignment.CenterStart,
@@ -113,8 +113,8 @@ fun AutoSaveField(
             },
             modifier = Modifier.fillMaxWidth().semantics { contentDescription = hint },
             singleLine = singleLine,
-            textStyle = KotlinConfTheme.typography.text1.copy(color = KotlinConfTheme.colors.primaryText),
-            cursorBrush = SolidColor(KotlinConfTheme.colors.primaryText),
+            textStyle = AppTheme.typography.text1.copy(color = AppTheme.colors.primaryText),
+            cursorBrush = SolidColor(AppTheme.colors.primaryText),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Sentences,
@@ -124,9 +124,9 @@ fun AutoSaveField(
         if (text.isEmpty()) {
             Text(
                 text = hint,
-                style = KotlinConfTheme.typography.text1,
+                style = AppTheme.typography.text1,
                 // placeholderText is 1.95:1 on this background; secondaryText is about 4.5:1
-                color = KotlinConfTheme.colors.secondaryText,
+                color = AppTheme.colors.secondaryText,
             )
         }
     }
@@ -142,7 +142,7 @@ fun NoteBlock(
     hint: String = stringResource(Res.string.session_my_notes_hint),
 ) {
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(title, style = KotlinConfTheme.typography.h3)
+        Text(title, style = AppTheme.typography.h3)
         AutoSaveField(stored = stored, onSave = onSave, hint = hint, minHeight = 96.dp)
     }
 }
@@ -159,7 +159,7 @@ fun RatingBlock(
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
                 stringResource(Res.string.session_my_rating),
-                style = KotlinConfTheme.typography.h3,
+                style = AppTheme.typography.h3,
                 modifier = Modifier.weight(1f),
             )
             ThumbButton(
@@ -195,7 +195,7 @@ private fun ThumbButton(
         Modifier
             .size(48.dp)
             .clip(FieldShape)
-            .background(if (selected) KotlinConfTheme.colors.primaryBackground else KotlinConfTheme.colors.tileBackground)
+            .background(if (selected) AppTheme.colors.primaryBackground else AppTheme.colors.tileBackground)
             .clickable(onClick = onClick, role = Role.RadioButton)
             .semantics {
                 contentDescription = description
@@ -206,7 +206,7 @@ private fun ThumbButton(
         Icon(
             painter = painterResource(icon),
             contentDescription = null,
-            tint = if (selected) KotlinConfTheme.colors.primaryTextWhiteFixed else KotlinConfTheme.colors.primaryText,
+            tint = if (selected) AppTheme.colors.primaryTextWhiteFixed else AppTheme.colors.primaryText,
             modifier = Modifier.size(24.dp),
         )
     }

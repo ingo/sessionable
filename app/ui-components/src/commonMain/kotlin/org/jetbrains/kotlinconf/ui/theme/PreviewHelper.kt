@@ -16,10 +16,10 @@ fun PreviewHelper(
     paddingEnabled: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    KotlinConfTheme {
+    AppTheme {
         Column(
             modifier = modifier
-                .background(KotlinConfTheme.colors.mainBackground)
+                .background(AppTheme.colors.mainBackground)
                 .padding(
                     if (paddingEnabled) 8.dp else 0.dp,
                 ),

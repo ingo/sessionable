@@ -69,7 +69,7 @@ data class Colors(
     val headerGradient: Brush = Brand.colorGradient,
 )
 
-val KotlinConfLightColors = Colors(
+val LightColors = Colors(
     isDark = false,
 
     mainBackground = white100,
@@ -104,7 +104,7 @@ val KotlinConfLightColors = Colors(
     toggleOn = purple100,
 )
 
-val KotlinConfDarkColors = Colors(
+val DarkColors = Colors(
     isDark = true,
 
     mainBackground = black100,
@@ -139,6 +139,3 @@ val KotlinConfDarkColors = Colors(
     toggleOn = purpleTextDark,
 )
 
-val GoldenKodeeColors = KotlinConfDarkColors.copy(
-    mainBackground = Color(0xFF3A0057),
-)

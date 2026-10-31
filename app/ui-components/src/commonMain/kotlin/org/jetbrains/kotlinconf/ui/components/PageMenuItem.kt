@@ -17,7 +17,7 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.arrow_right_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -32,9 +32,9 @@ fun PageMenuItem(
     Row(
         modifier
             .fillMaxWidth()
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
+            .clip(AppTheme.shapes.roundedCornerMd)
             .clickable(onClick = onClick)
-            .background(KotlinConfTheme.colors.tileBackground)
+            .background(AppTheme.colors.tileBackground)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -47,14 +47,14 @@ fun PageMenuItem(
         }
         Text(
             text = label,
-            style = KotlinConfTheme.typography.h3,
+            style = AppTheme.typography.h3,
         )
         Spacer(Modifier.weight(1f))
         Icon(
             modifier = Modifier.size(24.dp),
             painter = painterResource(drawableEnd),
             contentDescription = null,
-            tint = KotlinConfTheme.colors.primaryText,
+            tint = AppTheme.colors.primaryText,
         )
     }
 }

@@ -28,13 +28,13 @@ import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.kotlinconf.generated.resources.Res
-import org.jetbrains.kotlinconf.generated.resources.kodee_notifications
+import org.jetbrains.kotlinconf.generated.resources.notifications_bell
 import org.jetbrains.kotlinconf.generated.resources.notifications_description
 import org.jetbrains.kotlinconf.generated.resources.notifications_lets_get_started
 import org.jetbrains.kotlinconf.generated.resources.notifications_title
 import org.jetbrains.kotlinconf.ui.components.Button
 import org.jetbrains.kotlinconf.ui.components.Text
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 
 @Composable
 fun StartNotificationsScreen(
@@ -52,7 +52,7 @@ fun StartNotificationsScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = KotlinConfTheme.colors.mainBackground)
+            .background(color = AppTheme.colors.mainBackground)
             .windowInsetsPadding(WindowInsets.safeDrawing)
     ) {
         Column(
@@ -67,7 +67,7 @@ fun StartNotificationsScreen(
                 EventLogo(eventTheme, size = 160.dp, modifier = Modifier.fillMaxWidth())
             } else {
                 Image(
-                    imageVector = vectorResource(Res.drawable.kodee_notifications),
+                    imageVector = vectorResource(Res.drawable.notifications_bell),
                     contentDescription = null,
                     modifier = Modifier.fillMaxWidth()
                         .size(160.dp)
@@ -75,14 +75,14 @@ fun StartNotificationsScreen(
             }
             Text(
                 stringResource(Res.string.notifications_title),
-                style = KotlinConfTheme.typography.h1,
+                style = AppTheme.typography.h1,
                 modifier = Modifier.semantics {
                     heading()
                 }
             )
             Text(
                 stringResource(Res.string.notifications_description),
-                color = KotlinConfTheme.colors.longText,
+                color = AppTheme.colors.longText,
             )
             if (notificationSettings != null) {
                 NotificationSettings(

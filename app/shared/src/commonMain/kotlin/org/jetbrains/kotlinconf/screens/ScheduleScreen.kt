@@ -78,7 +78,7 @@ import org.jetbrains.kotlinconf.ui.components.TopMenuButton
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.bookmark_24
 import org.jetbrains.kotlinconf.ui.generated.resources.search_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.DateTimeFormatting
 import org.jetbrains.kotlinconf.utils.ErrorLoadingContent
 import org.jetbrains.kotlinconf.utils.ErrorLoadingState
@@ -88,7 +88,6 @@ import org.jetbrains.kotlinconf.utils.topInsetPadding
 @Composable
 fun ScheduleScreen(
     onSession: (SessionId) -> Unit,
-    onPrivacyNoticeNeeded: () -> Unit,
     onNavigateToMap: (String) -> Unit,
     tabReselections: Flow<TopLevelRoute>,
     viewModel: ScheduleViewModel = metroViewModel(),
@@ -149,7 +148,7 @@ fun ScheduleScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = KotlinConfTheme.colors.mainBackground)
+            .background(color = AppTheme.colors.mainBackground)
             .padding(topInsetPadding())
     ) {
         Header(
@@ -169,7 +168,7 @@ fun ScheduleScreen(
         )
         HorizontalDivider(
             thickness = 1.dp,
-            color = KotlinConfTheme.colors.strokePale,
+            color = AppTheme.colors.strokePale,
         )
 
         ErrorLoadingContent(
@@ -236,7 +235,6 @@ fun ScheduleScreen(
                     onBookmark = { sessionId, isBookmarked ->
                         viewModel.onBookmark(sessionId, isBookmarked)
                     },
-                    onPrivacyNoticeNeeded = onPrivacyNoticeNeeded,
                     pinnedRooms = pinnedRooms,
                     onNavigateToMap = onNavigateToMap,
                     filterItems = tags,
@@ -375,7 +373,6 @@ private fun ScheduleList(
     isSearch: Boolean,
     dayInfoMap: Map<LocalDate, DayInfo>,
     onBookmark: (SessionId, Boolean) -> Unit,
-    onPrivacyNoticeNeeded: () -> Unit,
     pinnedRooms: Set<String>,
     onNavigateToMap: (String) -> Unit,
     filterItems: List<FilterItem> = emptyList(),
@@ -405,8 +402,8 @@ private fun ScheduleList(
                         scheduleItems.size,
                         scheduleItems.size
                     ),
-                    color = KotlinConfTheme.colors.secondaryText,
-                    style = KotlinConfTheme.typography.text2,
+                    color = AppTheme.colors.secondaryText,
+                    style = AppTheme.typography.text2,
                     modifier = Modifier
                         .padding(horizontal = 12.dp)
                         .padding(bottom = 4.dp)
@@ -445,7 +442,7 @@ private fun ScheduleList(
                     is TimeSlotTitleItem -> {
                         Text(
                             text = item.value.title,
-                            style = KotlinConfTheme.typography.h2,
+                            style = AppTheme.typography.h2,
                             modifier = Modifier
                                 .padding(horizontal = 12.dp)
                                 .padding(top = 24.dp, bottom = 8.dp)
@@ -462,7 +459,6 @@ private fun ScheduleList(
                             speakerHighlights = item.speakerHighlights,
                             onBookmark = onBookmark,
                             onSession = onSession,
-                            onPrivacyNoticeNeeded = onPrivacyNoticeNeeded,
                             onFindOnMap = item.value.locationLine.takeIf { it in pinnedRooms }
                                 ?.let { room -> { onNavigateToMap(room) } },
                             modifier = Modifier
@@ -505,7 +501,7 @@ private fun ScheduleList(
                     is NoBookmarksItem -> {
                         Text(
                             stringResource(Res.string.schedule_label_no_bookmarks),
-                            color = KotlinConfTheme.colors.noteText,
+                            color = AppTheme.colors.noteText,
                             modifier = modifier.padding(12.dp),
                         )
                     }
@@ -520,7 +516,6 @@ private fun SessionCard(
     session: SessionCardView,
     onBookmark: (SessionId, Boolean) -> Unit,
     onSession: (SessionId) -> Unit,
-    onPrivacyNoticeNeeded: () -> Unit,
     isSearch: Boolean,
     onFindOnMap: (() -> Unit)?,
     modifier: Modifier = Modifier,
@@ -552,15 +547,5 @@ private fun SessionCard(
         onClick = { onSession(session.id) },
         modifier = modifier,
         onFindOnMap = onFindOnMap,
-        feedbackContent = if (ActiveEvent.hasBackend && !isSearch && session.state != SessionState.Upcoming) {
-            {
-                FeedbackBlock(
-                    sessionId = session.id,
-                    tags = session.tags,
-                    status = status,
-                    onPrivacyNoticeNeeded = onPrivacyNoticeNeeded,
-                )
-            }
-        } else null,
     )
 }

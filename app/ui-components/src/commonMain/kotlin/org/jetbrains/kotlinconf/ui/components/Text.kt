@@ -12,20 +12,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
 /**
- * A simple text component that uses defaults from [KotlinConfTheme],
+ * A simple text component that uses defaults from [AppTheme],
  * and accepts a simple [color] parameter to set the text color.
  */
 @Composable
 fun Text(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = KotlinConfTheme.colors.primaryText,
-    style: TextStyle = KotlinConfTheme.typography.text1,
+    color: Color = AppTheme.colors.primaryText,
+    style: TextStyle = AppTheme.typography.text1,
     maxLines: Int = Int.MAX_VALUE,
     selectable: Boolean = false,
     onTextLayout: ((TextLayoutResult) -> Unit)? = null,
@@ -45,8 +45,8 @@ fun Text(
 fun Text(
     text: AnnotatedString,
     modifier: Modifier = Modifier,
-    color: Color = KotlinConfTheme.colors.primaryText,
-    style: TextStyle = KotlinConfTheme.typography.text1,
+    color: Color = AppTheme.colors.primaryText,
+    style: TextStyle = AppTheme.typography.text1,
     maxLines: Int = Int.MAX_VALUE,
     selectable: Boolean = false,
     inlineContent: Map<String, InlineTextContent> = mapOf(),
@@ -80,12 +80,12 @@ private data class TypographyStylePreviewParams(
 private class TypographyStylePreviewProvider :
     PreviewParameterProvider<TypographyStylePreviewParams> {
     override val values = sequenceOf(
-        TypographyStylePreviewParams("h1") { KotlinConfTheme.typography.h1 },
-        TypographyStylePreviewParams("h2") { KotlinConfTheme.typography.h2 },
-        TypographyStylePreviewParams("h3") { KotlinConfTheme.typography.h3 },
-        TypographyStylePreviewParams("h4") { KotlinConfTheme.typography.h4 },
-        TypographyStylePreviewParams("text1") { KotlinConfTheme.typography.text1 },
-        TypographyStylePreviewParams("text2") { KotlinConfTheme.typography.text2 },
+        TypographyStylePreviewParams("h1") { AppTheme.typography.h1 },
+        TypographyStylePreviewParams("h2") { AppTheme.typography.h2 },
+        TypographyStylePreviewParams("h3") { AppTheme.typography.h3 },
+        TypographyStylePreviewParams("h4") { AppTheme.typography.h4 },
+        TypographyStylePreviewParams("text1") { AppTheme.typography.text1 },
+        TypographyStylePreviewParams("text2") { AppTheme.typography.text2 },
     )
 
     override fun getDisplayName(index: Int) = values.elementAt(index).name

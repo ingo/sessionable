@@ -26,7 +26,7 @@ import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -45,8 +45,8 @@ fun Toggle(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     val toggleColor by animateColorAsState(
-        if (enabled) KotlinConfTheme.colors.toggleOn
-        else KotlinConfTheme.colors.toggleOff
+        if (enabled) AppTheme.colors.toggleOn
+        else AppTheme.colors.toggleOff
     )
 
     Box(
@@ -76,7 +76,7 @@ fun Toggle(
                 .background(toggleColor)
         )
         val xOffset by animateDpAsState(if (enabled) ToggleWidth / 4 else -ToggleWidth / 4)
-        val thumbCenterColor = KotlinConfTheme.colors.mainBackground
+        val thumbCenterColor = AppTheme.colors.mainBackground
         Box(
             Modifier
                 .offset(x = xOffset)

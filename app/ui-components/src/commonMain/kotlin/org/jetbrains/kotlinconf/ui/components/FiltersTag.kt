@@ -19,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -35,18 +35,18 @@ fun FilterTag(
     modifier: Modifier = Modifier,
 ) {
     val backgroundColor by animateColorAsState(
-        if (selected) KotlinConfTheme.colors.primaryBackground
-        else KotlinConfTheme.colors.mainBackground,
+        if (selected) AppTheme.colors.primaryBackground
+        else AppTheme.colors.mainBackground,
         ColorSpringSpec,
     )
     val textColor by animateColorAsState(
-        if (selected) KotlinConfTheme.colors.primaryTextWhiteFixed
-        else KotlinConfTheme.colors.primaryText,
+        if (selected) AppTheme.colors.primaryTextWhiteFixed
+        else AppTheme.colors.primaryText,
         ColorSpringSpec,
     )
     val strokeColor by animateColorAsState(
         if (selected) Color.Transparent
-        else KotlinConfTheme.colors.strokeFull,
+        else AppTheme.colors.strokeFull,
         ColorSpringSpec,
     )
 
@@ -79,7 +79,7 @@ fun FilterTag(
     ) {
         Text(
             label,
-            style = KotlinConfTheme.typography.text1,
+            style = AppTheme.typography.text1,
             color = textColor,
         )
     }

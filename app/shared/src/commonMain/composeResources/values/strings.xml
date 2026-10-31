@@ -9,32 +9,22 @@
     <string name="nav_destination_schedule">Schedule</string>
     <string name="nav_destination_speakers">Speakers</string>
     <string name="nav_destination_map">Map</string>
-    <string name="nav_destination_golden_kodee">Golden Kodee</string>
 
     <!-- Screen resources -->
 
-    <string name="golden_kodee_title">Golden Kodee</string>
-    <string name="golden_kodee_winner">Winner</string>
-    <string name="golden_kodee_finalist">Finalist</string>
-    <string name="golden_kodee_winner_banner_title">Golden Kodee Awards %1$s Winner</string>
 
     <string name="about_app_title">About the app</string>
-    <string name="about_app_description">The KotlinConf application is developed by the JetBrains team using Kotlin Multiplatform for shared logic and Compose Multiplatform for UI across Android, iOS, Desktop, and Web platforms.
-
-For the source code and more technical details, visit the GitHub repository.</string>
-    <string name="about_app_description_sessionize">This app shows the %1$s schedule, read directly from Sessionize. It is based on the open-source KotlinConf app by JetBrains, built with Kotlin Multiplatform for shared logic and Compose Multiplatform for UI.</string>
+    <string name="about_app_description_sessionize">This app shows the %1$s schedule, read directly from the event's public Sessionize feed.</string>
+    <string name="about_app_unofficial">This is an unofficial app. It is not made, endorsed or supported by Sessionize or the organisers of the event. It is based on the open-source KotlinConf app by JetBrains and is published under the Apache License 2.0.</string>
+    <string name="about_app_privacy">Your notes, ratings and bookmarks stay on this device. The app has no account, no analytics and no tracking. It only downloads the public schedule from Sessionize.</string>
     <string name="about_app_link_github">GitHub repository</string>
     <string name="about_app_link_rate">Rate the app</string>
-    <string name="about_app_link_privacy_notice">App privacy notice</string>
-    <string name="about_app_link_terms_of_use">App terms of use</string>
     <string name="about_app_link_licenses">Licenses</string>
-    <string name="about_app_made_with_junie">Made with Junie</string>
 
     <string name="info_title">Info</string>
     <string name="info_link_about_conf">About the conference</string>
     <string name="info_link_how_to_find_venue">How to find the venue</string>
     <string name="info_link_about_app">About the app</string>
-    <string name="info_link_partners">Our partners</string>
     <string name="info_link_code_of_conduct">Code of conduct</string>
     <string name="info_link_settings">Settings</string>
     <string name="info_link_description_twitter">Twitter</string>
@@ -43,8 +33,6 @@ For the source code and more technical details, visit the GitHub repository.</st
 
     <string name="about_conference_title">About the conference</string>
 
-    <string name="about_conference_privacy_notice_link">Privacy notice for visitors</string>
-    <string name="about_conference_general_terms_link">General terms and conditions</string>
 
     <string name="about_conference_day1_title_line1">Opening</string>
     <string name="about_conference_day1_title_line2">keynote</string>
@@ -62,16 +50,7 @@ For the source code and more technical details, visit the GitHub repository.</st
     <string name="about_conference_closingpanel_title_line1">Closing</string>
     <string name="about_conference_closingpanel_title_line2">panel</string>
 
-    <string name="kotlinconf_by_jetbrains_description">KotlinConf by JetBrains 2025</string>
 
-    <string name="privacy_notice_title">Privacy notice</string>
-    <string name="privacy_notice_description">For you to maximize the benefits of this app, we need your consent to access and use your device ID so you can provide and we can collect and track your feedback about talks.
-
-We will process your data in accordance with the App Privacy Notice. You can adjust or withdraw your consent at any time by sending a request to privacy@jetbrains.com, but doing so may affect how this app functions.</string>
-    <string name="privacy_notice_read_action">Read the app privacy notice</string>
-    <string name="privacy_notice_reject">Reject</string>
-    <string name="privacy_notice_accept">Accept</string>
-    <string name="privacy_notice_back">Back</string>
 
     <string name="notifications_title">Notifications</string>
     <string name="notifications_description">Customize your preferences to ensure you receive only the notifications that matter to you, avoiding unnecessary disruptions.</string>
@@ -85,17 +64,9 @@ We will process your data in accordance with the App Privacy Notice. You can adj
 
     <string name="code_of_conduct">Code of Conduct</string>
 
-    <string name="general_terms">General Terms and Conditions</string>
-    <string name="visitors_terms_title">KotlinConf 2025 General Terms and Conditions for Visitors</string>
 
-    <string name="privacy_notice_for_visitors">Privacy Notice</string>
-    <string name="privacy_notice_for_visitors_title">KotlinConf 2025 Privacy Notice for Visitors</string>
 
-    <string name="app_privacy_notice_title">Privacy Notice</string>
-    <string name="app_privacy_notice_header">KotlinConf App Privacy Notice</string>
 
-    <string name="app_terms">Terms of Use</string>
-    <string name="app_terms_header">KotlinConf App Terms of Use</string>
 
     <string name="licenses_title">Licenses</string>
     <plurals name="licenses_number_of_results">
@@ -162,19 +133,7 @@ Please try again.</string>
     <string name="speaker_detail_title">Speaker</string>
     <string name="speaker_detail_error_not_found">Sorry, we can’t find the details for that speaker.</string>
 
-    <string name="partners_title">Partners</string>
-    <string name="partners_platinum">Platinum</string>
-    <string name="partners_gold">Gold</string>
-    <string name="partners_silver">Silver</string>
-    <string name="partners_bronze">Bronze</string>
-    <string name="partners_video">Video</string>
-    <string name="partners_codelab">Codelab</string>
-    <string name="partners_digital">Digital</string>
-    <string name="partners_media">Media</string>
-    <string name="partners_swag">Official KotlinConf swag</string>
-    <string name="partners_error">Partner information is not available.</string>
 
-    <string name="partner_detail_title">Partner</string>
     <string name="my_schedule_title">Calendar</string>
     <string name="my_schedule_all_day">All day</string>
     <string name="my_schedule_clash">Clash</string>
@@ -291,4 +250,44 @@ Please try again.</string>
     </plurals>
     <string name="my_schedule_state_live">Happening now</string>
     <string name="my_schedule_state_past">Ended</string>
+
+    <!-- Connect to a conference (generic build) -->
+    <string name="connect_title">Connect to a conference</string>
+    <string name="connect_intro">Paste the conference's Sessionize link or id. Organisers find it in Sessionize under API / embed, as the link of the "All" endpoint, for example sessionize.com/api/v2/abcd1234/view/All.</string>
+    <string name="connect_link_hint">Sessionize link or id</string>
+    <string name="connect_check">Check</string>
+    <string name="connect_checking">Reading the schedule…</string>
+    <string name="connect_not_found">No schedule found. Check the link, and that the organiser has enabled the API for the "All" endpoint.</string>
+    <string name="connect_not_a_link">That does not look like a Sessionize link or id.</string>
+    <string name="connect_found">Found %1$d sessions and %2$d speakers.</string>
+    <string name="connect_name_label">Name of the conference</string>
+    <string name="connect_name_hint">For example Summit 2027</string>
+    <string name="connect_zone_label">Time zone of the venue</string>
+    <string name="connect_zone_help">The schedule is shown in this time zone. Type to search, for example Berlin or Los_Angeles.</string>
+    <string name="connect_zone_unknown">Unknown time zone</string>
+    <string name="connect_open">Open the conference</string>
+    <string name="connect_examples">Try an example</string>
+    <string name="connect_saved">Your conferences</string>
+    <string name="connect_forget">Remove</string>
+    <string name="connect_privacy">The app only downloads the public schedule from Sessionize. Your bookmarks and notes stay on this device.</string>
+    <string name="info_link_report_problem">Report a problem</string>
+    <string name="info_link_switch_conference">Switch conference</string>
+
+    <!-- Photos and videos on a session -->
+    <string name="session_media_title">My photos and videos</string>
+    <string name="session_media_hint">Slides that were not shared, a whiteboard, the part of the talk you want to keep. They stay on this device.</string>
+    <string name="session_media_take_photo">Take a photo</string>
+    <string name="session_media_record_video">Record a video</string>
+    <string name="session_media_from_library">Add from photos</string>
+    <string name="session_media_adding">Adding…</string>
+    <string name="session_media_remove">Remove</string>
+    <string name="session_media_cancel">Cancel</string>
+    <string name="session_media_photo">Photo %1$d</string>
+    <string name="session_media_video">Video %1$d</string>
+    <string name="session_media_actions">Touch and hold to remove</string>
+    <string name="session_media_remove_label">Remove</string>
+    <plurals name="media_unreadable">
+        <item quantity="one">%1$d photo could not be read from your library. Try adding it again.</item>
+        <item quantity="other">%1$d photos could not be read from your library. Try adding them again.</item>
+    </plurals>
 </resources>

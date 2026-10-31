@@ -41,7 +41,7 @@ import org.jetbrains.kotlinconf.ui.components.TalkCard
 import org.jetbrains.kotlinconf.ui.components.TalkStatus
 import org.jetbrains.kotlinconf.ui.components.Text
 import org.jetbrains.kotlinconf.ui.components.TopMenuButton
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.ErrorLoadingContent
 import org.jetbrains.kotlinconf.utils.topInsetPadding
 
@@ -61,7 +61,7 @@ fun CompanyDetailScreen(
     Column(
         Modifier
             .fillMaxSize()
-            .background(color = KotlinConfTheme.colors.mainBackground)
+            .background(color = AppTheme.colors.mainBackground)
             .padding(topInsetPadding())
     ) {
         ErrorLoadingContent(
@@ -81,7 +81,7 @@ fun CompanyDetailScreen(
                             )
                         }
                     )
-                    HorizontalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokePale)
+                    HorizontalDivider(thickness = 1.dp, color = AppTheme.colors.strokePale)
                 },
                 compactContentHeader = { CompanyName(company, Modifier.padding(vertical = 24.dp)) },
                 largeContentHeader = { CompanyName(company, Modifier.padding(bottom = 24.dp, top = 6.dp)) },
@@ -106,8 +106,8 @@ private fun CompanyName(company: Company, modifier: Modifier = Modifier) {
     Column(modifier) {
         Text(
             text = company.name,
-            style = KotlinConfTheme.typography.h2,
-            color = KotlinConfTheme.colors.primaryText,
+            style = AppTheme.typography.h2,
+            color = AppTheme.colors.primaryText,
             selectable = true,
             modifier = Modifier.semantics { heading() },
         )
@@ -145,7 +145,7 @@ private fun SessionList(
     onSession: (SessionId) -> Unit,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(bottom = 16.dp)) {
-        Text(title, style = KotlinConfTheme.typography.h3, modifier = Modifier.semantics { heading() })
+        Text(title, style = AppTheme.typography.h3, modifier = Modifier.semantics { heading() })
         sessions.forEach { session ->
             TalkCard(
                 title = session.title,
@@ -165,7 +165,6 @@ private fun SessionList(
                     SessionState.Past -> TalkStatus.Past
                     SessionState.Upcoming -> TalkStatus.Upcoming
                 },
-                feedbackContent = null,
                 onClick = { onSession(session.id) },
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -178,7 +177,7 @@ private fun People(company: Company, onSpeaker: (SpeakerId) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Text(
             stringResource(Res.string.company_speakers),
-            style = KotlinConfTheme.typography.h3,
+            style = AppTheme.typography.h3,
             modifier = Modifier.semantics { heading() },
         )
         company.speakers.forEach { speaker ->

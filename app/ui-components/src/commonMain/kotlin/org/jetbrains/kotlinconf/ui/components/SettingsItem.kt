@@ -21,7 +21,7 @@ import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -38,8 +38,8 @@ fun SettingsItem(
     Row(
         modifier
             .fillMaxWidth()
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
-            .background(KotlinConfTheme.colors.tileBackground)
+            .clip(AppTheme.shapes.roundedCornerMd)
+            .background(AppTheme.colors.tileBackground)
             .toggleable(
                 value = enabled,
                 enabled = true,
@@ -58,13 +58,13 @@ fun SettingsItem(
         ) {
             Text(
                 text = title,
-                style = KotlinConfTheme.typography.h3,
+                style = AppTheme.typography.h3,
             )
             if (note != null) {
                 Text(
                     text = note,
-                    style = KotlinConfTheme.typography.text2,
-                    color = KotlinConfTheme.colors.secondaryText,
+                    style = AppTheme.typography.text2,
+                    color = AppTheme.colors.secondaryText,
                 )
             }
         }
@@ -84,7 +84,7 @@ fun SettingsItem(
 private fun SettingsItemSimplePreview() = PreviewHelper {
     var enabled by remember { mutableStateOf(true) }
     SettingsItem(
-        title = "Kodee containment",
+        title = "Dark mode",
         enabled = enabled,
         onToggle = { enabled = it },
     )

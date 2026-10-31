@@ -1,33 +1,37 @@
-# Sessionize Conference App
+# Sessionable
 
 A conference app for any event that publishes its schedule on [Sessionize](https://sessionize.com): Android, iOS,
-desktop and web from one Kotlin Multiplatform codebase. It is currently set up for
-[AGNTCon + MCPCon North America 2026](https://events.linuxfoundation.org/agntcon-mcpcon-north-america/).
+desktop and web from one Kotlin Multiplatform codebase. There is no server; the app reads the event's public
+Sessionize feed, and everything you add stays on your device.
 
-**Project page:** https://muschenetz.com/sessionize-app/ (what the app does, with screenshots, and how to join the TestFlight beta).
+- **Use it:** open the app, paste the conference's Sessionize link, and you have its schedule, a Now view, your own
+  timeline, notes, ratings, the people you met, calendar export and photos on sessions.
+- **Brand it:** fork this repository, change a few files, and ship an app for your own conference.
+  See [docs/FORKING.md](docs/FORKING.md).
 
 ## Credit
 
 This is a fork of the [KotlinConf app](https://github.com/JetBrains/kotlinconf-app) by
 [JetBrains](https://www.jetbrains.com/) and its [contributors](https://github.com/JetBrains/kotlinconf-app/graphs/contributors).
 Its architecture, screens, design system and most of the code are theirs: the shared Compose Multiplatform UI,
-navigation, schedule, speakers, search and filters, session reminders, and the Ktor backend. Thank you to the KotlinConf
-team for building it so well and for publishing it under the Apache License 2.0.
+navigation, schedule, speakers, search and filters, and session reminders. Thank you to the KotlinConf team for
+building it so well and for publishing it under the Apache License 2.0.
 
-This fork is not affiliated with or endorsed by JetBrains, KotlinConf, Sessionize or the Linux Foundation.
-KotlinConf and Kodee are trademarks of JetBrains. The AGNTCon + MCPCon name and logo belong to the Linux Foundation and
-are used here only to theme the AGNTCon build. The code is under the [Apache License 2.0](LICENSE), as the original;
-the changes made in this fork are listed below and in the git history.
+This app is not affiliated with or endorsed by JetBrains, KotlinConf, Sessionize or the Linux Foundation. KotlinConf
+and Kodee are trademarks of JetBrains. The AGNTCon + MCPCon name belongs to the Linux Foundation and is used here only
+as a worked example of a branded build. The code is under the [Apache License 2.0](LICENSE), as the original; the
+changes made in this fork are listed below and in the git history.
 
 ## What this fork adds
 
-**Any Sessionize conference, with or without a backend**
+**Any Sessionize conference, with no backend**
 - Conference profiles ([`EventProfiles.kt`](app/shared/src/commonMain/kotlin/org/jetbrains/kotlinconf/event/EventProfiles.kt)):
-  name, time zone, links, theme and data source per conference, picked at build time with `-Pevent=<id>`.
+  name, time zone, links and theme per conference, picked at build time with `-Pevent=<id>`. Without it, the app
+  asks for a Sessionize link at run time and connects to any conference ("Sessionable", the generic build).
 - Reads a public Sessionize feed directly, so a conference needs no server of its own. Times work whether the feed sends
   UTC or event-local times; schedule filters (topic, level, format) come from the feed's categories.
-- Features that need the KotlinConf backend (voting, feedback, Golden Kodee, maps, partners, legal documents, push
-  notifications) are hidden for such conferences; KotlinConf itself still builds as before (`-Pevent=kotlinconf`, the default).
+- The KotlinConf server and the features that needed it (voting, feedback, Golden Kodee, partners, legal documents,
+  push notifications) are gone; the app talks to nobody but Sessionize.
 - Per-conference look: light and dark colors, logo, app icon and launch screen.
 
 **Planning your conference**
@@ -82,37 +86,16 @@ the changes made in this fork are listed below and in the git history.
 - The Sessionize sync client is tested against a mock server with the requests and responses of the real web app.
 - The GitHub Actions workflow runs the core and app tests and the iOS build for each conference profile.
 
-## Building for a conference
+## Building
 
-1. [Set up your environment](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-setup.html) for
-   Kotlin Multiplatform development (JDK 21, Xcode for iOS).
-2. Find the event's Sessionize API id. Event schedule pages that embed Sessionize contain URLs such as
-   `https://sessionize.com/api/v2/{id}/view/GridSmart`; check that `https://sessionize.com/api/v2/{id}/view/All`
-   returns JSON. For bookmark sync, note the event's web app address (`https://<event>.sessionize.com`).
-3. Add an `EventProfile` with that `sessionizeId`, the venue's time zone (e.g. `America/Los_Angeles`), name, about
-   text and links, and optionally a theme ([`EventTheme.kt`](app/shared/src/commonMain/kotlin/org/jetbrains/kotlinconf/event/EventTheme.kt)).
-   For iOS, add `AppIcon-<id>`, `<id> launch` and `<id> launch background` to the asset catalog to give the build its
-   own icon and launch screen.
-4. Build with `-Pevent=<profile id>`:
-   * Web: `./gradlew -Pevent=agntcon-mcpcon-na-2026 :app:webApp:wasmJsBrowserDevelopmentRun`
-   * iOS to TestFlight: `scripts/ios-testflight.sh agntcon-mcpcon-na-2026 <bundle id> <display name> <team id> --upload`
-     (needs an App Store Connect app record and API key; see the script)
-   * Tests: `./gradlew -Pevent=agntcon-mcpcon-na-2026 :core:jvmTest :app:shared:jvmTest`
+See [docs/FORKING.md](docs/FORKING.md) for branding the app for your own conference. Requirements: JDK 21, the
+Android SDK for Android, Xcode for iOS ([setup guide](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-setup.html)).
 
-   Android and desktop share the same code but have not yet been tried with a profile that has no backend; Android
-   still uses KotlinConf's application id and Firebase setup.
+```bash
+./gradlew :core:jvmTest :app:shared:jvmTest          # tests
+./gradlew :app:androidApp:assembleDebug              # Android
+./gradlew :app:webApp:wasmJsBrowserDevelopmentRun    # web
+./gradlew :app:desktopApp:hotRun -DmainClass=org.jetbrains.kotlinconf.MainKt   # desktop
+```
 
-The backend (`:backend`) reads the same feed format; set `conference.timeZone` and the `sessionize.*` rules in
-`application.yaml` for another conference.
-
-## The original KotlinConf app
-
-The KotlinConf app is published for [Android](https://play.google.com/store/apps/details?id=com.jetbrains.kotlinconf),
-[iOS](https://apps.apple.com/us/app/kotlinconf/id1299196584) and the [web](https://jetbrains.github.io/kotlinconf-app/).
-To build it from this fork, leave out `-Pevent` or use `-Pevent=kotlinconf`:
-
-* Android: use the `app.androidApp` run configuration
-* iOS: use `KotlinConfAppScheme`
-* Desktop: `./gradlew :app:desktopApp:hotRun -DmainClass=org.jetbrains.kotlinconf.MainKt`
-* Web: `./gradlew :app:webApp:wasmJsBrowserDevelopmentRun`
-* Backend: `./gradlew :backend:run`
+Add `-Pevent=<profile id>` for a build branded for one conference.

@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -28,13 +28,7 @@ data class ServiceEventData(
 
 @Composable
 private fun ServiceEventItem(event: ServiceEventData) {
-    if (event.title.contains("Party", ignoreCase = true)) {
-        PartyEventCard(active = event.now) {
-            ServiceEventRow(event)
-        }
-    } else {
-        ServiceEventRow(event)
-    }
+    ServiceEventRow(event)
 }
 
 @Composable
@@ -46,8 +40,8 @@ private fun ServiceEventRow(event: ServiceEventData) {
     ) {
         Text(
             text = event.title,
-            style = KotlinConfTheme.typography.h3,
-            color = KotlinConfTheme.colors.primaryText,
+            style = AppTheme.typography.h3,
+            color = AppTheme.colors.primaryText,
         )
 
         Spacer(Modifier.weight(1f))
@@ -59,8 +53,8 @@ private fun ServiceEventRow(event: ServiceEventData) {
         if (event.note != null) {
             Text(
                 text = event.note,
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.noteText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.noteText,
                 maxLines = 1,
             )
         }
@@ -68,8 +62,8 @@ private fun ServiceEventRow(event: ServiceEventData) {
         if (event.time != null) {
             Text(
                 text = event.time,
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.primaryText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.primaryText,
                 maxLines = 1,
             )
         }
@@ -94,12 +88,12 @@ fun ServiceEvents(
 ) {
     Column(
         modifier
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
-            .background(KotlinConfTheme.colors.tileBackground)
+            .clip(AppTheme.shapes.roundedCornerMd)
+            .background(AppTheme.colors.tileBackground)
     ) {
         events.forEachIndexed { index, event ->
             if (index > 0) {
-                HorizontalDivider(1.dp, KotlinConfTheme.colors.strokePale)
+                HorizontalDivider(1.dp, AppTheme.colors.strokePale)
             }
             ServiceEventItem(event)
         }

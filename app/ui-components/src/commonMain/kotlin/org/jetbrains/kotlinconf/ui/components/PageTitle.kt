@@ -50,7 +50,7 @@ import org.jetbrains.kotlinconf.ui.generated.resources.bookmark_24_fill
 import org.jetbrains.kotlinconf.ui.generated.resources.lightning_16_fill
 import org.jetbrains.kotlinconf.ui.generated.resources.session_codelab
 import org.jetbrains.kotlinconf.ui.generated.resources.session_education
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -85,7 +85,7 @@ private fun InlineIconContent(placeholder: String) {
                 }
             ),
             contentDescription = null,
-            tint = KotlinConfTheme.colors.accentText,
+            tint = AppTheme.colors.accentText,
             modifier = Modifier.fillMaxHeight(0.9f).aspectRatio(1f),
         )
     }
@@ -139,29 +139,29 @@ private fun RowScope.TimeBlock(
                 modifier = Modifier.size(16.dp),
                 painter = painterResource(UiRes.drawable.lightning_16_fill),
                 contentDescription = null,
-                tint = KotlinConfTheme.colors.orangeText,
+                tint = AppTheme.colors.orangeText,
             )
         }
 
         Text(
             text = time,
-            style = KotlinConfTheme.typography.h3,
-            color = KotlinConfTheme.colors.primaryText
+            style = AppTheme.typography.h3,
+            color = AppTheme.colors.primaryText
         )
     }
 
     if (timeNote != null) {
         Text(
             text = timeNote,
-            style = KotlinConfTheme.typography.text1,
-            color = KotlinConfTheme.colors.noteText,
+            style = AppTheme.typography.text1,
+            color = AppTheme.colors.noteText,
             maxLines = 1,
         )
     }
 
     AnimatedVisibility(isLive, enter = fadeIn(), exit = fadeOut()) {
         NowLabel(
-            textStyle = KotlinConfTheme.typography.text1,
+            textStyle = AppTheme.typography.text1,
         )
     }
 }
@@ -169,8 +169,8 @@ private fun RowScope.TimeBlock(
 @Composable
 private fun EndButtons(bookmarked: Boolean, onBookmark: (Boolean) -> Unit, large: Boolean) {
     val iconTint by animateColorAsState(
-        if (bookmarked) KotlinConfTheme.colors.orangeText
-        else KotlinConfTheme.colors.primaryText
+        if (bookmarked) AppTheme.colors.orangeText
+        else AppTheme.colors.primaryText
     )
 
     Icon(
@@ -215,8 +215,8 @@ private fun Title(title: String, tags: Set<String>) {
         } else {
             AnnotatedString(title)
         },
-        style = KotlinConfTheme.typography.h1,
-        color = KotlinConfTheme.colors.primaryText,
+        style = AppTheme.typography.h1,
+        color = AppTheme.colors.primaryText,
         selectable = true,
         inlineContent = if (hasIcon) pageTitleInlineContent else emptyMap(),
         modifier = Modifier.semantics { heading() }.widthIn(max = 640.dp),

@@ -1,118 +1,46 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code (claude.ai/code) when working in this repository.
 
-## What This Is
+## What this is
 
-The official KotlinConf app — a Kotlin Multiplatform project serving Android, iOS, JVM desktop, and WebAssembly clients, backed by a Ktor server. All client UI is shared via Compose Multiplatform.
+Sessionable: a conference app for any event that publishes its schedule on Sessionize, a fork of JetBrains' open-source
+[KotlinConf app](https://github.com/JetBrains/kotlinconf-app) (Apache-2.0). Kotlin Multiplatform with Compose
+Multiplatform for iOS, Android, JVM desktop and web. No backend: it reads the public Sessionize `view/All` feed and
+everything the attendee adds stays on the device. Two modes: the generic build (no `-Pevent`) connects to any
+conference by a pasted Sessionize link; a branded build (`-Pevent=<id>`) is fixed to one profile. Read `docs/FORKING.md`.
 
-## Build & Run Commands
+## Commands
 
 ```bash
-# Run desktop app (hot reload enabled)
-./gradlew :app:desktopApp:hotRun -DmainClass=org.jetbrains.kotlinconf.MainKt
-
-# Run web app (wasmJs target, development mode)
-./gradlew :app:webApp:wasmJsBrowserDevelopmentRun
-
-# Run backend server
-./gradlew :backend:run
-
-# Run backend tests
-./gradlew :backend:test
-
-# Run shared module tests (JVM target)
-./gradlew :app:shared:jvmTest
-
-# Run core module tests
-./gradlew :core:jvmTest
-
-# Bump version across all platforms + generate library definitions
-./gradlew prepareRelease
+./gradlew :core:jvmTest :app:shared:jvmTest          # tests (snapshots of real feeds in testdata/)
+./gradlew :app:androidApp:assembleDebug              # Android (needs the SDK; JDK 21)
+./gradlew :app:webApp:wasmJsBrowserDevelopmentRun    # web
+scripts/make-icons.sh                                # icons for all platforms from branding/*.svg
 ```
 
-Android uses the `app.androidApp` run configuration in IDE; iOS uses `KotlinConfAppScheme`.
-
-## Module Structure
+## Layout
 
 ```
-:core                 — Shared data models (Conference, Session, Speaker, VoteInfo, Score, AppConfig, etc.)
-                        Used by both client and backend. No UI, no platform code.
-
-:app:ui-components    — Reusable Compose UI components (KotlinConfTheme, typography, colors, buttons, cards, etc.)
-                        Has its own resource class (UiRes) separate from the main app.
-
-:app:shared           — Main KMP client: all screens, ViewModels, navigation, ConferenceService, DI graph.
-                        Targets: android, jvm, iosArm64, iosSimulatorArm64, wasmJs, js.
-
-:app:androidApp       — Android entry point only. Wires up AndroidAppGraph.
-:app:desktopApp       — JVM desktop entry point. Uses Compose Desktop.
-:app:webApp           — Wasm+JS entry points. Targets wasmJs and js, both browser.
-
-:backend              — Ktor/Netty server. Fetches data from Sessionize, stores votes/users in DB.
+:core                 shared data model and the Sessionize feed parser. No UI.
+:app:ui-components    reusable Compose components and theme; own resource class UiRes.
+:app:shared           screens, ViewModels, navigation, ConferenceService, DI graph (Metro).
+:app:androidApp / :app:desktopApp / :app:webApp / app/iosApp   platform entry points
+branding/             icon.svg, glyph.svg, brand.env: the source of every platform's icons
+scripts/              icons, iOS upload, web branding, web smoke test
 ```
 
-## Client Architecture
+`event/EventProfiles.kt` holds what is specific to a conference. `EventSelection` is the conference being shown
+(Compose state); `ConferenceService` opens, switches and leaves conferences and is the central singleton. The generic
+build keeps connected conferences (`SavedEvent`) in `ApplicationStorage`. Routes are in `navigation/Routes.kt`.
 
-**Dependency Injection — Metro**
+## Conventions
 
-The app uses [Metro](https://github.com/ZacSweers/metro) (not Koin) for DI on the client. Key interfaces:
-
-- `AppGraph` — top-level DI graph (`AppScope`), one per app process. Holds `ConferenceService`, `FlagsManager`, `TimeProvider`, etc.
-- `YearGraph` — a *scoped sub-graph* (`YearScope`) created per active conference year. Holds `YearlyApi` and `YearlyStorage`. Created by `YearGraph.Factory` inside `ConferenceService`.
-- Platform-specific graph (e.g. `AndroidAppGraph`) — annotated `@DependencyGraph(AppScope::class)`, created at app startup, implements `AppGraph`.
-
-ViewModels are registered into Metro's map multibinding:
-```kotlin
-@ContributesIntoMap(AppScope::class)
-@ViewModelKey
-class ScheduleViewModel(...) : ViewModel()
-```
-
-**ConferenceService**
-
-`ConferenceService` is the central app singleton. It:
-- Fetches `AppConfig` (current year) from the backend on startup and stores it locally.
-- Creates a `YearGraph` for the active year, giving access to that year's `YearlyApi` and `YearlyStorage`.
-- Exposes `StateFlow`s: `agenda`, `speakers`, `conferenceInfo`, `goldenKodeeData`, `votes`, `currentYear`.
-- Handles favorites, voting, policy acceptance, notification scheduling, and asset caching.
-
-**Navigation**
-
-Uses `androidx.navigation3`. Routes are `@Serializable sealed interface AppRoute` types defined in `Routes.kt`. `TopLevelRoute` marks bottom-nav destinations. `NavHost.kt` maps routes to screen composables.
-
-**Screens / ViewModels pattern**
-
-Each screen has a corresponding `*ViewModel` that takes `ConferenceService` as a dependency, maps service `StateFlow`s into `uiState: StateFlow<ErrorLoadingState<...>>`, and exposes user-action functions. The screen Composable receives the ViewModel via Metro's ViewModel factory.
-
-**Flags**
-
-`Flags` is a `@Serializable data class` stored via `FlagsManager`. Compose screens access it via `LocalFlags`. Includes developer-mode options like `useFakeTime`, `debugLogging`, and `useFakeGoldenKodeeData`.
-
-**Source Set Hierarchy**
-
-The `app:shared` module defines custom intermediate source sets beyond the default hierarchy:
-- `nonAndroidMain` — shared by `iosMain`, `jvmMain`, and `webMain` (excludes Android)
-- `nonWebMain` — shared by `androidMain`, `iosMain`, and `jvmMain` (has `okio` dependency; web can't use it)
-- `webMain` — shared by `wasmJsMain` and `jsMain` (JS-specific timezone shim, browser APIs)
-
-## Backend Architecture
-
-- **Framework**: Ktor with Netty engine
-- **DI**: Koin (`diModule()` in `DiModule.kt`)
-- **Database**: Exposed ORM + HikariCP. PostgreSQL in production; H2 file-based fallback when no `database.host` is configured (used for local dev and tests).
-- **Migrations**: `MigrationRunner` applies SQL migrations in order.
-
-**Route structure** (`RoutesModule.kt`):
-- Year-agnostic: `/healthz`, `/time`, `/admin/*`, `/config`
-- Year-prefixed: `/{year}/conference`, `/{year}/conference-info`, `/{year}/schedule`, `/{year}/vote`, `/{year}/sign`, `/{year}/golden-kodee`, `/{year}/documents/*`, etc.
-
-**Data flow**: `SessionizeService` polls the Sessionize API on a configurable interval and caches schedule data in-memory. `KotlinConfRepository` handles all DB operations (users, votes, feedback, signed policies) using `suspendTransaction`.
-
-## Key Conventions
-
-**Version management**: Version numbers must stay in sync across Android `build.gradle.kts`, iOS `project.pbxproj`, iOS `Info.plist`, and `app/shared/src/commonMain/composeResources/values/version.xml`. Use `./gradlew prepareRelease` (which calls `updateVersion` and `exportLibraryDefinitions`) rather than editing these files manually.
-
-**Resources**: `app:shared` uses resource class `org.jetbrains.kotlinconf.generated.resources` (auto-generated). `app:ui-components` uses its own `UiRes` / `org.jetbrains.kotlinconf.ui.generated.resources`. Don't mix them.
-
-**Backend tests**: Use `ktor-server-test-host` with `test-application.yaml` config (H2 database, no external dependencies).
+- **No network except Sessionize.** No analytics, trackers, crash reporters or push services.
+- **Storage:** keep `ApplicationStorageImpl.LATEST_STORAGE_VERSION` unchanged unless you add a migration; a different
+  value wipes installed users' data. Keep a shipped profile's `storageScope` stable for the same reason.
+- **Strings:** every user-facing string needs an English and a German entry.
+- **Photos and videos** are attached only from a session's own page (`MediaSection`), never imported in bulk.
+- **Versions:** keep Android `build.gradle.kts`, iOS `project.pbxproj`/`Info.plist` and `values/version.xml` in step.
+- **Credit:** keep the JetBrains credit, the Apache-2.0 licence and the "unofficial, not affiliated" wording.
+- JDK 21 is required; on this machine point Gradle at Homebrew's openjdk@21.

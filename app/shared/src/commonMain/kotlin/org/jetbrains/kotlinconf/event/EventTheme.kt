@@ -14,9 +14,9 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.kotlinconf.generated.resources.Res
 import org.jetbrains.kotlinconf.generated.resources.event_agntcon_mark
 import org.jetbrains.kotlinconf.ui.theme.Colors
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfDarkColors
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfLightColors
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.DarkColors
+import org.jetbrains.kotlinconf.ui.theme.LightColors
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 
 /**
  * A conference's own look: light and dark colors, and its logo mark (a single-color image with
@@ -31,7 +31,7 @@ class EventTheme(
 /** The conference's logo mark, in the accent color on light backgrounds and white on dark ones. */
 @Composable
 fun EventLogo(theme: EventTheme, size: Dp, modifier: Modifier = Modifier, tint: Color? = null) {
-    val colors = KotlinConfTheme.colors
+    val colors = AppTheme.colors
     Image(
         painter = painterResource(theme.mark),
         contentDescription = null,
@@ -56,7 +56,7 @@ internal object AgntconTheme {
     )
 
     val theme = EventTheme(
-        light = KotlinConfLightColors.copy(
+        light = LightColors.copy(
             primaryBackground = indigo,
             strokeAccent = indigo,
             accentText = roseText,
@@ -66,7 +66,7 @@ internal object AgntconTheme {
             toggleOn = indigo,
             headerGradient = gradient,
         ),
-        dark = KotlinConfDarkColors.copy(
+        dark = DarkColors.copy(
             mainBackground = indigo,
             primaryBackground = roseButton,
             tooltipBackground = Color(0xFF34375C),

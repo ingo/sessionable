@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupPositionProvider
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -24,11 +24,11 @@ fun Tooltip(
 ) {
     Text(
         text = text,
-        style = KotlinConfTheme.typography.text2,
-        color = KotlinConfTheme.colors.primaryTextInverted,
+        style = AppTheme.typography.text2,
+        color = AppTheme.colors.primaryTextInverted,
         modifier = Modifier
             .clip(RoundedCornerShape(4.dp))
-            .background(KotlinConfTheme.colors.tooltipBackground)
+            .background(AppTheme.colors.tooltipBackground)
             .padding(vertical = 4.dp, horizontal = 8.dp)
     )
 }

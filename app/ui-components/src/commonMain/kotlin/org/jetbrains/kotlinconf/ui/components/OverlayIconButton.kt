@@ -19,7 +19,7 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.bookmark_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -32,12 +32,12 @@ fun OverlayIconButton(
     contentDescription: String? = null,
 ) {
     val strokeColor by animateColorAsState(
-        if (enabled) KotlinConfTheme.colors.strokeHalf
-        else KotlinConfTheme.colors.strokePale
+        if (enabled) AppTheme.colors.strokeHalf
+        else AppTheme.colors.strokePale
     )
     val iconColor by animateColorAsState(
-        if (enabled) KotlinConfTheme.colors.primaryText
-        else KotlinConfTheme.colors.placeholderText
+        if (enabled) AppTheme.colors.primaryText
+        else AppTheme.colors.placeholderText
     )
 
     Box(
@@ -47,7 +47,7 @@ fun OverlayIconButton(
             .clip(CircleShape)
             .border(1.dp, strokeColor, CircleShape)
             .clickable(enabled = enabled, onClick = onClick, role = Role.Button)
-            .background(KotlinConfTheme.colors.mainBackground),
+            .background(AppTheme.colors.mainBackground),
         contentAlignment = Alignment.Center,
     ) {
         Icon(

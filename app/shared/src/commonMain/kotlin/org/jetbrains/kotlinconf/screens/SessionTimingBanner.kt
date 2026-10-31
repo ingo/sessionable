@@ -27,7 +27,7 @@ import org.jetbrains.kotlinconf.generated.resources.session_starts_on
 import org.jetbrains.kotlinconf.ui.components.Text
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.clock_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.DateTimeFormatting
 import kotlin.time.Duration.Companion.minutes
 
@@ -37,7 +37,7 @@ import kotlin.time.Duration.Companion.minutes
  */
 @Composable
 internal fun SessionTimingBanner(session: SessionCardView, now: LocalDateTime, modifier: Modifier = Modifier) {
-    val colors = KotlinConfTheme.colors
+    val colors = AppTheme.colors
     val timing = sessionTiming(session.startsAt, session.endsAt, now)
     val accent = colors.accentText
     val highlighted = (timing is SessionTiming.StartsIn && timing.soon) || timing is SessionTiming.Live
@@ -60,7 +60,7 @@ internal fun SessionTimingBanner(session: SessionCardView, now: LocalDateTime, m
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
+            .clip(AppTheme.shapes.roundedCornerMd)
             .background(if (highlighted) accent.copy(alpha = 0.12f) else colors.tileBackground)
             .padding(horizontal = 16.dp, vertical = 12.dp)
             .semantics(mergeDescendants = true) {},
@@ -74,10 +74,10 @@ internal fun SessionTimingBanner(session: SessionCardView, now: LocalDateTime, m
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(
                 headline,
-                style = KotlinConfTheme.typography.h4,
+                style = AppTheme.typography.h4,
                 color = if (timing == SessionTiming.Ended) colors.noteText else if (highlighted) accent else colors.primaryText,
             )
-            Text(where, style = KotlinConfTheme.typography.text2, color = colors.secondaryText)
+            Text(where, style = AppTheme.typography.text2, color = colors.secondaryText)
         }
     }
 }

@@ -44,7 +44,7 @@ import org.jetbrains.kotlinconf.ui.generated.resources.location_28_fill
 import org.jetbrains.kotlinconf.ui.generated.resources.now
 import org.jetbrains.kotlinconf.ui.generated.resources.team_28
 import org.jetbrains.kotlinconf.ui.generated.resources.team_28_fill
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -59,12 +59,12 @@ private fun NavRailMenuItem(
     modifier: Modifier = Modifier,
 ) {
     val contentColor by animateColorAsState(
-        if (selected) KotlinConfTheme.colors.primaryText
-        else KotlinConfTheme.colors.secondaryText
+        if (selected) AppTheme.colors.primaryText
+        else AppTheme.colors.secondaryText
     )
 
     val itemModifier = modifier
-        .clip(KotlinConfTheme.shapes.roundedCornerMd)
+        .clip(AppTheme.shapes.roundedCornerMd)
         .fillMaxWidth()
         .selectable(
             selected = selected,
@@ -97,7 +97,7 @@ private fun NavRailMenuItem(
                         animatedVisibilityScope = this@AnimatedContent,
                     ),
                     text = label,
-                    style = KotlinConfTheme.typography.text2,
+                    style = AppTheme.typography.text2,
                     color = contentColor,
                 )
             }
@@ -178,12 +178,6 @@ private fun MainNavigationRailPreview(
             icon = UiRes.drawable.team_28,
             iconSelected = UiRes.drawable.team_28_fill,
             route = "Speakers"
-        ),
-        MainNavDestination(
-            label = UiRes.string.now,
-            icon = UiRes.drawable.award_28,
-            iconSelected = UiRes.drawable.award_28_fill,
-            route = "GoldenKodee"
         ),
         MainNavDestination(
             label = UiRes.string.now,

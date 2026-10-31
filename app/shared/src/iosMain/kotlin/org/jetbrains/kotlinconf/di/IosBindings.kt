@@ -1,6 +1,9 @@
 package org.jetbrains.kotlinconf.di
 
-import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
+import org.jetbrains.kotlinconf.di.FileStorageDir
+import platform.Foundation.NSUserDomainMask
+import platform.Foundation.NSSearchPathForDirectoriesInDomains
+import platform.Foundation.NSApplicationSupportDirectory
 import com.russhwolf.settings.ExperimentalSettingsApi
 import com.russhwolf.settings.NSUserDefaultsSettings
 import com.russhwolf.settings.ObservableSettings
@@ -9,10 +12,7 @@ import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
-import platform.Foundation.NSApplicationSupportDirectory
-import platform.Foundation.NSSearchPathForDirectoriesInDomains
 import platform.Foundation.NSUserDefaults
-import platform.Foundation.NSUserDomainMask
 
 @BindingContainer
 @ContributesTo(AppScope::class)
@@ -25,6 +25,7 @@ interface IosBindings {
         fun provideSettings(): ObservableSettings =
             NSUserDefaultsSettings(NSUserDefaults.standardUserDefaults)
 
+        /** Application Support, which the system neither purges nor shows in the Files app. */
         @Provides
         @SingleIn(AppScope::class)
         @FileStorageDir
@@ -34,14 +35,5 @@ interface IosBindings {
             ).first() as String
             return "$storageDir/files"
         }
-
-        @Provides
-        @SingleIn(AppScope::class)
-        fun provideNotificationPlatformConfiguration(): NotificationPlatformConfiguration =
-            NotificationPlatformConfiguration.Ios(
-                showPushNotification = true,
-                askNotificationPermissionOnStart = false,
-                notificationSoundName = null,
-            )
     }
 }

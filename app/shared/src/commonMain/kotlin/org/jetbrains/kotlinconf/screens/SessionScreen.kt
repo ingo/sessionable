@@ -67,7 +67,7 @@ import org.jetbrains.kotlinconf.ui.components.PageTitle
 import org.jetbrains.kotlinconf.ui.components.SpeakerCard
 import org.jetbrains.kotlinconf.ui.components.Text
 import org.jetbrains.kotlinconf.ui.components.TopMenuButton
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.ErrorLoadingContent
 import org.jetbrains.kotlinconf.utils.ErrorLoadingState
 import org.jetbrains.kotlinconf.utils.LocalWindowSize
@@ -80,7 +80,6 @@ fun SessionScreen(
     sessionId: SessionId,
     onBack: () -> Unit,
     onSpeaker: (SpeakerId) -> Unit,
-    onPrivacyNoticeNeeded: () -> Unit,
     onNavigateToMap: (String) -> Unit,
     onWatchVideo: (String) -> Unit,
     viewModel: SessionViewModel =
@@ -95,7 +94,7 @@ fun SessionScreen(
         state = sessionState,
         errorMessage = stringResource(Res.string.session_screen_error),
         modifier = Modifier.fillMaxSize()
-            .background(color = KotlinConfTheme.colors.mainBackground)
+            .background(color = AppTheme.colors.mainBackground)
             .padding(topInsetPadding()),
     ) { session ->
 
@@ -113,7 +112,7 @@ fun SessionScreen(
                 )
                 HorizontalDivider(
                     thickness = 1.dp,
-                    color = KotlinConfTheme.colors.strokePale
+                    color = AppTheme.colors.strokePale
                 )
             },
             compactContentHeader = {
@@ -129,7 +128,6 @@ fun SessionScreen(
                 SlidesLink(session)
                 VideoLink(session, onWatchVideo)
                 SessionActions(session, exporter)
-                Feedback(session, onPrivacyNoticeNeeded)
                 Speakers(speakers, onSpeaker)
                 RoomSection(session.locationLine, onNavigateToMap)
                 Description(session.description)
@@ -146,7 +144,6 @@ fun SessionScreen(
                 SlidesLink(session)
                 VideoLink(session, onWatchVideo)
                 SessionActions(session, exporter)
-                Feedback(session, onPrivacyNoticeNeeded)
                 if (session.description.isNotBlank()) {
                     Speakers(speakers, onSpeaker)
                 }
@@ -162,7 +159,7 @@ fun SessionScreen(
 private fun Description(description: String) {
     Text(
         text = description,
-        style = KotlinConfTheme.typography.text1,
+        style = AppTheme.typography.text1,
         selectable = true,
     )
 }
@@ -179,21 +176,6 @@ private fun Speakers(
             photoUrl = speaker.photoUrl,
             modifier = Modifier.padding(vertical = 12.dp).fillMaxWidth(),
             onClick = { onSpeaker(speaker.id) }
-        )
-    }
-}
-
-@Composable
-private fun Feedback(
-    session: SessionCardView,
-    onPrivacyNoticeNeeded: () -> Unit,
-) {
-    if (ActiveEvent.hasBackend && session.state != SessionState.Upcoming) {
-        FeedbackPanel(
-            sessionId = session.id,
-            tags = session.tags,
-            onPrivacyNoticeNeeded = onPrivacyNoticeNeeded,
-            modifier = Modifier.padding(bottom = 20.dp),
         )
     }
 }
@@ -250,10 +232,9 @@ private fun PersonalSection(viewModel: SessionViewModel) {
     val note by viewModel.note.collectAsStateWithLifecycle()
     val rating by viewModel.rating.collectAsStateWithLifecycle()
     Column(Modifier.padding(top = 24.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
-        if (!ActiveEvent.hasBackend) {
-            RatingBlock(rating = rating, onThumb = viewModel::setThumb, onTakeaway = viewModel::setTakeaway)
-        }
+        RatingBlock(rating = rating, onThumb = viewModel::setThumb, onTakeaway = viewModel::setTakeaway)
         NoteBlock(stored = note, onSave = viewModel::setNote)
+        MediaSection(viewModel)
     }
 }
 
@@ -301,7 +282,7 @@ private fun RoomSection(
             if (largeScreen) {
                 Text(
                     text = roomName,
-                    style = KotlinConfTheme.typography.h3,
+                    style = AppTheme.typography.h3,
                     modifier = Modifier.padding(bottom = 8.dp),
                 )
             } else {
@@ -337,8 +318,8 @@ private fun RoomSection(
                     svgsByPath = mapContent.svgsByPath,
                     modifier = Modifier
                         .padding(top = 8.dp)
-                        .clip(KotlinConfTheme.shapes.roundedCornerMd)
-                        .background(KotlinConfTheme.colors.tileBackground)
+                        .clip(AppTheme.shapes.roundedCornerMd)
+                        .background(AppTheme.colors.tileBackground)
                         .clickable {
                             onNavigateToMap(roomName)
                         }
@@ -355,7 +336,7 @@ private fun RoomSection(
         } else {
             Text(
                 text = roomName,
-                style = KotlinConfTheme.typography.h3,
+                style = AppTheme.typography.h3,
             )
         }
     }

@@ -62,7 +62,7 @@ import org.jetbrains.kotlinconf.ui.components.TopMenuButton
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.main_header_search_hint
 import org.jetbrains.kotlinconf.ui.generated.resources.search_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.bottomInsetPadding
 import org.jetbrains.kotlinconf.utils.topInsetPadding
 
@@ -103,7 +103,7 @@ fun SpeakersScreen(
 
     Column(
         Modifier.fillMaxSize()
-            .background(color = KotlinConfTheme.colors.mainBackground)
+            .background(color = AppTheme.colors.mainBackground)
             .padding(topInsetPadding())
     ) {
         MainHeaderContainer(
@@ -142,7 +142,7 @@ fun SpeakersScreen(
             }
         )
 
-        HorizontalDivider(1.dp, KotlinConfTheme.colors.strokePale)
+        HorizontalDivider(1.dp, AppTheme.colors.strokePale)
 
         if (tabs.size > 1) {
             val titles = tabs.map { stringResource(it.title) }
@@ -188,8 +188,8 @@ fun SpeakersScreen(
                                 speakers.size,
                                 speakers.size
                             ),
-                            color = KotlinConfTheme.colors.secondaryText,
-                            style = KotlinConfTheme.typography.text2,
+                            color = AppTheme.colors.secondaryText,
+                            style = AppTheme.typography.text2,
                             modifier = Modifier
                                 .animateItem()
                                 .padding(horizontal = 12.dp)
@@ -255,8 +255,8 @@ private fun CompaniesList(
             item(key = "number-of-companies") {
                 Text(
                     text = pluralStringResource(Res.plurals.companies_number_of_results, companies.size, companies.size),
-                    color = KotlinConfTheme.colors.secondaryText,
-                    style = KotlinConfTheme.typography.text2,
+                    color = AppTheme.colors.secondaryText,
+                    style = AppTheme.typography.text2,
                     modifier = Modifier
                         .padding(horizontal = 12.dp)
                         .padding(top = 4.dp, bottom = 4.dp)
@@ -268,7 +268,7 @@ private fun CompaniesList(
             item(key = "no-companies") {
                 Text(
                     stringResource(Res.string.companies_error_no_data),
-                    color = KotlinConfTheme.colors.secondaryText,
+                    color = AppTheme.colors.secondaryText,
                     modifier = Modifier.padding(24.dp),
                 )
             }
@@ -298,7 +298,7 @@ private fun MetList(viewModel: SpeakersViewModel, onSpeaker: (SpeakerId) -> Unit
             item(key = "no-met") {
                 Text(
                     stringResource(Res.string.speakers_met_empty),
-                    color = KotlinConfTheme.colors.secondaryText,
+                    color = AppTheme.colors.secondaryText,
                     modifier = Modifier.padding(24.dp),
                 )
             }

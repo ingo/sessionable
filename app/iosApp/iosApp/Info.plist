@@ -24,9 +24,9 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>40.0.5</string>
+	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
-	<string>79</string>
+	<string>1</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -73,5 +73,9 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>To take photos and videos of a session and keep them with your notes. They stay on this device.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>To record the sound of a session when you record a video of it.</string>
 </dict>
 </plist>

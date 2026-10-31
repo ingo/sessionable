@@ -1,29 +1,25 @@
 package org.jetbrains.kotlinconf.storage
 
+import org.jetbrains.kotlinconf.personal.Attachment
 import org.jetbrains.kotlinconf.sync.SessionizeSyncState
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.kotlinconf.Conference
 import org.jetbrains.kotlinconf.ConferenceInfo
-import org.jetbrains.kotlinconf.GoldenKodeeData
 import org.jetbrains.kotlinconf.NotificationSettings
 import org.jetbrains.kotlinconf.SessionId
 import org.jetbrains.kotlinconf.SpeakerId
 import org.jetbrains.kotlinconf.personal.PersonalNotes
 import org.jetbrains.kotlinconf.personal.SessionRating
-import org.jetbrains.kotlinconf.VoteInfo
 
 interface YearlyStorage {
-    fun isPolicySigned(): Flow<Boolean>
-    suspend fun setPolicySigned(value: Boolean)
+    /** Removes everything stored for this conference. */
+    suspend fun clear()
 
     fun getConferenceCache(): Flow<Conference?>
     suspend fun setConferenceCache(value: Conference)
 
     fun getConferenceInfoCache(): Flow<ConferenceInfo?>
     suspend fun setConferenceInfoCache(value: ConferenceInfo)
-
-    fun getGoldenKodeeCache(): Flow<GoldenKodeeData?>
-    suspend fun setGoldenKodeeCache(value: GoldenKodeeData)
 
     fun getFavorites(): Flow<Set<SessionId>>
     suspend fun setFavorites(value: Set<SessionId>)
@@ -40,15 +36,14 @@ interface YearlyStorage {
     fun getRatings(): Flow<Map<String, SessionRating>>
     suspend fun setRatings(value: Map<String, SessionRating>)
 
+    /** The photos and videos the attendee attached, by session id. The files themselves are in [org.jetbrains.kotlinconf.media.MediaFiles]. */
+    fun getAttachments(): Flow<Map<String, List<Attachment>>>
+    suspend fun setAttachments(value: Map<String, List<Attachment>>)
+
     fun getNotificationSettings(): Flow<NotificationSettings?>
     suspend fun setNotificationSettings(value: NotificationSettings)
 
     fun getSessionizeSync(): Flow<SessionizeSyncState?>
     suspend fun setSessionizeSync(value: SessionizeSyncState?)
 
-    fun getVotes(): Flow<List<VoteInfo>>
-    suspend fun setVotes(value: List<VoteInfo>)
-
-    suspend fun getAsset(name: String): String?
-    suspend fun setAsset(name: String, content: String)
 }

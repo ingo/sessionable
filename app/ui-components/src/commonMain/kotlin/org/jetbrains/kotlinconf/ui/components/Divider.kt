@@ -11,7 +11,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -50,11 +50,11 @@ fun VerticalDivider(
 @PreviewLightDark
 @Composable
 private fun HorizontalDividerPreview() = PreviewHelper(Modifier.width(100.dp)) {
-    HorizontalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokePale)
+    HorizontalDivider(thickness = 1.dp, color = AppTheme.colors.strokePale)
 }
 
 @PreviewLightDark
 @Composable
 private fun VerticalDividerPreview() = PreviewHelper(Modifier.height(100.dp)) {
-    VerticalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokePale)
+    VerticalDivider(thickness = 1.dp, color = AppTheme.colors.strokePale)
 }

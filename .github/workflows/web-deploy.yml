@@ -2,8 +2,10 @@ name: Publish the project page and web app on GitHub Pages
 
 # Publishes, from main:
 #   /       the project page (docs/site, plain HTML and CSS)
-#   /app/   the web app (Kotlin/Wasm with a JavaScript fallback), built for the AGNTCon + MCPCon event,
-#           with that event's icons, manifest and offline service worker (scripts/web-brand.sh)
+#   /app/   the web app (Kotlin/Wasm with a JavaScript fallback): the generic build, where the visitor
+#           pastes a Sessionize link, with its icons, manifest and offline service worker (scripts/web-brand.sh).
+#           To publish a build branded for one conference, set EVENT to its id and BRAND to its folder in
+#           app/webApp/branding (see docs/FORKING.md).
 # GitHub Pages must be enabled for the repository with "GitHub Actions" as its source (Settings > Pages).
 on:
   push:
@@ -19,9 +21,10 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  EVENT: agntcon-mcpcon-na-2026
-  EVENT_TITLE: AGNTCon + MCPCon North America 2026
-  EVENT_DESCRIPTION: Schedule, notes and people for AGNTCon + MCPCon North America 2026. Unofficial.
+  EVENT: ""
+  BRAND: generic
+  EVENT_TITLE: Sessionable
+  EVENT_DESCRIPTION: The schedule of any conference that publishes it on Sessionize, with notes and the people you met.
 
 jobs:
   build:
@@ -37,11 +40,13 @@ jobs:
           distribution: 'zulu'
           java-version: 21
 
-      - name: Check the service worker
-        run: node app/webApp/branding/test/service-worker-test.js
+      - name: Check the service worker and the loader
+        run: |
+          node app/webApp/branding/test/service-worker-test.js
+          node app/webApp/branding/test/loader-test.js
 
       - name: Build the web app
-        run: ./gradlew -Pevent=$EVENT :app:webApp:composeCompatibilityBrowserDistribution
+        run: ./gradlew "-Pevent=$EVENT" :app:webApp:composeCompatibilityBrowserDistribution
 
       - name: Put the page and the branded web app together
         run: |
@@ -49,7 +54,7 @@ jobs:
           mkdir -p _site/app
           cp -R docs/site/. _site/
           cp -R "$DIST"/. _site/app/
-          scripts/web-brand.sh "$EVENT" _site/app "$EVENT_TITLE" "$EVENT_DESCRIPTION"
+          scripts/web-brand.sh "$BRAND" _site/app "$EVENT_TITLE" "$EVENT_DESCRIPTION"
           # Source maps are for debugging and about 13 MB
           find _site/app -name '*.map' -delete
           chmod -R +rX _site

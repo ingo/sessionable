@@ -9,19 +9,20 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import org.jetbrains.kotlinconf.ConferenceImages
+import kotlinx.coroutines.launch
 import org.jetbrains.kotlinconf.ConferenceService
 
 @ContributesIntoMap(AppScope::class)
 @ViewModelKey
 class InfoViewModel(
-    service: ConferenceService,
+    private val service: ConferenceService,
 ) : ViewModel() {
+    /** Back to the connect screen of the generic build. */
+    fun switchConference() {
+        viewModelScope.launch { service.leaveEvent() }
+    }
+
     val venueAddress: StateFlow<String?> = service.conferenceInfo
         .map { it?.mapData?.venueAddress }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
-
-    val images: StateFlow<ConferenceImages?> = service.conferenceInfo
-        .map { it?.images }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 }

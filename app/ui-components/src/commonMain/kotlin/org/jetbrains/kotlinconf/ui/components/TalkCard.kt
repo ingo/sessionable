@@ -3,12 +3,9 @@ package org.jetbrains.kotlinconf.ui.components
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -63,7 +60,7 @@ import org.jetbrains.kotlinconf.ui.generated.resources.session_education
 import org.jetbrains.kotlinconf.ui.generated.resources.talk_card_find_on_map
 import org.jetbrains.kotlinconf.ui.generated.resources.talk_card_icon_desc_codelab
 import org.jetbrains.kotlinconf.ui.generated.resources.talk_card_icon_desc_education
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -81,8 +78,8 @@ internal fun buildHighlightedString(
             if (!range.isEmpty() && range.first in text.indices && range.last in text.indices) {
                 addStyle(
                     style = SpanStyle(
-                        color = KotlinConfTheme.colors.primaryTextWhiteFixed,
-                        background = KotlinConfTheme.colors.primaryBackground,
+                        color = AppTheme.colors.primaryTextWhiteFixed,
+                        background = AppTheme.colors.primaryBackground,
                     ),
                     start = range.first,
                     end = range.last + 1,
@@ -112,24 +109,23 @@ fun TalkCard(
     timeNote: String?,
     status: TalkStatus,
     onClick: () -> Unit,
-    feedbackContent: (@Composable () -> Unit)?,
     modifier: Modifier = Modifier,
     /** Shows a pin next to the room that opens it on the venue map; null when the room has no pin. */
     onFindOnMap: (() -> Unit)? = null,
 ) {
     val backgroundColor by animateColorAsState(
-        if (status == TalkStatus.Past) KotlinConfTheme.colors.cardBackgroundPast
+        if (status == TalkStatus.Past) AppTheme.colors.cardBackgroundPast
         else Color.Transparent,
         animationSpec = tween(1000),
     )
     val textColor by animateColorAsState(
-        if (status == TalkStatus.Past) KotlinConfTheme.colors.secondaryText
-        else KotlinConfTheme.colors.primaryText,
+        if (status == TalkStatus.Past) AppTheme.colors.secondaryText
+        else AppTheme.colors.primaryText,
         animationSpec = tween(1000),
     )
     val borderColor by animateColorAsState(
-        if (bookmarked) KotlinConfTheme.colors.strokeHalf
-        else KotlinConfTheme.colors.strokePale,
+        if (bookmarked) AppTheme.colors.strokeHalf
+        else AppTheme.colors.strokePale,
         animationSpec = tween(1000),
     )
 
@@ -138,9 +134,9 @@ fun TalkCard(
             .border(
                 width = 1.dp,
                 color = borderColor,
-                shape = KotlinConfTheme.shapes.roundedCornerMd
+                shape = AppTheme.shapes.roundedCornerMd
             )
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
+            .clip(AppTheme.shapes.roundedCornerMd)
             .clickable(onClick = onClick)
             .background(backgroundColor)
     ) {
@@ -159,7 +155,7 @@ fun TalkCard(
         // TODO BLOCKER double-check if removing this weight is correct
         HorizontalDivider(
             thickness = 1.dp,
-            color = KotlinConfTheme.colors.strokePale,
+            color = AppTheme.colors.strokePale,
         )
         TimeBlock(
             location = location,
@@ -170,22 +166,6 @@ fun TalkCard(
             time = time,
             onFindOnMap = onFindOnMap,
         )
-        AnimatedVisibility(
-            visible = feedbackContent != null,
-            enter = fadeIn(tween(300, 70, EaseOut)) + expandVertically(tween(150, 0, EaseOut)),
-            exit = fadeOut(tween(300, 70, EaseOut)) + shrinkVertically(tween(150, 0, EaseOut)),
-        ) {
-            Column(
-                // Prevent clicks on the non-interactive elements of the feedback area
-                Modifier.clickable(interactionSource = null, indication = null, onClick = {})
-            ) {
-                HorizontalDivider(
-                    thickness = 1.dp,
-                    color = KotlinConfTheme.colors.strokePale,
-                )
-                feedbackContent?.invoke()
-            }
-        }
     }
 }
 
@@ -221,8 +201,8 @@ private fun TopBlock(
             Spacer(Modifier.width(8.dp))
 
             val iconColor by animateColorAsState(
-                if (bookmarked) KotlinConfTheme.colors.orangeText
-                else KotlinConfTheme.colors.primaryText
+                if (bookmarked) AppTheme.colors.orangeText
+                else AppTheme.colors.primaryText
             )
             val stateDesc = stringResource(
                 resource = if (bookmarked)
@@ -265,8 +245,8 @@ private fun TopBlock(
         }
         Text(
             text = buildHighlightedString(speakers, speakerHighlights),
-            color = KotlinConfTheme.colors.secondaryText,
-            style = KotlinConfTheme.typography.text2,
+            color = AppTheme.colors.secondaryText,
+            style = AppTheme.typography.text2,
             maxLines = 1,
         )
     }
@@ -304,7 +284,7 @@ private fun TalkTitle(
         } else {
             title
         },
-        style = KotlinConfTheme.typography.h3,
+        style = AppTheme.typography.h3,
         color = textColor,
         maxLines = 2,
         inlineContent = if (hasIcon) talkCardTitleInlineContent(status) else emptyMap(),
@@ -329,8 +309,8 @@ private fun talkCardTitleInlineContent(status: TalkStatus): Map<String, InlineTe
 @Composable
 private fun InlineIconContent(status: TalkStatus, placeholder: String) {
     val textColor by animateColorAsState(
-        if (status == TalkStatus.Past) KotlinConfTheme.colors.secondaryText
-        else KotlinConfTheme.colors.accentText,
+        if (status == TalkStatus.Past) AppTheme.colors.secondaryText
+        else AppTheme.colors.accentText,
         animationSpec = tween(1000),
     )
     Icon(
@@ -374,7 +354,7 @@ private fun TimeBlock(
                 .weight(1f)
                 .then(
                     if (onFindOnMap != null) Modifier
-                        .clip(KotlinConfTheme.shapes.roundedCornerMd)
+                        .clip(AppTheme.shapes.roundedCornerMd)
                         .clickable(role = Role.Button, onClick = onFindOnMap)
                         .padding(vertical = 10.dp)
                     else Modifier
@@ -382,7 +362,7 @@ private fun TimeBlock(
         ) {
             Text(
                 text = location,
-                style = KotlinConfTheme.typography.text2,
+                style = AppTheme.typography.text2,
                 color = textColor,
                 modifier = Modifier.weight(1f, fill = false),
             )
@@ -391,7 +371,7 @@ private fun TimeBlock(
                 Icon(
                     painter = painterResource(UiRes.drawable.location_16),
                     contentDescription = description,
-                    tint = KotlinConfTheme.colors.accentText,
+                    tint = AppTheme.colors.accentText,
                     modifier = Modifier.size(24.dp).padding(4.dp),
                 )
             }
@@ -400,8 +380,8 @@ private fun TimeBlock(
         if (timeNote != null) {
             Text(
                 text = timeNote,
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.noteText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.noteText,
                 maxLines = 1,
             )
         }
@@ -415,7 +395,7 @@ private fun TimeBlock(
                 modifier = Modifier.size(16.dp),
                 painter = painterResource(UiRes.drawable.lightning_16_fill),
                 contentDescription = stringResource(UiRes.string.lightning_talk),
-                tint = KotlinConfTheme.colors.orangeText,
+                tint = AppTheme.colors.orangeText,
             )
         }
 
@@ -425,7 +405,7 @@ private fun TimeBlock(
         ) {
             Text(
                 text = it,
-                style = KotlinConfTheme.typography.text2,
+                style = AppTheme.typography.text2,
                 color = textColor,
                 maxLines = 1,
             )
@@ -459,27 +439,6 @@ private fun TalkCardLivePreview() = PreviewHelper {
         timeNote = null,
         status = TalkStatus.Live,
         onClick = { println("Clicked session") },
-        feedbackContent = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(start = 16.dp),
-            ) {
-                Text(
-                    "Thanks for your rating!",
-                    color = KotlinConfTheme.colors.primaryText,
-                    style = KotlinConfTheme.typography.h4,
-                    modifier = Modifier.weight(1f),
-                )
-                Emotion.entries.forEach { emotion ->
-                    KodeeIconSmall(
-                        emotion = emotion,
-                        selected = emotion == Emotion.Positive,
-                        modifier = Modifier.padding(12.dp),
-                    )
-                }
-            }
-        },
     )
 }
 
@@ -504,6 +463,5 @@ private fun TalkCardUpcomingPreview() = PreviewHelper {
         timeNote = "In 10 min",
         status = TalkStatus.Upcoming,
         onClick = { println("Clicked session") },
-        feedbackContent = null,
     )
 }

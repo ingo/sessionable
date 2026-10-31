@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.googleServices)
     alias(libs.plugins.metro)
 }
 
@@ -33,17 +32,28 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.jetbrains.kotlinconf"
+        applicationId = providers.gradleProperty("appId").getOrElse("org.example.sessionable")
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
-        versionCode = 73
-        versionName = "40.0.5"
+        versionCode = 1
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // A release is signed when the keystore is given in the environment (see docs/RELEASING.md)
+    val releaseSigning = System.getenv("ANDROID_KEYSTORE_PATH")?.let { path ->
+        signingConfigs.create("release") {
+            storeFile = file(path)
+            storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("ANDROID_KEY_ALIAS")
+            keyPassword = System.getenv("ANDROID_KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = releaseSigning
             isDebuggable = false
             isMinifyEnabled = true
             proguardFiles(

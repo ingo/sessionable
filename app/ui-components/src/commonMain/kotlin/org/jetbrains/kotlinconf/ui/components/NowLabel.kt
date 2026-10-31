@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.now
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 @Composable
 fun NowLabel(
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = KotlinConfTheme.typography.text2,
+    textStyle: TextStyle = AppTheme.typography.text2,
 ) {
     Row(
         modifier = modifier,
@@ -32,12 +32,12 @@ fun NowLabel(
         Box(
             Modifier.size(10.dp)
                 .clip(CircleShape)
-                .background(KotlinConfTheme.colors.accentText)
+                .background(AppTheme.colors.accentText)
         )
         Spacer(Modifier.size(4.dp))
         Text(
             text = stringResource(UiRes.string.now),
-            color = KotlinConfTheme.colors.accentText,
+            color = AppTheme.colors.accentText,
             style = textStyle,
             maxLines = 1,
         )

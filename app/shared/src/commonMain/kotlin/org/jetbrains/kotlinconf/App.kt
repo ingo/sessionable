@@ -3,6 +3,8 @@ package org.jetbrains.kotlinconf
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -11,6 +13,10 @@ import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import org.jetbrains.kotlinconf.di.AppGraph
 import org.jetbrains.kotlinconf.flags.LocalFlags
 import org.jetbrains.kotlinconf.navigation.NavHost
+import org.jetbrains.kotlinconf.screens.ConnectScreen
+import org.jetbrains.kotlinconf.ui.theme.DarkColors
+import org.jetbrains.kotlinconf.ui.theme.LightColors
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.LocalNotificationBar
 import org.jetbrains.kotlinconf.utils.LocalWindowSize
 import org.jetbrains.kotlinconf.utils.rememberNotificationBarState
@@ -33,6 +39,8 @@ fun App(
         .collectAsStateWithLifecycle(initialValue = null)
         .value
 
+    val activeEvent by service.activeEvent.collectAsStateWithLifecycle()
+
     val flags by appGraph.flagsManager.flags.collectAsStateWithLifecycle()
     CompositionLocalProvider(
         LocalFlags provides flags,
@@ -44,7 +52,15 @@ fun App(
         LocalNotificationBar provides rememberNotificationBarState(),
     ) {
         if (isOnboardingComplete != null) {
-            NavHost(isOnboardingComplete, isDarkTheme, onThemeChange)
+            val event = activeEvent
+            if (event == null) {
+                val colors = if (isDarkTheme) DarkColors else LightColors
+                if (onThemeChange != null) LaunchedEffect(colors) { onThemeChange(colors.isDark) }
+                AppTheme(rippleEnabled = flags.rippleEnabled, colors = colors) { ConnectScreen() }
+            } else {
+                // A fresh navigation state for each conference
+                key(event.id) { NavHost(isOnboardingComplete, isDarkTheme, onThemeChange) }
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.bookmark_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -88,7 +88,7 @@ private fun IconPreview() = PreviewHelper {
     Icon(
         painter = painterResource(UiRes.drawable.bookmark_24),
         contentDescription = null,
-        tint = KotlinConfTheme.colors.primaryText,
+        tint = AppTheme.colors.primaryText,
     )
 }
 

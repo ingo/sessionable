@@ -33,15 +33,12 @@ import org.jetbrains.kotlinconf.generated.resources.schedule_28
 import org.jetbrains.kotlinconf.generated.resources.schedule_28_fill
 import org.jetbrains.kotlinconf.generated.resources.calendar_28_fill
 import org.jetbrains.kotlinconf.generated.resources.nav_destination_my_schedule
-import org.jetbrains.kotlinconf.generated.resources.award_28
-import org.jetbrains.kotlinconf.generated.resources.award_28_fill
 import org.jetbrains.kotlinconf.generated.resources.clock_28
 import org.jetbrains.kotlinconf.generated.resources.clock_28_fill
 import org.jetbrains.kotlinconf.generated.resources.info_28
 import org.jetbrains.kotlinconf.generated.resources.info_28_fill
 import org.jetbrains.kotlinconf.generated.resources.location_28
 import org.jetbrains.kotlinconf.generated.resources.location_28_fill
-import org.jetbrains.kotlinconf.generated.resources.nav_destination_golden_kodee
 import org.jetbrains.kotlinconf.generated.resources.nav_destination_info
 import org.jetbrains.kotlinconf.generated.resources.nav_destination_map
 import org.jetbrains.kotlinconf.generated.resources.nav_destination_schedule
@@ -54,7 +51,7 @@ import org.jetbrains.kotlinconf.ui.components.MainNavigationBar
 import org.jetbrains.kotlinconf.ui.components.MainNavigationRail
 import org.jetbrains.kotlinconf.ui.components.Text
 import org.jetbrains.kotlinconf.ui.components.VerticalDivider
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.LocalNotificationBar
 import org.jetbrains.kotlinconf.utils.LocalWindowSize
 import org.jetbrains.kotlinconf.utils.WindowSize
@@ -87,12 +84,6 @@ private val bottomNavDestinations: List<MainNavDestination<TopLevelRoute>> = lis
         route = SpeakersScreen,
     ),
     MainNavDestination(
-        label = Res.string.nav_destination_golden_kodee,
-        icon = Res.drawable.award_28,
-        iconSelected = Res.drawable.award_28_fill,
-        route = GoldenKodeeScreen,
-    ),
-    MainNavDestination(
         label = Res.string.nav_destination_map,
         icon = Res.drawable.location_28,
         iconSelected = Res.drawable.location_28_fill,
@@ -110,7 +101,6 @@ private val bottomNavDestinations: List<MainNavDestination<TopLevelRoute>> = lis
 internal fun NavScaffold(
     navState: NavState,
     navigator: Navigator,
-    showGoldenKodee: Boolean,
     showMap: Boolean,
     content: @Composable (() -> Unit)
 ) {
@@ -118,9 +108,9 @@ internal fun NavScaffold(
         navigator.activate(route)
     }
 
-    val destinations = remember(showGoldenKodee, showMap) {
+    val destinations = remember(showMap) {
         bottomNavDestinations.filter {
-            (showGoldenKodee || it.route !is GoldenKodeeScreen) && (showMap || it.route !is MapScreen)
+            showMap || it.route !is MapScreen
         }
     }
 
@@ -135,7 +125,7 @@ internal fun NavScaffold(
 
     Row(
         Modifier.fillMaxSize()
-            .background(color = KotlinConfTheme.colors.mainBackground)
+            .background(color = AppTheme.colors.mainBackground)
     ) {
         val enterAnimSpec = tween<IntSize>(delayMillis = AnimationConstants.DefaultDurationMillis)
 
@@ -191,7 +181,7 @@ private fun BottomNavigation(
     Column(
         Modifier.padding(bottomInsetPadding()),
     ) {
-        HorizontalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokePale)
+        HorizontalDivider(thickness = 1.dp, color = AppTheme.colors.strokePale)
         MainNavigationBar(
             currentDestination = currentDestination,
             destinations = destinations,
@@ -221,7 +211,7 @@ private fun SideNavigation(
             expanded = expanded,
             modifier = Modifier.padding(topInsetPadding()),
         )
-        VerticalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokePale)
+        VerticalDivider(thickness = 1.dp, color = AppTheme.colors.strokePale)
     }
 }
 
@@ -234,11 +224,11 @@ private fun NotificationBar() {
     ) {
         Text(
             text = message ?: "",
-            color = KotlinConfTheme.colors.primaryTextInverted,
-            style = KotlinConfTheme.typography.text2.copy(textAlign = TextAlign.Center),
+            color = AppTheme.colors.primaryTextInverted,
+            style = AppTheme.typography.text2.copy(textAlign = TextAlign.Center),
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = KotlinConfTheme.colors.mainBackgroundInverted)
+                .background(color = AppTheme.colors.mainBackgroundInverted)
                 .padding(vertical = 16.dp, horizontal = 10.dp)
         )
     }

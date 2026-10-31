@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="160dp"
+    android:height="160dp"
+    android:viewportWidth="160"
+    android:viewportHeight="160">
+    <!-- A bell in the app's teal: the notifications welcome screen -->
+    <path
+        android:fillColor="#00796B"
+        android:pathData="M80,24c-20,0 -36,16 -36,36v26c0,6 -2,11 -6,16l-8,10c-3,4 0,10 5,10h90c5,0 8,-6 5,-10l-8,-10c-4,-5 -6,-10 -6,-16V60c0,-20 -16,-36 -36,-36z"/>
+    <path
+        android:fillColor="#00BFA5"
+        android:pathData="M64,128h32c0,9 -7,16 -16,16s-16,-7 -16,-16z"/>
+    <path
+        android:fillColor="#2EDB91"
+        android:pathData="M80,10m-7,0a7,7 0,1 1,14 0a7,7 0,1 1,-14 0"/>
+</vector>

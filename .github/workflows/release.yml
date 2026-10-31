@@ -1,0 +1,147 @@
+name: Release
+
+# Builds the iOS and Android apps and sends them to TestFlight and to Google Play's internal testing track
+# whenever app code changes on main, or on demand. The web app is published by web-deploy.yml.
+# Nothing happens until the secrets and variables in docs/RELEASING.md are set: a job whose secrets are
+# missing says so and finishes green.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "core/**"
+      - "gradle/**"
+      - "branding/**"
+      - "*.gradle.kts"
+      - "gradle.properties"
+      - ".github/workflows/release.yml"
+      - "scripts/ios-testflight.sh"
+  workflow_dispatch:
+    inputs:
+      ios:
+        description: Upload the iOS build to TestFlight
+        type: boolean
+        default: true
+      android:
+        description: Upload the Android build to Google Play (internal testing)
+        type: boolean
+        default: true
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  # The conference this release is branded for; empty is the generic app (see docs/FORKING.md)
+  EVENT: ${{ vars.RELEASE_EVENT }}
+  DISPLAY_NAME: ${{ vars.APP_DISPLAY_NAME || 'Sessionable' }}
+
+jobs:
+  ios:
+    name: iOS to TestFlight
+    if: ${{ github.event_name == 'push' || inputs.ios }}
+    runs-on: macos-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check the secrets
+        id: gate
+        env:
+          KEY: ${{ secrets.ASC_KEY_P8 }}
+          ID: ${{ secrets.ASC_KEY_ID }}
+          ISSUER: ${{ secrets.ASC_ISSUER_ID }}
+          TEAM: ${{ vars.APPLE_TEAM_ID }}
+          BUNDLE: ${{ vars.IOS_BUNDLE_ID }}
+        run: |
+          if [[ -z "$KEY" || -z "$ID" || -z "$ISSUER" || -z "$TEAM" || -z "$BUNDLE" ]]; then
+            echo "::notice::iOS release skipped: set ASC_KEY_P8, ASC_KEY_ID, ASC_ISSUER_ID (secrets) and APPLE_TEAM_ID, IOS_BUNDLE_ID (variables). See docs/RELEASING.md."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.ready == 'true'
+      - uses: actions/setup-java@v4
+        if: steps.gate.outputs.ready == 'true'
+        with:
+          distribution: zulu
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+        if: steps.gate.outputs.ready == 'true'
+
+      - name: Build and upload
+        if: steps.gate.outputs.ready == 'true'
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          TEAM: ${{ vars.APPLE_TEAM_ID }}
+          BUNDLE: ${{ vars.IOS_BUNDLE_ID }}
+        run: |
+          umask 077
+          printf '%s' "$ASC_KEY_P8" > "$RUNNER_TEMP/AuthKey.p8"
+          export ASC_KEY_PATH="$RUNNER_TEMP/AuthKey.p8"
+          scripts/ios-testflight.sh "$EVENT" "$BUNDLE" "$DISPLAY_NAME" "$TEAM" --upload
+          rm -f "$ASC_KEY_PATH"
+
+  android:
+    name: Android to Google Play
+    if: ${{ github.event_name == 'push' || inputs.android }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check the secrets
+        id: gate
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          PLAY: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          APP_ID: ${{ vars.ANDROID_APP_ID }}
+        run: |
+          if [[ -z "$KEYSTORE" || -z "$PASSWORD" || -z "$ALIAS" || -z "$PLAY" || -z "$APP_ID" ]]; then
+            echo "::notice::Android release skipped: set ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, PLAY_SERVICE_ACCOUNT_JSON (secrets) and ANDROID_APP_ID (variable). See docs/RELEASING.md."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.ready == 'true'
+      - uses: actions/setup-java@v4
+        if: steps.gate.outputs.ready == 'true'
+        with:
+          distribution: zulu
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+        if: steps.gate.outputs.ready == 'true'
+
+      - name: Build the signed bundle
+        if: steps.gate.outputs.ready == 'true'
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD || secrets.ANDROID_KEYSTORE_PASSWORD }}
+          APP_ID: ${{ vars.ANDROID_APP_ID }}
+        run: |
+          umask 077
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/release.keystore"
+          export ANDROID_KEYSTORE_PATH="$RUNNER_TEMP/release.keystore"
+          # Google Play wants a higher version code with every upload: the run number, above any manual upload
+          sed -i "s/versionCode = [0-9]*/versionCode = $((1000 + GITHUB_RUN_NUMBER))/" app/androidApp/build.gradle.kts
+          ./gradlew "-Pevent=$EVENT" "-PappId=$APP_ID" :app:androidApp:bundleRelease
+          rm -f "$ANDROID_KEYSTORE_PATH"
+
+      - name: Upload to the internal testing track
+        if: steps.gate.outputs.ready == 'true'
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: ${{ vars.ANDROID_APP_ID }}
+          releaseFiles: app/androidApp/build/outputs/bundle/release/androidApp-release.aab
+          track: internal
+          status: completed

@@ -1,6 +1,6 @@
 package org.jetbrains.kotlinconf.di
 
-import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
+import org.jetbrains.kotlinconf.di.FileStorageDir
 import com.russhwolf.settings.ObservableSettings
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.BindingContainer
@@ -23,15 +23,8 @@ object JvmBindings {
     @FileStorageDir
     fun provideFileStorageDir(): String = "files"
 
-    @Provides
-    @SingleIn(AppScope::class)
-    fun provideLocalNotificationService(): LocalNotificationService = EmptyLocalNotificationService()
 
     @Provides
     @SingleIn(AppScope::class)
-    fun provideNotificationPlatformConfiguration(): NotificationPlatformConfiguration =
-        NotificationPlatformConfiguration.Desktop(
-            showPushNotification = false,
-            notificationIconPath = null,
-        )
+    fun provideLocalNotificationService(): LocalNotificationService = EmptyLocalNotificationService()
 }
