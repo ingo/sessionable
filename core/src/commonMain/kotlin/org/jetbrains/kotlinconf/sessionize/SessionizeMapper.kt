@@ -92,7 +92,8 @@ fun SessionizeData.toConference(
 
         if (tags.any { it in rules.excludedTags }) return@mapNotNull null
 
-        val room = session.roomId?.let { roomNames[it] } ?: "unknown"
+        // A session that has a time but no room yet has no location to show
+        val room = session.roomId?.let { roomNames[it] } ?: ""
         Session(
             id = session.id,
             title = session.displayTitle,
@@ -103,7 +104,10 @@ fun SessionizeData.toConference(
             endsAt = parseSessionizeTime(endsAt, timeZone),
             tags = tags,
             videoUrl = session.recordingUrl?.trim()?.takeIf { it.isNotEmpty() },
+            liveUrl = session.liveUrl?.trim()?.takeIf { it.startsWith("http") },
             slidesUrl = session.slidesUrl(slidesQuestionIds, rules),
+            isServiceSession = session.isServiceSession,
+            isPlenarySession = session.isPlenumSession,
         )
     }.let { list ->
         rules.multipartWorkshopTag?.let { list.mergeWorkshops(it) } ?: list

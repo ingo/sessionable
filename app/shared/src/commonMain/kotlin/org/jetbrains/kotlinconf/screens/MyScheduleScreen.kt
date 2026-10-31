@@ -421,7 +421,7 @@ private fun BookedSlot(block: BookedBlock, lines: Int, onClick: () -> Unit, modi
         Text(block.session.title, style = AppTheme.typography.text2, maxLines = titleLines)
         if (showTime) {
             Text(
-                "${block.session.shortTimeline} · ${block.session.locationLine}",
+                block.session.timelineWithRoom,
                 style = AppTheme.typography.text2,
                 color = AppTheme.colors.noteText,
                 maxLines = 1,
@@ -528,7 +528,7 @@ internal fun BoxScope.FreeTimePanel(
                     Column(Modifier.weight(1f)) {
                         Text(session.title, maxLines = 2)
                         Text(
-                            "${session.shortTimeline} · ${session.locationLine}",
+                            session.timelineWithRoom,
                             style = AppTheme.typography.text2,
                             color = AppTheme.colors.noteText,
                             maxLines = 1,

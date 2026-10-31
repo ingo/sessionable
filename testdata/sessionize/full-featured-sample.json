@@ -1,0 +1,952 @@
+{
+ "sessions": [
+  {
+   "id": "sv0reg",
+   "title": "Registration and badge pickup",
+   "description": null,
+   "startsAt": "2027-03-09T08:00:00",
+   "endsAt": "2027-03-09T09:00:00",
+   "isServiceSession": true,
+   "isPlenumSession": false,
+   "speakers": [],
+   "categoryItems": [],
+   "questionAnswers": [],
+   "roomId": 1,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "sv0cof1",
+   "title": "Coffee break",
+   "description": null,
+   "startsAt": "2027-03-09T10:30:00",
+   "endsAt": "2027-03-09T11:00:00",
+   "isServiceSession": true,
+   "isPlenumSession": false,
+   "speakers": [],
+   "categoryItems": [],
+   "questionAnswers": [],
+   "roomId": 6,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "sv0lun",
+   "title": "Lunch",
+   "description": "Lunch is served in the exhibition area.",
+   "startsAt": "2027-03-09T12:30:00",
+   "endsAt": "2027-03-09T13:30:00",
+   "isServiceSession": true,
+   "isPlenumSession": false,
+   "speakers": [],
+   "categoryItems": [],
+   "questionAnswers": [],
+   "roomId": 6,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "sv1reg",
+   "title": "Registration and badge pickup",
+   "description": null,
+   "startsAt": "2027-03-10T08:00:00",
+   "endsAt": "2027-03-10T09:00:00",
+   "isServiceSession": true,
+   "isPlenumSession": false,
+   "speakers": [],
+   "categoryItems": [],
+   "questionAnswers": [],
+   "roomId": 1,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "sv1cof1",
+   "title": "Coffee break",
+   "description": null,
+   "startsAt": "2027-03-10T10:30:00",
+   "endsAt": "2027-03-10T11:00:00",
+   "isServiceSession": true,
+   "isPlenumSession": false,
+   "speakers": [],
+   "categoryItems": [],
+   "questionAnswers": [],
+   "roomId": 6,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "sv1lun",
+   "title": "Lunch",
+   "description": "Lunch is served in the exhibition area.",
+   "startsAt": "2027-03-10T12:30:00",
+   "endsAt": "2027-03-10T13:30:00",
+   "isServiceSession": true,
+   "isPlenumSession": false,
+   "speakers": [],
+   "categoryItems": [],
+   "questionAnswers": [],
+   "roomId": 6,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "sv2reg",
+   "title": "Registration and badge pickup",
+   "description": null,
+   "startsAt": "2027-03-11T08:00:00",
+   "endsAt": "2027-03-11T09:00:00",
+   "isServiceSession": true,
+   "isPlenumSession": false,
+   "speakers": [],
+   "categoryItems": [],
+   "questionAnswers": [],
+   "roomId": 1,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "sv2cof1",
+   "title": "Coffee break",
+   "description": null,
+   "startsAt": "2027-03-11T10:30:00",
+   "endsAt": "2027-03-11T11:00:00",
+   "isServiceSession": true,
+   "isPlenumSession": false,
+   "speakers": [],
+   "categoryItems": [],
+   "questionAnswers": [],
+   "roomId": 6,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "sv2lun",
+   "title": "Lunch",
+   "description": "Lunch is served in the exhibition area.",
+   "startsAt": "2027-03-11T12:30:00",
+   "endsAt": "2027-03-11T13:30:00",
+   "isServiceSession": true,
+   "isPlenumSession": false,
+   "speakers": [],
+   "categoryItems": [],
+   "questionAnswers": [],
+   "roomId": 6,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "sv2party",
+   "title": "Closing party",
+   "description": "Food, drinks and music.",
+   "startsAt": "2027-03-11T18:00:00",
+   "endsAt": "2027-03-11T22:00:00",
+   "isServiceSession": true,
+   "isPlenumSession": false,
+   "speakers": [],
+   "categoryItems": [],
+   "questionAnswers": [],
+   "roomId": 1,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "allday",
+   "title": "Exhibition open",
+   "description": "The Solutions Showcase is open all day.",
+   "startsAt": "2027-03-09T08:00:00",
+   "endsAt": "2027-03-09T18:00:00",
+   "isServiceSession": true,
+   "isPlenumSession": false,
+   "speakers": [],
+   "categoryItems": [],
+   "questionAnswers": [],
+   "roomId": 6,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "k1",
+   "title": "Opening keynote: Agents everywhere",
+   "description": "Why agents changed how we build.",
+   "startsAt": "2027-03-09T09:00:00",
+   "endsAt": "2027-03-09T09:45:00",
+   "isServiceSession": false,
+   "isPlenumSession": true,
+   "speakers": [
+    "sp06"
+   ],
+   "categoryItems": [
+    101,
+    121
+   ],
+   "questionAnswers": [],
+   "roomId": 1,
+   "liveUrl": "https://live.example/main",
+   "recordingUrl": "https://youtu.be/sample-k1"
+  },
+  {
+   "id": "t1",
+   "title": "Securing multi-server MCP access",
+   "description": "Production lessons.\n\n- Auth\n- Rate limits\n- Audit",
+   "startsAt": "2027-03-09T11:00:00",
+   "endsAt": "2027-03-09T11:45:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp01",
+    "sp02"
+   ],
+   "categoryItems": [
+    103,
+    112,
+    122,
+    131
+   ],
+   "questionAnswers": [
+    {
+     "questionId": 4,
+     "answerValue": "https://sessionize.com/download/sample-deck.pdf"
+    }
+   ],
+   "roomId": 2,
+   "liveUrl": null,
+   "recordingUrl": "  https://youtu.be/sample-t1  "
+  },
+  {
+   "id": "t2",
+   "title": "A very long session title that goes on and on to check how cards, headers and the calendar wrap text across several lines on a small phone screen",
+   "description": "Short.",
+   "startsAt": "2027-03-09T11:00:00",
+   "endsAt": "2027-03-09T11:45:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp03"
+   ],
+   "categoryItems": [
+    102,
+    111,
+    122
+   ],
+   "questionAnswers": [],
+   "roomId": 3,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "t3",
+   "title": "Talks without a speaker",
+   "description": "A session without any speaker, such as a sponsored slot.",
+   "startsAt": "2027-03-09T14:00:00",
+   "endsAt": "2027-03-09T14:30:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [],
+   "categoryItems": [
+    104,
+    122
+   ],
+   "questionAnswers": [],
+   "roomId": 6,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "t4",
+   "title": "Emoji 🚀 and ünïcödé in a title",
+   "description": "日本語の説明。",
+   "startsAt": "2027-03-09T14:00:00",
+   "endsAt": "2027-03-09T14:45:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp05"
+   ],
+   "categoryItems": [
+    101,
+    113,
+    122,
+    132
+   ],
+   "questionAnswers": [],
+   "roomId": 2,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "t5",
+   "title": "Open source maintainers panel",
+   "description": null,
+   "startsAt": "2027-03-09T15:00:00",
+   "endsAt": "2027-03-09T16:00:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp04",
+    "sp08",
+    "sp01"
+   ],
+   "categoryItems": [
+    104,
+    125,
+    131
+   ],
+   "questionAnswers": [],
+   "roomId": 1,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "w1",
+   "title": "Hands-on agents workshop. Part 1",
+   "description": "Bring a laptop.",
+   "startsAt": "2027-03-09T14:00:00",
+   "endsAt": "2027-03-09T16:00:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp01"
+   ],
+   "categoryItems": [
+    101,
+    112,
+    123
+   ],
+   "questionAnswers": [],
+   "roomId": 4,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "w2",
+   "title": "Hands-on agents workshop. Part 2",
+   "description": "Bring a laptop.",
+   "startsAt": "2027-03-09T16:30:00",
+   "endsAt": "2027-03-09T18:00:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp01"
+   ],
+   "categoryItems": [
+    101,
+    112,
+    123
+   ],
+   "questionAnswers": [],
+   "roomId": 4,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "l0",
+   "title": "Lightning talk 1",
+   "description": "Five minutes.",
+   "startsAt": "2027-03-09T16:00:00",
+   "endsAt": "2027-03-09T16:08:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp02"
+   ],
+   "categoryItems": [
+    104,
+    124
+   ],
+   "questionAnswers": [],
+   "roomId": 5,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "l1",
+   "title": "Lightning talk 2",
+   "description": "Five minutes.",
+   "startsAt": "2027-03-09T16:10:00",
+   "endsAt": "2027-03-09T16:18:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp03"
+   ],
+   "categoryItems": [
+    104,
+    124
+   ],
+   "questionAnswers": [],
+   "roomId": 5,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "l2",
+   "title": "Lightning talk 3",
+   "description": "Five minutes.",
+   "startsAt": "2027-03-09T16:20:00",
+   "endsAt": "2027-03-09T16:28:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp04"
+   ],
+   "categoryItems": [
+    104,
+    124
+   ],
+   "questionAnswers": [],
+   "roomId": 5,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "l3",
+   "title": "Lightning talk 4",
+   "description": "Five minutes.",
+   "startsAt": "2027-03-09T16:30:00",
+   "endsAt": "2027-03-09T16:38:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp07"
+   ],
+   "categoryItems": [
+    104,
+    124
+   ],
+   "questionAnswers": [],
+   "roomId": 5,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "t6",
+   "title": "Day two: platform internals",
+   "description": "Deep dive.",
+   "startsAt": "2027-03-10T09:30:00",
+   "endsAt": "2027-03-10T10:30:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp01"
+   ],
+   "categoryItems": [
+    102,
+    113,
+    122
+   ],
+   "questionAnswers": [
+    {
+     "questionId": 4,
+     "answerValue": "https://sessionize.com/download/sample-deck.pdf"
+    },
+    {
+     "questionId": 5,
+     "answerValue": "https://sessionize.com/download/logo.pdf"
+    }
+   ],
+   "roomId": 2,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "t7",
+   "title": "Overlapping talk in Borealis",
+   "description": "Runs at the same time as the Aurora talk.",
+   "startsAt": "2027-03-10T09:45:00",
+   "endsAt": "2027-03-10T10:45:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp04"
+   ],
+   "categoryItems": [
+    103,
+    112,
+    122
+   ],
+   "questionAnswers": [],
+   "roomId": 3,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "t8",
+   "title": "Panel: the future of work",
+   "description": "Who knows.",
+   "startsAt": "2027-03-10T14:00:00",
+   "endsAt": "2027-03-10T15:00:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp08",
+    "sp06"
+   ],
+   "categoryItems": [
+    104,
+    125
+   ],
+   "questionAnswers": [],
+   "roomId": 1,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "k2",
+   "title": "Closing keynote",
+   "description": "What comes next.",
+   "startsAt": "2027-03-11T16:30:00",
+   "endsAt": "2027-03-11T17:30:00",
+   "isServiceSession": false,
+   "isPlenumSession": true,
+   "speakers": [
+    "sp06"
+   ],
+   "categoryItems": [
+    101,
+    121
+   ],
+   "questionAnswers": [],
+   "roomId": 1,
+   "liveUrl": null,
+   "recordingUrl": "https://youtu.be/sample-k2"
+  },
+  {
+   "id": "t9",
+   "title": "A talk in a room nobody defined",
+   "description": "The room id is missing.",
+   "startsAt": "2027-03-11T10:00:00",
+   "endsAt": "2027-03-11T10:45:00",
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp07"
+   ],
+   "categoryItems": [
+    102,
+    122
+   ],
+   "questionAnswers": [],
+   "roomId": null,
+   "liveUrl": null,
+   "recordingUrl": null
+  },
+  {
+   "id": "t10",
+   "title": "Not scheduled yet",
+   "description": "Accepted, but no time and room yet.",
+   "startsAt": null,
+   "endsAt": null,
+   "isServiceSession": false,
+   "isPlenumSession": false,
+   "speakers": [
+    "sp03"
+   ],
+   "categoryItems": [
+    101,
+    122
+   ],
+   "questionAnswers": [],
+   "roomId": null,
+   "liveUrl": null,
+   "recordingUrl": null
+  }
+ ],
+ "rooms": [
+  {
+   "id": 1,
+   "name": "Main Hall",
+   "sort": 0
+  },
+  {
+   "id": 2,
+   "name": "Room Aurora",
+   "sort": 1
+  },
+  {
+   "id": 3,
+   "name": "Room Borealis",
+   "sort": 2
+  },
+  {
+   "id": 4,
+   "name": "Workshop Studio",
+   "sort": 3
+  },
+  {
+   "id": 5,
+   "name": "Lightning Stage (Lightning talks)",
+   "sort": 4
+  },
+  {
+   "id": 6,
+   "name": "Solutions Showcase",
+   "sort": 5
+  }
+ ],
+ "speakers": [
+  {
+   "id": "sp01",
+   "firstName": "Ada",
+   "lastName": "Nguyen",
+   "fullName": "Ada Nguyen",
+   "tagLine": "Principal engineer",
+   "bio": "Builds agent platforms.\n\nLikes *clear* interfaces.",
+   "profilePicture": "https://sessionize.com/image/sample-1.jpg",
+   "isTopSpeaker": true,
+   "links": [
+    {
+     "title": "LinkedIn",
+     "url": "https://linkedin.com/in/ada-sample",
+     "linkType": "LinkedIn"
+    },
+    {
+     "title": "Twitter",
+     "url": "https://x.com/ada",
+     "linkType": "Twitter"
+    },
+    {
+     "title": "Ada's blog",
+     "url": "https://ada.example/blog",
+     "linkType": "Blog"
+    },
+    {
+     "title": "Company Website",
+     "url": "https://acme.example",
+     "linkType": "Company_Website"
+    },
+    {
+     "title": "Sessionize",
+     "url": "https://sessionize.com/ada-sample",
+     "linkType": "Sessionize"
+    },
+    {
+     "title": "All my talks",
+     "url": "https://ada.example/talks",
+     "linkType": "Other"
+    }
+   ],
+   "categoryItems": [],
+   "questionAnswers": [
+    {
+     "questionId": 1,
+     "answerValue": "Acme"
+    },
+    {
+     "questionId": 2,
+     "answerValue": "Principal Engineer"
+    },
+    {
+     "questionId": 3,
+     "answerValue": "https://acme.example"
+    }
+   ]
+  },
+  {
+   "id": "sp02",
+   "firstName": "Björn",
+   "lastName": "Åkesson",
+   "fullName": "Björn Åkesson",
+   "tagLine": "Security lead at ACME",
+   "bio": "Threat models for the unthreatened.",
+   "profilePicture": "https://sessionize.com/image/sample-2.jpg",
+   "isTopSpeaker": false,
+   "links": [
+    {
+     "title": "LinkedIn",
+     "url": "https://linkedin.com/in/bjorn-sample",
+     "linkType": "LinkedIn"
+    }
+   ],
+   "categoryItems": [],
+   "questionAnswers": [
+    {
+     "questionId": 1,
+     "answerValue": "ACME"
+    },
+    {
+     "questionId": 3,
+     "answerValue": "https://acme.example/logo.png"
+    }
+   ]
+  },
+  {
+   "id": "sp03",
+   "firstName": "Chiamaka",
+   "lastName": "Okafor",
+   "fullName": "Chiamaka Okafor",
+   "tagLine": null,
+   "bio": "",
+   "profilePicture": null,
+   "isTopSpeaker": false,
+   "links": [],
+   "categoryItems": [],
+   "questionAnswers": [
+    {
+     "questionId": 1,
+     "answerValue": "Initech"
+    },
+    {
+     "questionId": 2,
+     "answerValue": "Developer Advocate"
+    }
+   ]
+  },
+  {
+   "id": "sp04",
+   "firstName": "Dmitri",
+   "lastName": "Volkov",
+   "fullName": "Dmitri Volkov",
+   "tagLine": "Maintainer",
+   "bio": "Open source since 2009.",
+   "profilePicture": "https://sessionize.com/image/sample-4.jpg",
+   "isTopSpeaker": false,
+   "links": [
+    {
+     "title": "Blog",
+     "url": "https://dmitri.example",
+     "linkType": "Blog"
+    },
+    {
+     "title": "Email",
+     "url": "mailto:dmitri@example.com",
+     "linkType": "Contact"
+    }
+   ],
+   "categoryItems": [],
+   "questionAnswers": [
+    {
+     "questionId": 1,
+     "answerValue": "Initech"
+    },
+    {
+     "questionId": 2,
+     "answerValue": "Staff Engineer"
+    }
+   ]
+  },
+  {
+   "id": "sp05",
+   "firstName": "Emoji 🚀 Speaker",
+   "lastName": "Ünïcode",
+   "fullName": "Emoji 🚀 Speaker Ünïcode",
+   "tagLine": "名前 · naïve café",
+   "bio": "日本語の自己紹介。Привет, мир!",
+   "profilePicture": "https://sessionize.com/image/sample-5.jpg",
+   "isTopSpeaker": false,
+   "links": [],
+   "categoryItems": [],
+   "questionAnswers": [
+    {
+     "questionId": 1,
+     "answerValue": "Globex"
+    },
+    {
+     "questionId": 2,
+     "answerValue": "CTO"
+    }
+   ]
+  },
+  {
+   "id": "sp06",
+   "firstName": "Fatima",
+   "lastName": "Al-Sayed",
+   "fullName": "Fatima Al-Sayed",
+   "tagLine": "Keynote speaker",
+   "bio": "A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. A very long biography. ",
+   "profilePicture": "https://sessionize.com/image/sample-6.jpg",
+   "isTopSpeaker": true,
+   "links": [
+    {
+     "title": "LinkedIn",
+     "url": "https://linkedin.com/in/fatima-sample",
+     "linkType": "LinkedIn"
+    }
+   ],
+   "categoryItems": [],
+   "questionAnswers": [
+    {
+     "questionId": 1,
+     "answerValue": "Globex"
+    },
+    {
+     "questionId": 2,
+     "answerValue": "Chief Scientist"
+    }
+   ]
+  },
+  {
+   "id": "sp07",
+   "firstName": "Grace",
+   "lastName": "Hopper-Smith",
+   "fullName": "Grace Hopper-Smith",
+   "tagLine": null,
+   "bio": null,
+   "profilePicture": null,
+   "isTopSpeaker": false,
+   "links": [],
+   "categoryItems": [],
+   "questionAnswers": []
+  },
+  {
+   "id": "sp08",
+   "firstName": "Hiro",
+   "lastName": "Tanaka",
+   "fullName": "Hiro Tanaka",
+   "tagLine": "Panelist",
+   "bio": "",
+   "profilePicture": "https://sessionize.com/image/sample-8.jpg",
+   "isTopSpeaker": false,
+   "links": [],
+   "categoryItems": [],
+   "questionAnswers": [
+    {
+     "questionId": 1,
+     "answerValue": "Hooli"
+    },
+    {
+     "questionId": 2,
+     "answerValue": "VP Engineering"
+    }
+   ]
+  }
+ ],
+ "questions": [
+  {
+   "id": 1,
+   "question": "Company",
+   "questionType": "Short_Text",
+   "sort": 0
+  },
+  {
+   "id": 2,
+   "question": "Speaker Title",
+   "questionType": "Short_Text",
+   "sort": 1
+  },
+  {
+   "id": 3,
+   "question": "Company URL",
+   "questionType": "Short_Text",
+   "sort": 2
+  },
+  {
+   "id": 4,
+   "question": "Presentation or Poster",
+   "questionType": "File_upload",
+   "sort": 3
+  },
+  {
+   "id": 5,
+   "question": "Event Logo",
+   "questionType": "File_upload",
+   "sort": 4
+  },
+  {
+   "id": 6,
+   "question": "Anything the organisers should know?",
+   "questionType": "Long_Text",
+   "sort": 5
+  }
+ ],
+ "categories": [
+  {
+   "id": 10,
+   "title": "Track",
+   "sort": 0,
+   "items": [
+    {
+     "id": 101,
+     "name": "AI & Agents",
+     "sort": 0
+    },
+    {
+     "id": 102,
+     "name": "Platform",
+     "sort": 1
+    },
+    {
+     "id": 103,
+     "name": "Security",
+     "sort": 2
+    },
+    {
+     "id": 104,
+     "name": "Community",
+     "sort": 3
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "title": "Audience Level",
+   "sort": 1,
+   "items": [
+    {
+     "id": 111,
+     "name": "Beginner",
+     "sort": 0
+    },
+    {
+     "id": 112,
+     "name": "Intermediate",
+     "sort": 1
+    },
+    {
+     "id": 113,
+     "name": "Advanced",
+     "sort": 2
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "title": "Session format",
+   "sort": 2,
+   "items": [
+    {
+     "id": 121,
+     "name": "Keynote",
+     "sort": 0
+    },
+    {
+     "id": 122,
+     "name": "Talk",
+     "sort": 1
+    },
+    {
+     "id": 123,
+     "name": "Workshop",
+     "sort": 2
+    },
+    {
+     "id": 124,
+     "name": "Lightning talk",
+     "sort": 3
+    },
+    {
+     "id": 125,
+     "name": "Panel",
+     "sort": 4
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "title": "Tags",
+   "sort": 3,
+   "items": [
+    {
+     "id": 131,
+     "name": "Open source",
+     "sort": 0
+    },
+    {
+     "id": 132,
+     "name": "Live demo",
+     "sort": 1
+    }
+   ]
+  }
+ ]
+}

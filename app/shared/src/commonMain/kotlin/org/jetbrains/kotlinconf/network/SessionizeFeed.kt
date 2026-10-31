@@ -26,16 +26,17 @@ class SessionizeFeed(
     private val client: HttpClient,
 ) {
     private val mutex = Mutex()
-    private var cached: Pair<Instant, SessionizeData>? = null
+    // One entry per feed: the attendee can switch between conferences within the minute
+    private val cached = mutableMapOf<String, Pair<Instant, SessionizeData>>()
 
     suspend fun get(url: String): SessionizeData = mutex.withLock {
-        cached?.let { (fetchedAt, data) ->
+        cached[url]?.let { (fetchedAt, data) ->
             if (Clock.System.now() - fetchedAt < 1.minutes) return data
         }
         // A full feed is several hundred kilobytes, more than the default timeout allows on a slow network
         val body = client.get(url) { timeout { requestTimeoutMillis = 30.seconds.inWholeMilliseconds } }.bodyAsText()
         val data = parseSessionizeData(body)
-        cached = Clock.System.now() to data
+        cached[url] = Clock.System.now() to data
         data
     }
 }

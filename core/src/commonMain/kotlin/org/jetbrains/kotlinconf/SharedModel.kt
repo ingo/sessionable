@@ -60,6 +60,12 @@ class Session(
     val videoUrl: String? = null,
     /** The speakers' slides (or poster), when uploaded to Sessionize. */
     val slidesUrl: String? = null,
+    /** Where to watch the session live, when the organisers set one. */
+    val liveUrl: String? = null,
+    /** A break, lunch or registration: Sessionize's own mark for sessions that are not talks. */
+    val isServiceSession: Boolean = false,
+    /** A session for all attendees, such as a keynote: nothing else runs at the same time. */
+    val isPlenarySession: Boolean = false,
 )
 
 @Serializable
