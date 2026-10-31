@@ -1,20 +1,13 @@
 {
-  "fill" : "system-light",
+  "fill" : {
+    "automatic-gradient" : "display-p3:0.14510,0.38824,0.92157,1.00000"
+  },
   "groups" : [
     {
       "layers" : [
         {
-          "image-name" : "Pupil.svg",
-          "name" : "Pupil"
-        },
-        {
-          "glass" : true,
-          "image-name" : "Eye.svg",
-          "name" : "Eye"
-        },
-        {
-          "image-name" : "Head.svg",
-          "name" : "Head"
+          "image-name" : "Glyph.svg",
+          "name" : "Glyph"
         }
       ],
       "shadow" : {

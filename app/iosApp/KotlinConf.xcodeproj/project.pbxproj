@@ -328,7 +328,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2ZEFAR8TH3;
@@ -340,13 +340,13 @@
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KotlinConf;
 				EVENT_LAUNCH_BACKGROUND = "";
-				EVENT_LAUNCH_IMAGE = "KotlinConf 2026 icon";
+				EVENT_LAUNCH_IMAGE = "launch-glyph";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 40.0.5;
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -354,8 +354,8 @@
 					"-framework",
 					"shared\n",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.kotlinconf.iosapp;
-				PRODUCT_NAME = KotlinConf;
+				PRODUCT_BUNDLE_IDENTIFIER = org.example.sessionable;
+				PRODUCT_NAME = Sessionable;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "KotlinConf iOS App for notifications";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -374,7 +374,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2ZEFAR8TH3;
@@ -386,13 +386,13 @@
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = KotlinConf;
 				EVENT_LAUNCH_BACKGROUND = "";
-				EVENT_LAUNCH_IMAGE = "KotlinConf 2026 icon";
+				EVENT_LAUNCH_IMAGE = "launch-glyph";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 40.0.5;
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -400,8 +400,8 @@
 					"-framework",
 					"shared\n",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.kotlinconf.iosapp;
-				PRODUCT_NAME = KotlinConf;
+				PRODUCT_BUNDLE_IDENTIFIER = org.example.sessionable;
+				PRODUCT_NAME = Sessionable;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "KotlinConf iOS App for notifications";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

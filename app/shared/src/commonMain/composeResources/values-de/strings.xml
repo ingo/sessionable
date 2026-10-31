@@ -313,6 +313,7 @@ Bitte versuchen Sie es erneut.</string>
     <string name="connect_saved">Deine Konferenzen</string>
     <string name="connect_forget">Entfernen</string>
     <string name="connect_privacy">Die App lädt nur das öffentliche Programm von Sessionize herunter. Deine Lesezeichen und Notizen bleiben auf diesem Gerät.</string>
+    <string name="info_link_report_problem">Problem melden</string>
     <string name="info_link_switch_conference">Konferenz wechseln</string>
 
     <!-- Photos and videos on a session -->
