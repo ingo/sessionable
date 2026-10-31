@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import kotlin.random.Random
 
 @Composable
@@ -93,31 +93,31 @@ private fun MarkdownImpl(
         Markdown(
             state = state,
             colors = DefaultMarkdownColors(
-                text = KotlinConfTheme.colors.longText,
-                codeBackground = KotlinConfTheme.colors.mainBackground,
-                inlineCodeBackground = KotlinConfTheme.colors.mainBackground,
-                dividerColor = KotlinConfTheme.colors.strokePale,
-                tableBackground = KotlinConfTheme.colors.mainBackground,
+                text = AppTheme.colors.longText,
+                codeBackground = AppTheme.colors.mainBackground,
+                inlineCodeBackground = AppTheme.colors.mainBackground,
+                dividerColor = AppTheme.colors.strokePale,
+                tableBackground = AppTheme.colors.mainBackground,
             ),
             typography = DefaultMarkdownTypography(
-                text = KotlinConfTheme.typography.text1,
-                code = KotlinConfTheme.typography.text1,
-                h1 = KotlinConfTheme.typography.h1,
-                h2 = KotlinConfTheme.typography.h2,
-                h3 = KotlinConfTheme.typography.h3,
-                h4 = KotlinConfTheme.typography.h4,
-                h5 = KotlinConfTheme.typography.h4,
-                h6 = KotlinConfTheme.typography.h4,
-                quote = KotlinConfTheme.typography.text2,
-                paragraph = KotlinConfTheme.typography.text1,
-                ordered = KotlinConfTheme.typography.text1,
-                bullet = KotlinConfTheme.typography.text1,
-                list = KotlinConfTheme.typography.text1,
-                inlineCode = KotlinConfTheme.typography.text1,
-                table = KotlinConfTheme.typography.text1,
+                text = AppTheme.typography.text1,
+                code = AppTheme.typography.text1,
+                h1 = AppTheme.typography.h1,
+                h2 = AppTheme.typography.h2,
+                h3 = AppTheme.typography.h3,
+                h4 = AppTheme.typography.h4,
+                h5 = AppTheme.typography.h4,
+                h6 = AppTheme.typography.h4,
+                quote = AppTheme.typography.text2,
+                paragraph = AppTheme.typography.text1,
+                ordered = AppTheme.typography.text1,
+                bullet = AppTheme.typography.text1,
+                list = AppTheme.typography.text1,
+                inlineCode = AppTheme.typography.text1,
+                table = AppTheme.typography.text1,
                 textLink = TextLinkStyles(
                     style = SpanStyle(
-                        color = KotlinConfTheme.colors.primaryText,
+                        color = AppTheme.colors.primaryText,
                         textDecoration = TextDecoration.Underline,
                     ),
                 ),

@@ -1,123 +1,113 @@
 #!/usr/bin/env bash
-# Regenerates the app icons of every platform from two SVGs, so branding an app means replacing them:
+# Regenerates the app icons of every platform from one picture, so branding an app means replacing it:
 #
-#   branding/icon.svg    the app icon: square, fully opaque (the stores round the corners)
-#   branding/glyph.svg   the mark alone, white on transparent, inside the middle two thirds
-#                        (Android's adaptive icon and the web splash screen are drawn from it)
-#   branding/brand.env   the colors that go with them
+#   branding/icon.png    the app icon: square, at least 1024 px, fully opaque (the stores round the corners)
+#   branding/brand.env   the colors of the web app's loading page
 #
 #   scripts/make-icons.sh
 #
-# Writes the iOS asset catalog, the iOS Icon Composer icon, the Android launcher icons and Play Store
-# icon, and the icons and splash screens of each web branding folder (app/webApp/branding/<name>).
-# Needs rsvg-convert (brew install librsvg) and Python with Pillow (pip install pillow).
+# Writes the iOS asset catalog and Icon Composer icon, the iOS launch image, the Android launcher icons and
+# Play Store icon, and the icons and splash screens of the web app and of each web branding folder marked with
+# a .generated-icons file (app/webApp/branding/<name>). Needs Python with Pillow and NumPy
+# (pip install pillow numpy).
 set -euo pipefail
 
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
-BRANDING="$ROOT/branding"
-command -v rsvg-convert >/dev/null || { echo "rsvg-convert is needed: brew install librsvg" >&2; exit 1; }
-python3 -c "import PIL" 2>/dev/null || { echo "Pillow is needed: pip install pillow" >&2; exit 1; }
-[[ -f "$BRANDING/icon.svg" && -f "$BRANDING/glyph.svg" ]] || { echo "Missing branding/icon.svg or branding/glyph.svg" >&2; exit 1; }
-source "$BRANDING/brand.env"
+python3 -c "import PIL, numpy" 2>/dev/null || { echo "Pillow and NumPy are needed: pip install pillow numpy" >&2; exit 1; }
+[[ -f "$ROOT/branding/icon.png" ]] || { echo "Missing branding/icon.png" >&2; exit 1; }
 
-TMP=$(mktemp -d)
-trap 'rm -rf "$TMP"' EXIT
+python3 - "$ROOT" <<'PY'
+import base64, io, json, os, pathlib, sys
+import numpy as np
+from PIL import Image, ImageFilter
 
-# render <pixels> <svg> <png>
-render() { rsvg-convert -w "$1" -h "$1" "$2" -o "$3"; }
+root = pathlib.Path(sys.argv[1])
+source = Image.open(root / "branding/icon.png").convert("RGB")
+if source.width != source.height or source.width < 1024:
+    sys.exit("branding/icon.png must be square and at least 1024 px")
 
-# The glyph in another color: black for Android's themed icon, accent colors for the web splash screens
-recolor() { sed "s/#ffffff/$2/g" "$1" > "$3"; }
+def size(px):
+    return source.resize((px, px), Image.LANCZOS)
 
-# iOS asset catalog: every size the catalog asks for. Icons must not have an alpha channel.
-IOS="$ROOT/app/iosApp/iosApp"
-python3 - "$IOS/Assets.xcassets/AppIcon.appiconset" "$BRANDING/icon.svg" <<'PY'
-import json, subprocess, sys, io
-from PIL import Image
-catalog, svg = sys.argv[1:3]
-for image in json.load(open(f"{catalog}/Contents.json"))["images"]:
-    name = image.get("filename")
-    if not name:
-        continue
-    px = round(float(image["size"].split("x")[0]) * int(image["scale"].rstrip("x")))
-    png = subprocess.run(["rsvg-convert", "-w", str(px), "-h", str(px), svg], check=True, capture_output=True).stdout
-    Image.open(io.BytesIO(png)).convert("RGB").save(f"{catalog}/{name}")
-PY
+def save(image, path):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    image.save(path)
 
-# iOS Icon Composer icon: the glyph on the brand gradient
-if [[ -d "$IOS/AppIcon.icon" ]]; then
-  rm -f "$IOS"/AppIcon.icon/Assets/*.svg
-  cp "$BRANDING/glyph.svg" "$IOS/AppIcon.icon/Assets/Glyph.svg"
-  cat > "$IOS/AppIcon.icon/icon.json" <<JSON
-{
-  "fill" : {
-    "automatic-gradient" : "display-p3:0.14510,0.38824,0.92157,1.00000"
-  },
-  "groups" : [
-    {
-      "layers" : [
-        {
-          "image-name" : "Glyph.svg",
-          "name" : "Glyph"
-        }
-      ],
-      "shadow" : {
-        "kind" : "neutral",
-        "opacity" : 0.5
-      },
-      "translucency" : {
-        "enabled" : true,
-        "value" : 0.5
-      }
-    }
-  ],
-  "supported-platforms" : {
-    "circles" : [
-      "watchOS"
-    ],
-    "squares" : "shared"
-  }
-}
-JSON
-fi
+# iOS asset catalog: every size the catalog asks for (no alpha channel allowed)
+ios = root / "app/iosApp/iosApp"
+catalog = ios / "Assets.xcassets/AppIcon.appiconset"
+for image in json.load(open(catalog / "Contents.json"))["images"]:
+    if image.get("filename"):
+        px = round(float(image["size"].split("x")[0]) * int(image["scale"].rstrip("x")))
+        save(size(px), catalog / image["filename"])
 
-# Android: adaptive icon layers (108 dp at 4x), themed icon, Play Store icon
-RES="$ROOT/app/androidApp/src/main/res"
-mkdir -p "$RES/drawable-nodpi"
-render 432 "$BRANDING/glyph.svg" "$RES/drawable-nodpi/ic_launcher_foreground.png"
-recolor "$BRANDING/glyph.svg" "#000000" "$TMP/glyph-mono.svg"
-render 432 "$TMP/glyph-mono.svg" "$RES/drawable-nodpi/ic_launcher_mono.png"
-render 512 "$BRANDING/icon.svg" "$ROOT/app/androidApp/src/main/ic_launcher-playstore.png"
-cat > "$RES/values/ic_launcher_background.xml" <<XML
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="ic_launcher_background">$ICON_BACKGROUND</color>
-</resources>
-XML
+# iOS Icon Composer icon: the picture as one layer
+composer = ios / "AppIcon.icon"
+if composer.exists():
+    for old in (composer / "Assets").glob("*"):
+        old.unlink()
+    save(size(1024), composer / "Assets/Icon.png")
+    (composer / "icon.json").write_text(json.dumps({
+        "groups": [{"layers": [{"image-name": "Icon.png", "name": "Icon"}]}],
+        "supported-platforms": {"circles": ["watchOS"], "squares": "shared"},
+    }, indent=2) + "\n")
 
-# Web: icons and splash screens for each branding folder
-python3 - "$BRANDING/glyph.svg" "$TMP" <<'PY'
-import re, sys
-glyph = open(sys.argv[1]).read()
-inner = re.search(r"<svg[^>]*>(.*)</svg>", glyph, re.S).group(1)
-def splash(background, color):
-    body = inner.replace("#ffffff", color)
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">'
+# iOS launch image shown while the app starts
+launch = ios / "Assets.xcassets/launch-glyph.imageset"
+for scale in (1, 2, 3):
+    save(size(120 * scale), launch / f"launch-glyph@{scale}x.png")
+(launch / "launch-glyph.svg").unlink(missing_ok=True)
+(launch / "Contents.json").write_text(json.dumps({
+    "images": [{"filename": f"launch-glyph@{s}x.png", "idiom": "universal", "scale": f"{s}x"} for s in (1, 2, 3)],
+    "info": {"author": "xcode", "version": 1},
+}, indent=2) + "\n")
+
+# Android adaptive icon: 108 dp at 4x. Only the middle two thirds show through the mask, so the
+# picture is shrunk into that area and the gradient around it is continued outwards.
+res = root / "app/androidApp/src/main/res"
+canvas, inner = 432, 324
+art = np.asarray(size(inner), dtype=np.float32)
+pad = (canvas - inner) // 2
+extended = np.pad(art, ((pad, canvas - inner - pad), (pad, canvas - inner - pad), (0, 0)), mode="edge")
+blurred = Image.fromarray(extended.astype(np.uint8)).filter(ImageFilter.GaussianBlur(24))
+background = np.asarray(blurred).copy()
+background[pad:pad + inner, pad:pad + inner] = art.astype(np.uint8)
+save(Image.fromarray(background), res / "drawable-nodpi/ic_launcher_background.png")
+# Themed icon: the white badge as a silhouette
+badge = (art.min(axis=2) > 235).astype(np.uint8) * 255
+mono = np.zeros((canvas, canvas, 4), dtype=np.uint8)
+mono[pad:pad + inner, pad:pad + inner, 3] = badge
+save(Image.fromarray(mono, "RGBA"), res / "drawable-nodpi/ic_launcher_mono.png")
+(res / "drawable-nodpi/ic_launcher_foreground.png").unlink(missing_ok=True)
+save(size(432), res / "drawable-nodpi/splash_icon.png")
+(res / "drawable/ic_launcher.xml").write_text(
+    '<?xml version="1.0" encoding="utf-8"?>\n'
+    '<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">\n'
+    '    <background android:drawable="@drawable/ic_launcher_background"/>\n'
+    '    <foreground android:drawable="@android:color/transparent"/>\n'
+    '    <monochrome android:drawable="@drawable/ic_launcher_mono"/>\n'
+    '</adaptive-icon>\n')
+(res / "values/ic_launcher_background.xml").unlink(missing_ok=True)
+save(size(512), root / "app/androidApp/src/main/ic_launcher-playstore.png")
+
+# Web: icons and splash screens
+def splash(background):
+    buffer = io.BytesIO()
+    size(256).save(buffer, "PNG")
+    data = base64.b64encode(buffer.getvalue()).decode()
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512">'
             f'<rect width="512" height="512" fill="{background}"/>'
-            f'<g transform="translate(128 128) scale(0.25)">{body}</g></svg>\n')
-open(f"{sys.argv[2]}/splash-light.svg", "w").write(splash("#f8fafc", "#2563eb"))
-open(f"{sys.argv[2]}/splash-dark.svg", "w").write(splash("#0f172a", "#60a5fa"))
+            f'<clipPath id="r"><rect x="128" y="128" width="256" height="256" rx="58"/></clipPath>'
+            f'<image x="128" y="128" width="256" height="256" clip-path="url(#r)" href="data:image/png;base64,{data}"/></svg>\n')
+
+targets = [root / "app/webApp/src/webMain/resources"]
+branding = root / "app/webApp/branding"
+targets += [d for d in sorted(branding.iterdir()) if d.is_dir() and (d / ".generated-icons").exists()]
+for target in targets:
+    images = target / "images"
+    for name, px in (("icon-192", 192), ("icon-360", 360), ("icon-512", 512), ("apple-touch-icon", 180)):
+        save(size(px), images / f"{name}.png")
+    (images / "splash-light.svg").write_text(splash("#f4faf9"))
+    (images / "splash-dark.svg").write_text(splash("#0b2a30"))
+print("Icons written from branding/icon.png")
 PY
-for dir in "$ROOT"/app/webApp/branding/*/; do
-  [[ "$(basename "$dir")" == test ]] && continue
-  # A folder with its own artwork (no generated marker) is left alone
-  [[ -f "$dir/.generated-icons" ]] || continue
-  mkdir -p "$dir/images"
-  render 192 "$BRANDING/icon.svg" "$dir/images/icon-192.png"
-  render 360 "$BRANDING/icon.svg" "$dir/images/icon-360.png"
-  render 512 "$BRANDING/icon.svg" "$dir/images/icon-512.png"
-  render 180 "$BRANDING/icon.svg" "$dir/images/apple-touch-icon.png"
-  cp "$TMP/splash-light.svg" "$dir/images/splash-light.svg"
-  cp "$TMP/splash-dark.svg" "$dir/images/splash-dark.svg"
-done
-echo "Icons written from branding/icon.svg and branding/glyph.svg"

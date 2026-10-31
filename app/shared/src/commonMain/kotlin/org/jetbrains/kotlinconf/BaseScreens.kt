@@ -24,7 +24,7 @@ import org.jetbrains.kotlinconf.ui.components.TopMenuButton
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.arrow_left_24
 import org.jetbrains.kotlinconf.ui.generated.resources.main_header_back
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.bottomInsetPadding
 import org.jetbrains.kotlinconf.utils.topInsetPadding
 
@@ -39,7 +39,7 @@ fun ScreenWithTitle(
     Column(
         modifier
             .fillMaxSize()
-            .background(color = KotlinConfTheme.colors.mainBackground)
+            .background(color = AppTheme.colors.mainBackground)
             .padding(topInsetPadding())
     ) {
         MainHeaderTitleBar(
@@ -53,12 +53,12 @@ fun ScreenWithTitle(
             }
         )
 
-        HorizontalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokePale)
+        HorizontalDivider(thickness = 1.dp, color = AppTheme.colors.strokePale)
 
         Column(
             Modifier
                 .fillMaxSize()
-                .background(color = KotlinConfTheme.colors.mainBackground)
+                .background(color = AppTheme.colors.mainBackground)
                 .padding(horizontal = 12.dp)
                 .verticalScroll(contentScrollState)
                 .padding(bottomInsetPadding())
@@ -84,7 +84,7 @@ fun MarkdownScreenWithTitle(
         if (header.isNotEmpty()) {
             Text(
                 header,
-                style = KotlinConfTheme.typography.h1,
+                style = AppTheme.typography.h1,
                 modifier = Modifier.padding(top = 24.dp, bottom = 12.dp)
             )
         }

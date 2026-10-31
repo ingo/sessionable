@@ -25,7 +25,7 @@ import org.jetbrains.kotlinconf.generated.resources.about_conference_title
 import org.jetbrains.kotlinconf.generated.resources.arrow_up_right_24
 import org.jetbrains.kotlinconf.ui.components.PageMenuItem
 import org.jetbrains.kotlinconf.ui.components.Text
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 
 @Composable
 fun AboutConference(
@@ -48,7 +48,7 @@ fun AboutConference(
             ) {
                 Text(
                     text = conferenceInfo.aboutHeader,
-                    style = KotlinConfTheme.typography.h1,
+                    style = AppTheme.typography.h1,
                     modifier = Modifier.semantics { heading() }
                 )
                 Text(text = conferenceInfo.aboutDescription)

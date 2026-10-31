@@ -22,7 +22,7 @@ import org.jetbrains.kotlinconf.generated.resources.Res
 import org.jetbrains.kotlinconf.generated.resources.nav_destination_now
 import org.jetbrains.kotlinconf.ui.components.HorizontalDivider
 import org.jetbrains.kotlinconf.ui.components.MainHeaderTitleBar
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.topInsetPadding
 
 /** "What's up now": your bookmarked sessions from the current time. The app's home tab. */
@@ -38,11 +38,11 @@ fun NowScreen(
     Column(
         Modifier
             .fillMaxSize()
-            .background(KotlinConfTheme.colors.mainBackground)
+            .background(AppTheme.colors.mainBackground)
             .padding(topInsetPadding())
     ) {
         MainHeaderTitleBar(title = stringResource(Res.string.nav_destination_now))
-        HorizontalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokePale)
+        HorizontalDivider(thickness = 1.dp, color = AppTheme.colors.strokePale)
 
         Box(Modifier.weight(1f).fillMaxWidth().padding(top = 8.dp)) {
             UpNextContent(

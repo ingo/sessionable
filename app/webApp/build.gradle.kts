@@ -13,7 +13,7 @@ kotlin {
         binaries.executable()
         browser {
             commonWebpackConfig {
-                outputFileName = "kotlinconf-app.js"
+                outputFileName = "sessionable.js"
             }
         }
     }
@@ -22,7 +22,7 @@ kotlin {
         binaries.executable()
         browser {
             commonWebpackConfig {
-                outputFileName = "kotlinconf-app.js"
+                outputFileName = "sessionable.js"
             }
         }
     }

@@ -29,7 +29,7 @@ import org.jetbrains.kotlinconf.generated.resources.company_showcase_count
 import org.jetbrains.kotlinconf.ui.components.Icon
 import org.jetbrains.kotlinconf.ui.components.SpeakerCard
 import org.jetbrains.kotlinconf.ui.components.Text
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 
 /** A company in the directory: its name, how many speakers and sessions, and its showcase talks. */
 @Composable
@@ -42,16 +42,16 @@ fun CompanyCard(
 ) {
     Row(
         modifier
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
+            .clip(AppTheme.shapes.roundedCornerMd)
             .clickable(role = Role.Button, onClick = onClick)
-            .background(KotlinConfTheme.colors.tileBackground)
+            .background(AppTheme.colors.tileBackground)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(
                 text = highlighted(company.name, nameHighlights),
-                style = KotlinConfTheme.typography.h3,
+                style = AppTheme.typography.h3,
             )
             val sessions = company.sessions.size
             val counts = buildList {
@@ -62,15 +62,15 @@ fun CompanyCard(
             }
             Text(
                 text = counts.joinToString(" · "),
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.secondaryText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.secondaryText,
                 maxLines = 2,
             )
         }
         Icon(
             painter = painterResource(Res.drawable.arrow_right_24),
             contentDescription = null,
-            tint = KotlinConfTheme.colors.primaryText,
+            tint = AppTheme.colors.primaryText,
             modifier = Modifier.padding(start = 8.dp),
         )
     }
@@ -88,8 +88,8 @@ fun MetPersonCard(
     val link: SpeakerLink? = speaker.contactLink
     Column(
         modifier
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
-            .background(KotlinConfTheme.colors.tileBackground)
+            .clip(AppTheme.shapes.roundedCornerMd)
+            .background(AppTheme.colors.tileBackground)
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -106,18 +106,18 @@ fun MetPersonCard(
         if (person.note.isNotBlank()) {
             Text(
                 text = person.note,
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.longText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.longText,
                 maxLines = 4,
             )
         }
         if (link != null) {
             Text(
                 text = link.title,
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.accentText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.accentText,
                 modifier = Modifier
-                    .clip(KotlinConfTheme.shapes.roundedCornerMd)
+                    .clip(AppTheme.shapes.roundedCornerMd)
                     .clickable(role = Role.Button) { onOpenLink(link.url) }
                     .padding(vertical = 12.dp),
             )
@@ -133,8 +133,8 @@ private fun highlighted(text: String, highlights: List<IntRange>): AnnotatedStri
             if (!range.isEmpty() && range.last in text.indices) {
                 addStyle(
                     SpanStyle(
-                        color = KotlinConfTheme.colors.primaryTextWhiteFixed,
-                        background = KotlinConfTheme.colors.primaryBackground,
+                        color = AppTheme.colors.primaryTextWhiteFixed,
+                        background = AppTheme.colors.primaryBackground,
                     ),
                     range.first,
                     range.last + 1,

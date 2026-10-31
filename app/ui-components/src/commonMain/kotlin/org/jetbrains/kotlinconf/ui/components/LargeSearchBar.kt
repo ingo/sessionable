@@ -36,7 +36,7 @@ import org.jetbrains.kotlinconf.ui.generated.resources.close_24
 import org.jetbrains.kotlinconf.ui.generated.resources.main_header_search_clear
 import org.jetbrains.kotlinconf.ui.generated.resources.main_header_search_hint
 import org.jetbrains.kotlinconf.ui.generated.resources.search_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import org.jetbrains.kotlinconf.ui.utils.PreviewInteractionSource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -56,9 +56,9 @@ fun LargeSearchBar(
 
     val strokeColor by animateColorAsState(
         when {
-            focused -> KotlinConfTheme.colors.strokeInputFocus
-            hovered -> KotlinConfTheme.colors.strokeHalf
-            else -> KotlinConfTheme.colors.strokePale
+            focused -> AppTheme.colors.strokeInputFocus
+            hovered -> AppTheme.colors.strokeHalf
+            else -> AppTheme.colors.strokePale
         }
     )
 
@@ -67,11 +67,11 @@ fun LargeSearchBar(
             .border(
                 width = 1.dp,
                 color = strokeColor,
-                shape = KotlinConfTheme.shapes.roundedCornerSm,
+                shape = AppTheme.shapes.roundedCornerSm,
             )
-            .clip(KotlinConfTheme.shapes.roundedCornerSm)
+            .clip(AppTheme.shapes.roundedCornerSm)
             .heightIn(min = 40.dp)
-            .background(KotlinConfTheme.colors.mainBackground),
+            .background(AppTheme.colors.mainBackground),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -81,7 +81,7 @@ fun LargeSearchBar(
                 .size(24.dp),
             painter = painterResource(UiRes.drawable.search_24),
             contentDescription = null,
-            tint = KotlinConfTheme.colors.primaryText,
+            tint = AppTheme.colors.primaryText,
         )
 
         var focusRequested by rememberSaveable { mutableStateOf(false) }

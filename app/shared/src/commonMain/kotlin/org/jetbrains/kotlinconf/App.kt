@@ -14,9 +14,9 @@ import org.jetbrains.kotlinconf.di.AppGraph
 import org.jetbrains.kotlinconf.flags.LocalFlags
 import org.jetbrains.kotlinconf.navigation.NavHost
 import org.jetbrains.kotlinconf.screens.ConnectScreen
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfDarkColors
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfLightColors
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.DarkColors
+import org.jetbrains.kotlinconf.ui.theme.LightColors
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.LocalNotificationBar
 import org.jetbrains.kotlinconf.utils.LocalWindowSize
 import org.jetbrains.kotlinconf.utils.rememberNotificationBarState
@@ -54,9 +54,9 @@ fun App(
         if (isOnboardingComplete != null) {
             val event = activeEvent
             if (event == null) {
-                val colors = if (isDarkTheme) KotlinConfDarkColors else KotlinConfLightColors
+                val colors = if (isDarkTheme) DarkColors else LightColors
                 if (onThemeChange != null) LaunchedEffect(colors) { onThemeChange(colors.isDark) }
-                KotlinConfTheme(rippleEnabled = flags.rippleEnabled, colors = colors) { ConnectScreen() }
+                AppTheme(rippleEnabled = flags.rippleEnabled, colors = colors) { ConnectScreen() }
             } else {
                 // A fresh navigation state for each conference
                 key(event.id) { NavHost(isOnboardingComplete, isDarkTheme, onThemeChange) }

@@ -47,7 +47,7 @@ import org.jetbrains.kotlinconf.generated.resources.twitter
 import org.jetbrains.kotlinconf.ui.components.HorizontalDivider
 import org.jetbrains.kotlinconf.ui.components.MainHeaderTitleBar
 import org.jetbrains.kotlinconf.ui.components.PageMenuItem
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.bottomInsetPadding
 import org.jetbrains.kotlinconf.utils.plus
 import org.jetbrains.kotlinconf.utils.topInsetPadding
@@ -70,11 +70,11 @@ fun InfoScreen(
     val venueAddress = viewModel.venueAddress.collectAsStateWithLifecycle().value
     Column(
         Modifier.fillMaxSize()
-            .background(color = KotlinConfTheme.colors.mainBackground)
+            .background(color = AppTheme.colors.mainBackground)
             .padding(topInsetPadding())
     ) {
         MainHeaderTitleBar(stringResource(Res.string.info_title))
-        HorizontalDivider(1.dp, KotlinConfTheme.colors.strokePale)
+        HorizontalDivider(1.dp, AppTheme.colors.strokePale)
 
         Column(
             Modifier
@@ -89,7 +89,7 @@ fun InfoScreen(
                 EventLogo(eventTheme, size = 96.dp, modifier = Modifier.padding(top = 24.dp))
                 Text(
                     ActiveEvent.name,
-                    style = KotlinConfTheme.typography.h3,
+                    style = AppTheme.typography.h3,
                     modifier = Modifier.padding(bottom = 16.dp),
                 )
             }
@@ -171,11 +171,11 @@ private fun SocialSquare(
         imageVector = image,
         contentDescription = description,
         modifier = modifier
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
+            .clip(AppTheme.shapes.roundedCornerMd)
             .clickable(onClick = onClick)
-            .background(KotlinConfTheme.colors.tileBackground)
+            .background(AppTheme.colors.tileBackground)
             .padding(vertical = 32.dp)
             .size(64.dp),
-        colorFilter = ColorFilter.tint(KotlinConfTheme.colors.primaryText),
+        colorFilter = ColorFilter.tint(AppTheme.colors.primaryText),
     )
 }

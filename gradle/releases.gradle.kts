@@ -46,7 +46,7 @@ tasks.register("updateVersion") {
         versionNames.add("""versionName\s*=\s*"([^"]+)"""".toRegex().find(androidBuildGradleContent)?.groupValues?.get(1))
 
         // iOS versions from project file
-        val iosProjectFile = file("app/iosApp/KotlinConf.xcodeproj/project.pbxproj")
+        val iosProjectFile = file("app/iosApp/Sessionable.xcodeproj/project.pbxproj")
         val iosProjectContent = iosProjectFile.readText()
         versionCodes.addAll("""CURRENT_PROJECT_VERSION\s*=\s*(\d+)""".toRegex().findAll(iosProjectContent)
             .map { it.groupValues[1].toIntOrNull() }.toList())

@@ -39,8 +39,8 @@ EVENT_SETTINGS=()
 [[ -d "$ASSETS/$EVENT launch background.colorset" ]] && EVENT_SETTINGS+=(EVENT_LAUNCH_BACKGROUND="$EVENT launch background")
 
 xcodebuild archive \
-  -project "$ROOT/app/iosApp/KotlinConf.xcodeproj" \
-  -scheme KotlinConfAppScheme \
+  -project "$ROOT/app/iosApp/Sessionable.xcodeproj" \
+  -scheme SessionableScheme \
   -configuration Release \
   -destination 'generic/platform=iOS' \
   -archivePath "$ARCHIVE" \

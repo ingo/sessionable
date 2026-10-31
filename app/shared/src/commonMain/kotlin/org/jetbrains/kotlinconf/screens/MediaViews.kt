@@ -56,7 +56,7 @@ import org.jetbrains.kotlinconf.personal.MediaKind
 import org.jetbrains.kotlinconf.ui.components.Button
 import org.jetbrains.kotlinconf.ui.components.PageMenuItem
 import org.jetbrains.kotlinconf.ui.components.Text
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 
 /**
  * The attendee's photos and videos on a session: a grid of thumbnails (tap to view, touch and hold to remove) and the
@@ -76,11 +76,11 @@ fun MediaSection(viewModel: SessionViewModel, modifier: Modifier = Modifier) {
     val selected = attachments.find { it.id == selectedId }
 
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(stringResource(Res.string.session_media_title), style = KotlinConfTheme.typography.h3)
+        Text(stringResource(Res.string.session_media_title), style = AppTheme.typography.h3)
         Text(
             stringResource(Res.string.session_media_hint),
-            style = KotlinConfTheme.typography.text2,
-            color = KotlinConfTheme.colors.secondaryText,
+            style = AppTheme.typography.text2,
+            color = AppTheme.colors.secondaryText,
         )
 
         if (attachments.isNotEmpty()) {
@@ -128,8 +128,8 @@ fun MediaSection(viewModel: SessionViewModel, modifier: Modifier = Modifier) {
             } else {
                 Text(
                     stringResource(Res.string.session_media_actions),
-                    style = KotlinConfTheme.typography.text2,
-                    color = KotlinConfTheme.colors.secondaryText,
+                    style = AppTheme.typography.text2,
+                    color = AppTheme.colors.secondaryText,
                 )
             }
         }
@@ -137,15 +137,15 @@ fun MediaSection(viewModel: SessionViewModel, modifier: Modifier = Modifier) {
         if (unreadable > 0 && !adding) {
             Text(
                 pluralStringResource(Res.plurals.media_unreadable, unreadable, unreadable),
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.orangeText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.orangeText,
             )
         }
         if (adding) {
             Text(
                 stringResource(Res.string.session_media_adding),
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.secondaryText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.secondaryText,
             )
         }
 
@@ -192,13 +192,13 @@ private fun MediaTile(
     onClick: () -> Unit,
     onLongClick: () -> Unit,
 ) {
-    val shape = KotlinConfTheme.shapes.roundedCornerMd
+    val shape = AppTheme.shapes.roundedCornerMd
     Box(
         Modifier
             .size(104.dp)
             .clip(shape)
-            .background(KotlinConfTheme.colors.tileBackground)
-            .then(if (selected) Modifier.border(3.dp, KotlinConfTheme.colors.primaryBackground, shape) else Modifier)
+            .background(AppTheme.colors.tileBackground)
+            .then(if (selected) Modifier.border(3.dp, AppTheme.colors.primaryBackground, shape) else Modifier)
             .combinedClickable(
                 role = Role.Image,
                 onClickLabel = label,
@@ -216,7 +216,7 @@ private fun MediaTile(
                 modifier = Modifier.fillMaxSize(),
             )
         } else {
-            Text(label, style = KotlinConfTheme.typography.text2, color = KotlinConfTheme.colors.secondaryText)
+            Text(label, style = AppTheme.typography.text2, color = AppTheme.colors.secondaryText)
         }
         if (attachment.kind == MediaKind.VIDEO) {
             Box(

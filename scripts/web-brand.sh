@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Applies a conference's look to a built web app, without touching the KotlinConf web resources.
+# Applies a conference's look to a built web app, without touching the default web resources.
 #
 #   scripts/web-brand.sh <event-id> <dist-dir> <title> <description>
 #   scripts/web-brand.sh agntcon-mcpcon-na-2026 app/webApp/build/dist/composeWebCompatibility/productionExecutable \
@@ -22,7 +22,7 @@ BRAND="$ROOT/app/webApp/branding/$EVENT"
 [[ -f "$DIST/index.html" ]] || { echo "No built web app in $DIST" >&2; exit 1; }
 
 # Colors and the short name come from brand.env in the branding folder (see docs/FORKING.md)
-BG="#1f2937" ACCENT="#3b82f6" BUTTON="#2563eb" SHORT_NAME="$TITLE"
+BG="#0b2a30" ACCENT="#00bfa5" BUTTON="#00796b" SHORT_NAME="$TITLE"
 [[ -f "$BRAND/brand.env" ]] && source "$BRAND/brand.env"
 export BG ACCENT BUTTON SHORT_NAME
 
@@ -52,10 +52,7 @@ sub(r'(<meta name="twitter:title" content=)"[^"]*"', rf'\1"{title}"')
 sub(r'(<meta name="description" content=)"[^"]*"', rf'\1"{description}"')
 sub(r'(<meta property="og:description" content=)"[^"]*"', rf'\1"{description}"')
 sub(r'(<meta name="twitter:description" content=)"[^"]*"', rf'\1"{description}"')
-text = text.replace("images/KotlinConf-icon-360.png", "images/icon-360.png")
-text = text.replace("images/KotlinConf-splash-screen-dark.svg", "images/splash-dark.svg")
-text = text.replace("images/KotlinConf-splash-screen-light.svg", "images/splash-light.svg")
-sub(r"background-color: #000;", f"background-color: {bg};")
+sub(r"background-color: #[0-9a-fA-F]{3,6};", f"background-color: {bg};")
 sub(
     r'(<link rel="manifest" href="manifest.json"/>)',
     r'\1\n        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">'
@@ -164,6 +161,4 @@ sub(r"</head>", """        <script>
 open(path, "w", encoding="utf-8").write(text)
 PY
 
-# The default KotlinConf images are not needed in a branded build
-rm -f "$DIST"/images/KotlinConf-*
 echo "Branded $DIST for $EVENT"

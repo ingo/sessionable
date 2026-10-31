@@ -2,7 +2,7 @@ package org.jetbrains.kotlinconf.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -14,8 +14,8 @@ fun SectionTitle(
     Text(
         text = text,
         modifier = modifier,
-        style = KotlinConfTheme.typography.h2,
-        color = KotlinConfTheme.colors.primaryText,
+        style = AppTheme.typography.h2,
+        color = AppTheme.colors.primaryText,
     )
 }
 

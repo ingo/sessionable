@@ -53,7 +53,7 @@ import org.jetbrains.kotlinconf.ui.components.Button
 import org.jetbrains.kotlinconf.ui.components.HorizontalDivider
 import org.jetbrains.kotlinconf.ui.components.MainHeaderTitleBar
 import org.jetbrains.kotlinconf.ui.components.Text
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.bottomInsetPadding
 import org.jetbrains.kotlinconf.utils.topInsetPadding
 
@@ -72,11 +72,11 @@ fun ConnectScreen(viewModel: ConnectViewModel = metroViewModel()) {
     Column(
         Modifier
             .fillMaxSize()
-            .background(KotlinConfTheme.colors.mainBackground)
+            .background(AppTheme.colors.mainBackground)
             .padding(topInsetPadding())
     ) {
         MainHeaderTitleBar(stringResource(Res.string.connect_title))
-        HorizontalDivider(1.dp, KotlinConfTheme.colors.strokePale)
+        HorizontalDivider(1.dp, AppTheme.colors.strokePale)
 
         Column(
             Modifier
@@ -88,7 +88,7 @@ fun ConnectScreen(viewModel: ConnectViewModel = metroViewModel()) {
         ) {
             Text(
                 stringResource(Res.string.connect_intro),
-                color = KotlinConfTheme.colors.longText,
+                color = AppTheme.colors.longText,
                 modifier = Modifier.padding(top = 24.dp),
             )
 
@@ -111,15 +111,15 @@ fun ConnectScreen(viewModel: ConnectViewModel = metroViewModel()) {
             when (val state = uiState) {
                 ConnectUiState.Idle -> Unit
                 ConnectUiState.Checking ->
-                    Text(stringResource(Res.string.connect_checking), color = KotlinConfTheme.colors.noteText)
+                    Text(stringResource(Res.string.connect_checking), color = AppTheme.colors.noteText)
                 ConnectUiState.NotALink ->
-                    Text(stringResource(Res.string.connect_not_a_link), color = KotlinConfTheme.colors.orangeText)
+                    Text(stringResource(Res.string.connect_not_a_link), color = AppTheme.colors.orangeText)
                 ConnectUiState.NotFound ->
-                    Text(stringResource(Res.string.connect_not_found), color = KotlinConfTheme.colors.orangeText)
+                    Text(stringResource(Res.string.connect_not_found), color = AppTheme.colors.orangeText)
                 is ConnectUiState.Found -> {
                     Text(
                         stringResource(Res.string.connect_found, state.summary.sessions, state.summary.speakers),
-                        color = KotlinConfTheme.colors.noteText,
+                        color = AppTheme.colors.noteText,
                     )
                     Heading(stringResource(Res.string.connect_name_label))
                     TextInput(name, onChange = { name = it }, hint = stringResource(Res.string.connect_name_hint))
@@ -165,7 +165,7 @@ fun ConnectScreen(viewModel: ConnectViewModel = metroViewModel()) {
 
             Text(
                 stringResource(Res.string.connect_privacy),
-                color = KotlinConfTheme.colors.noteText,
+                color = AppTheme.colors.noteText,
                 modifier = Modifier.padding(vertical = 12.dp),
             )
         }
@@ -178,7 +178,7 @@ private fun TimeZoneField(zoneId: String, onChange: (String) -> Unit) {
     TextInput(zoneId, onChange = onChange, hint = stringResource(Res.string.connect_zone_label))
     val valid = zoneId in TimeZone.availableZoneIds
     if (valid) {
-        Text(stringResource(Res.string.connect_zone_help), color = KotlinConfTheme.colors.noteText)
+        Text(stringResource(Res.string.connect_zone_help), color = AppTheme.colors.noteText)
         return
     }
     val matches = remember(zoneId) {
@@ -187,7 +187,7 @@ private fun TimeZoneField(zoneId: String, onChange: (String) -> Unit) {
         else TimeZone.availableZoneIds.filter { it.contains(query, ignoreCase = true) }.sorted().take(6)
     }
     if (matches.isEmpty()) {
-        Text(stringResource(Res.string.connect_zone_unknown), color = KotlinConfTheme.colors.orangeText)
+        Text(stringResource(Res.string.connect_zone_unknown), color = AppTheme.colors.orangeText)
     }
     for (match in matches) Button(match, onClick = { onChange(match) })
 }
@@ -196,7 +196,7 @@ private fun TimeZoneField(zoneId: String, onChange: (String) -> Unit) {
 private fun Heading(text: String) {
     Text(
         text,
-        style = KotlinConfTheme.typography.h3,
+        style = AppTheme.typography.h3,
         modifier = Modifier.padding(top = 8.dp).semantics { heading() },
     )
 }
@@ -208,22 +208,22 @@ private fun TextInput(
     hint: String,
     keyboardType: KeyboardType = KeyboardType.Text,
 ) {
-    val colors = KotlinConfTheme.colors
+    val colors = AppTheme.colors
     BasicTextField(
         value = value,
         onValueChange = onChange,
         singleLine = true,
-        textStyle = KotlinConfTheme.typography.text1.copy(color = colors.primaryText),
+        textStyle = AppTheme.typography.text1.copy(color = colors.primaryText),
         cursorBrush = SolidColor(colors.primaryText),
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         modifier = Modifier
             .fillMaxWidth()
-            .border(1.dp, colors.strokeHalf, KotlinConfTheme.shapes.roundedCornerSm)
+            .border(1.dp, colors.strokeHalf, AppTheme.shapes.roundedCornerSm)
             .padding(horizontal = 16.dp, vertical = 12.dp)
             .semantics { contentDescription = hint },
         decorationBox = { field ->
             if (value.isEmpty()) {
-                Text(hint, style = KotlinConfTheme.typography.text1, color = colors.placeholderText)
+                Text(hint, style = AppTheme.typography.text1, color = colors.placeholderText)
             }
             field()
         },

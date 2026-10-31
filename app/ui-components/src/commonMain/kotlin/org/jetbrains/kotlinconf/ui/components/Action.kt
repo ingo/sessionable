@@ -18,7 +18,7 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.arrow_right_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -37,8 +37,8 @@ fun Action(
     iconRotation: Float = 0f,
 ) {
     val color by animateColorAsState(
-        if (enabled) KotlinConfTheme.colors.primaryText
-        else KotlinConfTheme.colors.noteText,
+        if (enabled) AppTheme.colors.primaryText
+        else AppTheme.colors.noteText,
         ColorSpringSpec,
     )
     Row(
@@ -63,8 +63,8 @@ fun Action(
             text = label,
             color = color,
             style = when (size) {
-                ActionSize.Medium -> KotlinConfTheme.typography.h4
-                ActionSize.Large -> KotlinConfTheme.typography.h3
+                ActionSize.Medium -> AppTheme.typography.h4
+                ActionSize.Large -> AppTheme.typography.h3
             },
             maxLines = 1,
             modifier = Modifier.weight(1f, fill = false),

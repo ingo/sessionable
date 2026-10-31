@@ -27,7 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -43,14 +43,14 @@ private fun SwitcherItem(
 ) {
     val backgroundColor by animateColorAsState(
         if (selected) Color.Transparent
-        else KotlinConfTheme.colors.tileBackground,
+        else AppTheme.colors.tileBackground,
     )
     val textColor by animateColorAsState(
-        if (selected) KotlinConfTheme.colors.primaryText
-        else KotlinConfTheme.colors.secondaryText,
+        if (selected) AppTheme.colors.primaryText
+        else AppTheme.colors.secondaryText,
     )
     val strokeColor by animateColorAsState(
-        if (selected) KotlinConfTheme.colors.strokeAccent
+        if (selected) AppTheme.colors.strokeAccent
         else Color.Transparent,
     )
 
@@ -74,7 +74,7 @@ private fun SwitcherItem(
     ) {
         Text(
             label,
-            style = KotlinConfTheme.typography.text1,
+            style = AppTheme.typography.text1,
             color = textColor,
             maxLines = 1,
             onTextLayout = { result ->

@@ -24,8 +24,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.jetbrains.kotlinconf.ui.theme.JetBrainsSans
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppFont
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import org.jetbrains.kotlinconf.ui.theme.UI.white60
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 private val DayDateStyle
     @Composable
     get() = TextStyle(
-        fontFamily = JetBrainsSans,
+        fontFamily = AppFont,
         fontWeight = FontWeight.Bold,
         fontSize = 58.sp,
         textAlign = TextAlign.Center,
@@ -42,7 +42,7 @@ private val DayDateStyle
 private val DayHeaderStyle
     @Composable
     get() = TextStyle(
-        fontFamily = JetBrainsSans,
+        fontFamily = AppFont,
         fontWeight = FontWeight.SemiBold,
         fontSize = 22.sp,
     )
@@ -64,7 +64,7 @@ fun DayHeader(
                 shape = RoundedCornerShape(cornerRadius)
                 clip = true
             }
-            .background(KotlinConfTheme.colors.headerGradient)
+            .background(AppTheme.colors.headerGradient)
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp)
             .semantics(mergeDescendants = true) {
@@ -80,18 +80,18 @@ fun DayHeader(
             ) {
                 Text(
                     month,
-                    style = KotlinConfTheme.typography.text2,
+                    style = AppTheme.typography.text2,
                     color = white60,
                 )
                 Text(
                     day,
                     style = DayDateStyle,
-                    color = KotlinConfTheme.colors.primaryTextWhiteFixed,
+                    color = AppTheme.colors.primaryTextWhiteFixed,
                     modifier = Modifier.widthIn(min = 72.dp),
                 )
                 Text(
                     "",
-                    style = KotlinConfTheme.typography.text2,
+                    style = AppTheme.typography.text2,
                     color = Color.Transparent,
                 )
             }
@@ -99,7 +99,7 @@ fun DayHeader(
                 Text(
                     "-$day2",
                     style = DayDateStyle,
-                    color = KotlinConfTheme.colors.primaryTextWhiteFixed,
+                    color = AppTheme.colors.primaryTextWhiteFixed,
                     modifier = Modifier.widthIn(min = 72.dp),
                 )
             }
@@ -108,12 +108,12 @@ fun DayHeader(
             Text(
                 line1,
                 style = DayHeaderStyle,
-                color = KotlinConfTheme.colors.primaryTextWhiteFixed,
+                color = AppTheme.colors.primaryTextWhiteFixed,
             )
             Text(
                 line2,
                 style = DayHeaderStyle,
-                color = KotlinConfTheme.colors.primaryTextWhiteFixed,
+                color = AppTheme.colors.primaryTextWhiteFixed,
             )
         }
     }

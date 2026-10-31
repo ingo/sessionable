@@ -51,7 +51,7 @@ import org.jetbrains.kotlinconf.ui.components.MainNavigationBar
 import org.jetbrains.kotlinconf.ui.components.MainNavigationRail
 import org.jetbrains.kotlinconf.ui.components.Text
 import org.jetbrains.kotlinconf.ui.components.VerticalDivider
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.LocalNotificationBar
 import org.jetbrains.kotlinconf.utils.LocalWindowSize
 import org.jetbrains.kotlinconf.utils.WindowSize
@@ -125,7 +125,7 @@ internal fun NavScaffold(
 
     Row(
         Modifier.fillMaxSize()
-            .background(color = KotlinConfTheme.colors.mainBackground)
+            .background(color = AppTheme.colors.mainBackground)
     ) {
         val enterAnimSpec = tween<IntSize>(delayMillis = AnimationConstants.DefaultDurationMillis)
 
@@ -181,7 +181,7 @@ private fun BottomNavigation(
     Column(
         Modifier.padding(bottomInsetPadding()),
     ) {
-        HorizontalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokePale)
+        HorizontalDivider(thickness = 1.dp, color = AppTheme.colors.strokePale)
         MainNavigationBar(
             currentDestination = currentDestination,
             destinations = destinations,
@@ -211,7 +211,7 @@ private fun SideNavigation(
             expanded = expanded,
             modifier = Modifier.padding(topInsetPadding()),
         )
-        VerticalDivider(thickness = 1.dp, color = KotlinConfTheme.colors.strokePale)
+        VerticalDivider(thickness = 1.dp, color = AppTheme.colors.strokePale)
     }
 }
 
@@ -224,11 +224,11 @@ private fun NotificationBar() {
     ) {
         Text(
             text = message ?: "",
-            color = KotlinConfTheme.colors.primaryTextInverted,
-            style = KotlinConfTheme.typography.text2.copy(textAlign = TextAlign.Center),
+            color = AppTheme.colors.primaryTextInverted,
+            style = AppTheme.typography.text2.copy(textAlign = TextAlign.Center),
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = KotlinConfTheme.colors.mainBackgroundInverted)
+                .background(color = AppTheme.colors.mainBackgroundInverted)
                 .padding(vertical = 16.dp, horizontal = 10.dp)
         )
     }

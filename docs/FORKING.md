@@ -28,13 +28,13 @@ On the event's Sessionize dashboard, under API / embed, enable the **All** endpo
    `ORG_GRADLE_PROJECT_event`). With a value there is no connect screen and no "Switch conference".
 3. **Name the app.**
    - Android: `appId` in `gradle.properties`, and `app_name` in `app/androidApp/src/main/res/values/strings.xml`.
-   - iOS: `PRODUCT_BUNDLE_IDENTIFIER` and `PRODUCT_NAME` in `app/iosApp/KotlinConf.xcodeproj/project.pbxproj`,
+   - iOS: `PRODUCT_BUNDLE_IDENTIFIER` and `PRODUCT_NAME` in `app/iosApp/Sessionable.xcodeproj/project.pbxproj`,
      or pass them to `scripts/ios-testflight.sh <event-id> <bundle-id> <display-name> <team-id>`.
    - Versions live in four places that must agree (Android `build.gradle.kts`, the iOS project and `Info.plist`,
      `values/version.xml`); `./gradlew prepareRelease` bumps them together.
-4. **Replace the icon.** Edit `branding/icon.svg` (square, opaque) and `branding/glyph.svg` (the mark alone, white
-   on transparent, inside the middle two thirds), set the colors in `branding/brand.env`, and run
-   `scripts/make-icons.sh`. It writes the iOS, Android and web icons.
+4. **Replace the icon.** Put a square, opaque picture of at least 1024 px at `branding/icon.png`, set the web loading
+   page colors in `branding/brand.env`, and run `scripts/make-icons.sh`. It writes the iOS, Android and web icons,
+   the iOS launch image and the web splash screens.
 5. **Fix the credits and links.** `URLs.kt` has the project's GitHub repository (used by "Report a problem").
    Keep the JetBrains credit, the Apache-2.0 licence and the "unofficial, not affiliated" wording, which the
    licence and the trademarks of the parts this builds on require.

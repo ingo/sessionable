@@ -3,14 +3,8 @@ package org.jetbrains.kotlinconf.ui.theme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import org.jetbrains.compose.resources.Font
-import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
-import org.jetbrains.kotlinconf.ui.generated.resources.jetbrains_sans_bold
-import org.jetbrains.kotlinconf.ui.generated.resources.jetbrains_sans_regular
-import org.jetbrains.kotlinconf.ui.generated.resources.jetbrains_sans_semibold
 
 class Typography(
     val h1: TextStyle,
@@ -21,49 +15,46 @@ class Typography(
     val text2: TextStyle
 )
 
-internal val KotlinConfTypography: Typography
+internal val AppTypography: Typography
     @Composable
     get() = Typography(
         h1 = TextStyle(
-            fontFamily = JetBrainsSans,
+            fontFamily = AppFont,
             fontWeight = FontWeight.SemiBold,
             fontSize = 30.sp,
             lineHeight = 32.sp,
         ),
         h2 = TextStyle(
-            fontFamily = JetBrainsSans,
+            fontFamily = AppFont,
             fontWeight = FontWeight.SemiBold,
             fontSize = 22.sp,
             lineHeight = 28.sp,
         ),
         h3 = TextStyle(
             fontWeight = FontWeight.SemiBold,
-            fontFamily = JetBrainsSans,
+            fontFamily = AppFont,
             fontSize = 16.sp,
             lineHeight = 24.sp,
         ),
         h4 = TextStyle(
             fontWeight = FontWeight.SemiBold,
-            fontFamily = JetBrainsSans,
+            fontFamily = AppFont,
             fontSize = 13.sp,
             lineHeight = 20.sp,
         ),
         text1 = TextStyle(
-            fontFamily = JetBrainsSans,
+            fontFamily = AppFont,
             fontSize = 16.sp,
             lineHeight = 24.sp,
         ),
         text2 = TextStyle(
-            fontFamily = JetBrainsSans,
+            fontFamily = AppFont,
             fontSize = 13.sp,
             lineHeight = 20.sp,
         ),
     )
 
-internal val JetBrainsSans: FontFamily
+/** The platform's own typeface, so no font is bundled with the app. */
+internal val AppFont: FontFamily
     @Composable
-    get() = FontFamily(
-        Font(UiRes.font.jetbrains_sans_bold, FontWeight.Bold, FontStyle.Normal),
-        Font(UiRes.font.jetbrains_sans_semibold, FontWeight.SemiBold, FontStyle.Normal),
-        Font(UiRes.font.jetbrains_sans_regular, FontWeight.Normal, FontStyle.Normal),
-    )
+    get() = FontFamily.Default

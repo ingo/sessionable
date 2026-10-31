@@ -39,7 +39,7 @@ import org.jetbrains.kotlinconf.ui.components.NowButtonState.Current
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.arrow_down_16
 import org.jetbrains.kotlinconf.ui.generated.resources.now
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -65,7 +65,7 @@ fun NowButton(
         onClick = onClick,
         minWidth = 72.dp,
         minHeight = 36.dp,
-        textStyle = KotlinConfTheme.typography.text2,
+        textStyle = AppTheme.typography.text2,
         shape = NowButtonShape,
         modifier = modifier
     )
@@ -84,7 +84,7 @@ fun FloatingNowButton(
         onClick = onClick,
         minWidth = 90.dp,
         minHeight = 48.dp,
-        textStyle = KotlinConfTheme.typography.text1,
+        textStyle = AppTheme.typography.text1,
         shape = CircleShape,
         modifier = modifier
     )
@@ -103,13 +103,13 @@ private fun NowButtonImpl(
 ) {
     val active = time != Current
     val textColor by animateColorAsState(
-        if (active) KotlinConfTheme.colors.primaryTextWhiteFixed
-        else KotlinConfTheme.colors.noteText,
+        if (active) AppTheme.colors.primaryTextWhiteFixed
+        else AppTheme.colors.noteText,
         ColorSpringSpec,
     )
     val background by animateColorAsState(
-        if (active) KotlinConfTheme.colors.primaryBackground
-        else KotlinConfTheme.colors.tileBackground,
+        if (active) AppTheme.colors.primaryBackground
+        else AppTheme.colors.tileBackground,
         ColorSpringSpec,
     )
     val startPadding by animateDpAsState(if (active) 6.dp else 0.dp)

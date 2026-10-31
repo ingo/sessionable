@@ -48,7 +48,7 @@ import org.jetbrains.kotlinconf.generated.resources.sync_title
 import org.jetbrains.kotlinconf.generated.resources.sync_waiting
 import org.jetbrains.kotlinconf.ui.components.Button
 import org.jetbrains.kotlinconf.ui.components.Text
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.DateTimeFormatting
 import kotlin.time.Instant
 
@@ -73,7 +73,7 @@ fun SessionizeSyncScreen(
 
             if (syncState?.linked == true) {
                 Heading(stringResource(Res.string.sync_linked_title))
-                Text(stringResource(Res.string.sync_linked_text), color = KotlinConfTheme.colors.longText)
+                Text(stringResource(Res.string.sync_linked_text), color = AppTheme.colors.longText)
                 val lastSynced = syncState?.lastSyncedAt
                 Text(
                     if (lastSynced != null) {
@@ -81,7 +81,7 @@ fun SessionizeSyncScreen(
                     } else {
                         stringResource(Res.string.sync_not_synced_yet)
                     },
-                    color = KotlinConfTheme.colors.noteText,
+                    color = AppTheme.colors.noteText,
                 )
                 FailureText(failure)
                 Button(stringResource(Res.string.sync_now), onClick = viewModel::syncNow, primary = true, enabled = !working)
@@ -90,10 +90,10 @@ fun SessionizeSyncScreen(
             }
 
             val host = ActiveEvent.sessionizeAppUrl?.substringAfter("://") ?: ""
-            Text(stringResource(Res.string.sync_intro, host), color = KotlinConfTheme.colors.longText)
+            Text(stringResource(Res.string.sync_intro, host), color = AppTheme.colors.longText)
 
             Heading(stringResource(Res.string.sync_have_code_title))
-            Text(stringResource(Res.string.sync_have_code_steps), color = KotlinConfTheme.colors.longText)
+            Text(stringResource(Res.string.sync_have_code_steps), color = AppTheme.colors.longText)
             var code by rememberSaveable { mutableStateOf("") }
             CodeField(code, onChange = { code = it.filter(Char::isDigit).take(CODE_LENGTH) })
             if (failure == SyncFailure.BadCode) FailureText(failure)
@@ -105,15 +105,15 @@ fun SessionizeSyncScreen(
             )
 
             Heading(stringResource(Res.string.sync_no_code_title))
-            Text(stringResource(Res.string.sync_no_code_steps), color = KotlinConfTheme.colors.longText)
+            Text(stringResource(Res.string.sync_no_code_steps), color = AppTheme.colors.longText)
             val shown = uiState as? SyncUiState.ShowingCode
             if (shown != null) {
                 Text(
                     shown.code.chunked(3).joinToString(" "),
-                    style = KotlinConfTheme.typography.h1,
+                    style = AppTheme.typography.h1,
                     modifier = Modifier.semantics { contentDescription = shown.code.toList().joinToString(" ") },
                 )
-                Text(stringResource(Res.string.sync_waiting), color = KotlinConfTheme.colors.noteText)
+                Text(stringResource(Res.string.sync_waiting), color = AppTheme.colors.noteText)
             } else {
                 if (failure == SyncFailure.Network || failure == SyncFailure.CodeExpired) FailureText(failure)
                 Button(stringResource(Res.string.sync_show_code), onClick = viewModel::showCode, enabled = !working)
@@ -126,7 +126,7 @@ fun SessionizeSyncScreen(
 private fun Heading(text: String) {
     Text(
         text,
-        style = KotlinConfTheme.typography.h3,
+        style = AppTheme.typography.h3,
         modifier = Modifier.padding(top = 8.dp).semantics { heading() },
     )
 }
@@ -139,28 +139,28 @@ private fun FailureText(failure: SyncFailure?) {
         SyncFailure.CodeExpired -> Res.string.sync_error_expired
         null -> return
     }
-    Text(stringResource(message), color = KotlinConfTheme.colors.orangeText)
+    Text(stringResource(message), color = AppTheme.colors.orangeText)
 }
 
 @Composable
 private fun CodeField(value: String, onChange: (String) -> Unit) {
-    val colors = KotlinConfTheme.colors
+    val colors = AppTheme.colors
     val hint = stringResource(Res.string.sync_code_hint)
     BasicTextField(
         value = value,
         onValueChange = onChange,
         singleLine = true,
-        textStyle = KotlinConfTheme.typography.h2.copy(color = colors.primaryText),
+        textStyle = AppTheme.typography.h2.copy(color = colors.primaryText),
         cursorBrush = SolidColor(colors.primaryText),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         modifier = Modifier
             .fillMaxWidth()
-            .border(1.dp, colors.strokeHalf, KotlinConfTheme.shapes.roundedCornerSm)
+            .border(1.dp, colors.strokeHalf, AppTheme.shapes.roundedCornerSm)
             .padding(horizontal = 16.dp, vertical = 12.dp)
             .semantics { contentDescription = hint },
         decorationBox = { field ->
             if (value.isEmpty()) {
-                Text(hint, style = KotlinConfTheme.typography.h2, color = colors.placeholderText)
+                Text(hint, style = AppTheme.typography.h2, color = colors.placeholderText)
             }
             field()
         },

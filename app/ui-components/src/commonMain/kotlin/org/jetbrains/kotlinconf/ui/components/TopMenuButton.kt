@@ -24,7 +24,7 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.bookmark_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -73,12 +73,12 @@ fun TopMenuButton(
     large: Boolean = false,
 ) {
     val backgroundColor by animateColorAsState(
-        if (selected) KotlinConfTheme.colors.primaryBackground
+        if (selected) AppTheme.colors.primaryBackground
         else Color.Transparent
     )
     val iconColor by animateColorAsState(
-        if (selected) KotlinConfTheme.colors.primaryTextWhiteFixed
-        else KotlinConfTheme.colors.primaryText
+        if (selected) AppTheme.colors.primaryTextWhiteFixed
+        else AppTheme.colors.primaryText
     )
 
     TopMenuButtonImpl(
@@ -114,7 +114,7 @@ fun TopMenuButton(
         modifier = modifier,
         interactionModifier = Modifier.clickable(onClick = onClick),
         backgroundColor = Color.Transparent,
-        iconColor = KotlinConfTheme.colors.primaryText,
+        iconColor = AppTheme.colors.primaryText,
         large = large,
     )
 }

@@ -30,7 +30,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.view_grid_24
 import org.jetbrains.kotlinconf.ui.generated.resources.view_list_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -48,7 +48,7 @@ fun HeaderToggleButton(
 ) {
     Box(
         modifier
-            .border(1.dp, KotlinConfTheme.colors.strokePale, CircleShape)
+            .border(1.dp, AppTheme.colors.strokePale, CircleShape)
             .size(width = HeaderToggleItemWidth * options.size, height = HeaderToggleItemHeight)
     ) {
         val offsetX by animateDpAsState(
@@ -59,7 +59,7 @@ fun HeaderToggleButton(
             Modifier
                 .offset(x = offsetX)
                 .clip(CircleShape)
-                .background(KotlinConfTheme.colors.primaryBackground)
+                .background(AppTheme.colors.primaryBackground)
                 .size(width = HeaderToggleItemWidth, height = HeaderToggleItemHeight)
                 .align(Alignment.CenterStart)
         )
@@ -67,8 +67,8 @@ fun HeaderToggleButton(
             options.forEachIndexed { index, option ->
                 val selected = index == selectedIndex
                 val iconColor by animateColorAsState(
-                    if (selected) KotlinConfTheme.colors.primaryTextWhiteFixed
-                    else KotlinConfTheme.colors.primaryText
+                    if (selected) AppTheme.colors.primaryTextWhiteFixed
+                    else AppTheme.colors.primaryText
                 )
 
                 BasicTooltipBox(

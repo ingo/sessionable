@@ -59,7 +59,7 @@ import org.jetbrains.kotlinconf.ui.generated.resources.filter_label_company
 import org.jetbrains.kotlinconf.ui.generated.resources.filter_label_level
 import org.jetbrains.kotlinconf.ui.generated.resources.filter_label_session_format
 import org.jetbrains.kotlinconf.ui.generated.resources.up_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -83,8 +83,8 @@ fun Filters(
 
     Column(
         modifier = modifier
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
-            .background(KotlinConfTheme.colors.tileBackground),
+            .clip(AppTheme.shapes.roundedCornerMd)
+            .background(AppTheme.colors.tileBackground),
     ) {
         val stateDesc = stringResource(
             if (isExpanded) UiRes.string.action_state_description_expanded
@@ -134,7 +134,7 @@ fun Filters(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier.size(24.dp)
                             .clip(CircleShape)
-                            .background(KotlinConfTheme.colors.primaryBackground)
+                            .background(AppTheme.colors.primaryBackground)
                     ) {
                         val tagCountContentDescription = pluralStringResource(
                             UiRes.plurals.filter_by_tags_tag_count,
@@ -143,8 +143,8 @@ fun Filters(
                         )
                         Text(
                             text = count.toString(),
-                            color = KotlinConfTheme.colors.primaryTextWhiteFixed,
-                            style = KotlinConfTheme.typography.text2,
+                            color = AppTheme.colors.primaryTextWhiteFixed,
+                            style = AppTheme.typography.text2,
                             modifier = Modifier.semantics {
                                 contentDescription = tagCountContentDescription
                             }
@@ -221,8 +221,8 @@ private fun FilterItemGroup(
     ) {
         Text(
             text = title,
-            style = KotlinConfTheme.typography.text2,
-            color = KotlinConfTheme.colors.noteText,
+            style = AppTheme.typography.text2,
+            color = AppTheme.colors.noteText,
             modifier = Modifier.semantics {
                 heading()
             }
@@ -244,10 +244,10 @@ private fun FilterItemGroup(
                 Text(
                     text = if (showAll) stringResource(UiRes.string.filter_company_show_fewer)
                     else stringResource(UiRes.string.filter_company_show_all, items.size),
-                    style = KotlinConfTheme.typography.text1,
-                    color = KotlinConfTheme.colors.accentText,
+                    style = AppTheme.typography.text1,
+                    color = AppTheme.colors.accentText,
                     modifier = Modifier
-                        .clip(KotlinConfTheme.shapes.roundedCornerMd)
+                        .clip(AppTheme.shapes.roundedCornerMd)
                         .clickable(role = Role.Button) { showAll = !showAll }
                         .padding(horizontal = 4.dp, vertical = 10.dp),
                 )

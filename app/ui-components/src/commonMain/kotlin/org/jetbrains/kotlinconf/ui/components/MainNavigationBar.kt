@@ -33,7 +33,7 @@ import org.jetbrains.kotlinconf.ui.generated.resources.location_28_fill
 import org.jetbrains.kotlinconf.ui.generated.resources.now
 import org.jetbrains.kotlinconf.ui.generated.resources.team_28
 import org.jetbrains.kotlinconf.ui.generated.resources.team_28_fill
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import org.jetbrains.kotlinconf.ui.utils.WidePreviewLightDark
@@ -48,12 +48,12 @@ private fun MainNavigationButton(
     modifier: Modifier = Modifier,
 ) {
     val iconColor by animateColorAsState(
-        if (selected) KotlinConfTheme.colors.primaryText
-        else KotlinConfTheme.colors.secondaryText
+        if (selected) AppTheme.colors.primaryText
+        else AppTheme.colors.secondaryText
     )
     Icon(
         modifier = modifier
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
+            .clip(AppTheme.shapes.roundedCornerMd)
             .selectable(
                 selected = selected,
                 enabled = true,

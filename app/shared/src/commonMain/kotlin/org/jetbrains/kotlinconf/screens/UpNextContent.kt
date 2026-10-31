@@ -65,7 +65,7 @@ import org.jetbrains.kotlinconf.generated.resources.up_next_pick_one
 import org.jetbrains.kotlinconf.generated.resources.up_next_starts_in
 import org.jetbrains.kotlinconf.minus
 import org.jetbrains.kotlinconf.ui.components.Text
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.DateTimeFormatting
 import org.jetbrains.kotlinconf.utils.bottomInsetPadding
 import kotlin.time.Duration
@@ -160,8 +160,8 @@ internal fun UpNextContent(
             var showEarlier by rememberSaveable(upNext.day.date) { mutableStateOf(false) }
             Text(
                 stringResource(Res.string.up_next_earlier, upNext.earlier.size) + if (showEarlier) "  ▴" else "  ▾",
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.noteText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.noteText,
                 modifier = Modifier.clickable { showEarlier = !showEarlier }.padding(vertical = 8.dp),
             )
             if (showEarlier) upNext.earlier.forEach { CompactRow(it, clash = it.id in clashing, onClick = { onSession(it.id) }) }
@@ -173,7 +173,7 @@ internal fun UpNextContent(
 private fun SectionTitle(text: String) {
     Text(
         text,
-        style = KotlinConfTheme.typography.h3,
+        style = AppTheme.typography.h3,
         modifier = Modifier.padding(top = 12.dp).semantics { heading() },
     )
 }
@@ -182,8 +182,8 @@ private fun SectionTitle(text: String) {
 private fun Note(text: String, warning: Boolean = false) {
     Text(
         text,
-        style = KotlinConfTheme.typography.text2,
-        color = if (warning) KotlinConfTheme.colors.orangeText else KotlinConfTheme.colors.noteText,
+        style = AppTheme.typography.text2,
+        color = if (warning) AppTheme.colors.orangeText else AppTheme.colors.noteText,
     )
 }
 
@@ -195,22 +195,22 @@ private fun SessionCard(
     previousLocation: String?,
     onClick: () -> Unit,
 ) {
-    val colors = KotlinConfTheme.colors
+    val colors = AppTheme.colors
     Column(
         verticalArrangement = Arrangement.spacedBy(6.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
+            .clip(AppTheme.shapes.roundedCornerMd)
             .background(colors.tileBackground)
             .clickable(onClick = onClick)
             .padding(16.dp),
     ) {
-        Text(session.title, style = KotlinConfTheme.typography.h3, maxLines = 3)
+        Text(session.title, style = AppTheme.typography.h3, maxLines = 3)
         Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
             if (clash) ClashIcon()
             Text(
                 session.shortTimeline + (timeNote?.let { " · $it" } ?: ""),
-                style = KotlinConfTheme.typography.text2,
+                style = AppTheme.typography.text2,
                 color = colors.secondaryText,
             )
         }
@@ -218,14 +218,14 @@ private fun SessionCard(
         val level = roomLevel(session.locationLine)
         Text(
             roomName(session.locationLine) + (level?.let { " · $it" } ?: ""),
-            style = KotlinConfTheme.typography.text1,
+            style = AppTheme.typography.text1,
             color = colors.primaryText,
         )
         val previousLevel = previousLocation?.let(::roomLevel)
         if (level != null && previousLevel != null && level != previousLevel) {
             Text(
                 stringResource(Res.string.up_next_change_floor, previousLevel, level),
-                style = KotlinConfTheme.typography.text2,
+                style = AppTheme.typography.text2,
                 color = colors.accentText,
             )
         }
@@ -234,19 +234,19 @@ private fun SessionCard(
 
 @Composable
 private fun FreeCard(free: FreeBlock, onClick: () -> Unit) {
-    val colors = KotlinConfTheme.colors
+    val colors = AppTheme.colors
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
+            .clip(AppTheme.shapes.roundedCornerMd)
             .background(colors.mainBackground)
             .clickable(enabled = free.available.isNotEmpty(), onClick = onClick)
             .padding(vertical = 8.dp),
     ) {
         Text(
             stringResource(Res.string.my_schedule_free, DateTimeFormatting.timeToTime(free.startsAt, free.endsAt)),
-            style = KotlinConfTheme.typography.text2,
+            style = AppTheme.typography.text2,
             color = colors.noteText,
         )
         if (free.available.isNotEmpty()) {
@@ -268,18 +268,18 @@ private fun CompactRow(session: SessionCardView, clash: Boolean, onClick: () -> 
         ) {
             Text(
                 DateTimeFormatting.time(session.startsAt),
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.noteText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.noteText,
             )
             if (clash) ClashIcon()
         }
         Column(Modifier.weight(1f)) {
-            Text(session.title, style = KotlinConfTheme.typography.text1, maxLines = 2)
+            Text(session.title, style = AppTheme.typography.text1, maxLines = 2)
             val level = roomLevel(session.locationLine)
             Text(
                 roomName(session.locationLine) + (level?.let { " · $it" } ?: ""),
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.noteText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.noteText,
                 maxLines = 1,
             )
         }
@@ -302,7 +302,7 @@ private fun ClashIcon() {
     Image(
         painter = painterResource(Res.drawable.clash_16),
         contentDescription = stringResource(Res.string.up_next_clash),
-        colorFilter = ColorFilter.tint(KotlinConfTheme.colors.orangeText),
+        colorFilter = ColorFilter.tint(AppTheme.colors.orangeText),
         modifier = Modifier.size(14.dp),
     )
 }
@@ -310,7 +310,7 @@ private fun ClashIcon() {
 /** A friendly welcome: greeting, the event, and where the day stands. */
 @Composable
 private fun GreetingCard(upNext: UpNext?, now: LocalDateTime) {
-    val white = KotlinConfTheme.colors.primaryTextWhiteFixed
+    val white = AppTheme.colors.primaryTextWhiteFixed
     val event = ActiveEvent
     val greeting = when (now.hour) {
         in 0..11 -> Res.string.now_good_morning
@@ -331,27 +331,27 @@ private fun GreetingCard(upNext: UpNext?, now: LocalDateTime) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 4.dp)
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
-            .background(KotlinConfTheme.colors.headerGradient)
+            .clip(AppTheme.shapes.roundedCornerMd)
+            .background(AppTheme.colors.headerGradient)
             .padding(20.dp),
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(14.dp), verticalAlignment = Alignment.CenterVertically) {
             event.theme?.let { EventLogo(it, size = 44.dp, tint = white) }
             Column {
-                Text(stringResource(greeting), style = KotlinConfTheme.typography.h2, color = white)
+                Text(stringResource(greeting), style = AppTheme.typography.h2, color = white)
                 Text(
                     DateTimeFormatting.weekdayDate(now.date) + " · " + DateTimeFormatting.time(now),
-                    style = KotlinConfTheme.typography.text2,
+                    style = AppTheme.typography.text2,
                     color = white.copy(alpha = 0.8f),
                 )
             }
         }
-        Text(event.name, style = KotlinConfTheme.typography.text1, color = white, modifier = Modifier.padding(top = 6.dp))
+        Text(event.name, style = AppTheme.typography.text1, color = white, modifier = Modifier.padding(top = 6.dp))
         if (status != null) {
-            Text(status, style = KotlinConfTheme.typography.text2, color = white.copy(alpha = 0.9f))
+            Text(status, style = AppTheme.typography.text2, color = white.copy(alpha = 0.9f))
         }
         if (upNext != null && upNext.nothingBookmarked) {
-            Text(stringResource(Res.string.now_welcome_hint), style = KotlinConfTheme.typography.text2, color = white.copy(alpha = 0.9f))
+            Text(stringResource(Res.string.now_welcome_hint), style = AppTheme.typography.text2, color = white.copy(alpha = 0.9f))
         }
     }
 }
@@ -363,18 +363,18 @@ private fun BrowseRow(session: SessionCardView, onSession: (SessionId) -> Unit, 
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
-            .background(KotlinConfTheme.colors.tileBackground)
+            .clip(AppTheme.shapes.roundedCornerMd)
+            .background(AppTheme.colors.tileBackground)
             .clickable { onSession(session.id) }
             .padding(start = 16.dp, end = 4.dp, top = 10.dp, bottom = 10.dp),
     ) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(session.title, style = KotlinConfTheme.typography.text1, maxLines = 2)
+            Text(session.title, style = AppTheme.typography.text1, maxLines = 2)
             val level = roomLevel(session.locationLine)
             Text(
                 session.shortTimeline + " · " + roomName(session.locationLine) + (level?.let { " · $it" } ?: ""),
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.noteText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.noteText,
                 maxLines = 1,
             )
         }

@@ -18,7 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -36,13 +36,13 @@ fun CardTag(
     size: CardTagSize = CardTagSize.Normal,
 ) {
     val backgroundColor by animateColorAsState(
-        if (selected) KotlinConfTheme.colors.primaryBackground
-        else KotlinConfTheme.colors.tileBackground,
+        if (selected) AppTheme.colors.primaryBackground
+        else AppTheme.colors.tileBackground,
         ColorSpringSpec,
     )
     val textColor by animateColorAsState(
-        if (selected) KotlinConfTheme.colors.primaryTextWhiteFixed
-        else KotlinConfTheme.colors.secondaryText,
+        if (selected) AppTheme.colors.primaryTextWhiteFixed
+        else AppTheme.colors.secondaryText,
         ColorSpringSpec,
     )
 
@@ -66,7 +66,7 @@ fun CardTag(
     ) {
         Text(
             label,
-            style = KotlinConfTheme.typography.text2,
+            style = AppTheme.typography.text2,
             color = textColor,
         )
     }

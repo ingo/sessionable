@@ -52,9 +52,9 @@ import org.jetbrains.kotlinconf.screens.SpeakersScreen
 import org.jetbrains.kotlinconf.screens.StartNotificationsScreen
 import org.jetbrains.kotlinconf.screens.licenses.LicensesScreen
 import org.jetbrains.kotlinconf.screens.licenses.SingleLicenseScreen
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfDarkColors
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfLightColors
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.DarkColors
+import org.jetbrains.kotlinconf.ui.theme.LightColors
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.getStoreUrl
 
 fun navigateByLocalNotificationId(notificationId: String) {
@@ -137,22 +137,22 @@ internal fun NavHost(
         enabled = navState.currentBackstack.lastOrNull() is SettingsScreen,
     ) { appliedIsDarkTheme ->
         val colors = when {
-            appliedIsDarkTheme -> ActiveEvent.theme?.dark ?: KotlinConfDarkColors
-            else -> ActiveEvent.theme?.light ?: KotlinConfLightColors
+            appliedIsDarkTheme -> ActiveEvent.theme?.dark ?: DarkColors
+            else -> ActiveEvent.theme?.light ?: LightColors
         }
 
         if (onThemeChange != null) {
             LaunchedEffect(colors) { onThemeChange(colors.isDark) }
         }
 
-        KotlinConfTheme(
+        AppTheme(
             rippleEnabled = LocalFlags.current.rippleEnabled,
             colors = colors,
         ) {
             Box(
                 Modifier
                     .fillMaxSize()
-                    .background(KotlinConfTheme.colors.mainBackground)
+                    .background(AppTheme.colors.mainBackground)
                     .windowInsetsPadding(
                         WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)
                     )

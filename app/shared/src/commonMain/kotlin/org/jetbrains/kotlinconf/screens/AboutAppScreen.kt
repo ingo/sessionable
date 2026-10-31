@@ -29,7 +29,7 @@ import org.jetbrains.kotlinconf.generated.resources.app_version
 import org.jetbrains.kotlinconf.generated.resources.arrow_up_right_24
 import org.jetbrains.kotlinconf.ui.components.PageMenuItem
 import org.jetbrains.kotlinconf.ui.components.Text
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.utils.getStoreUrl
 
 @Composable
@@ -50,15 +50,15 @@ fun AboutAppScreen(
             ) {
                 Text(
                     stringResource(Res.string.about_app_description_sessionize, ActiveEvent.name),
-                    color = KotlinConfTheme.colors.longText,
+                    color = AppTheme.colors.longText,
                 )
                 Text(
                     stringResource(Res.string.about_app_unofficial),
-                    color = KotlinConfTheme.colors.longText,
+                    color = AppTheme.colors.longText,
                 )
                 Text(
                     stringResource(Res.string.about_app_privacy),
-                    color = KotlinConfTheme.colors.longText,
+                    color = AppTheme.colors.longText,
                 )
             }
 
@@ -85,11 +85,11 @@ fun AboutAppScreen(
             val appVersion = stringResource(resource = Res.string.app_version)
             Text(
                 text = appVersion,
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.primaryText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.primaryText,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .clip(KotlinConfTheme.shapes.roundedCornerMd)
+                    .clip(AppTheme.shapes.roundedCornerMd)
                     .clickable { clipboardManager.setText(AnnotatedString(appVersion)) }
                     .padding(16.dp)
             )

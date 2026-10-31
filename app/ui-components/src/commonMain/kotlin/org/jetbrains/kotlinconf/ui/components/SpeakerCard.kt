@@ -20,7 +20,7 @@ import coil3.request.crossfade
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.person_silhouette
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -38,7 +38,7 @@ fun SpeakerCard(
 ) {
     Row(
         modifier = modifier
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
+            .clip(AppTheme.shapes.roundedCornerMd)
             .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -50,14 +50,14 @@ fun SpeakerCard(
         Column {
             Text(
                 text = buildHighlightedString(name, nameHighlights),
-                style = if (compact) KotlinConfTheme.typography.h4 else KotlinConfTheme.typography.h3,
-                color = KotlinConfTheme.colors.primaryText,
+                style = if (compact) AppTheme.typography.h4 else AppTheme.typography.h3,
+                color = AppTheme.colors.primaryText,
             )
             Spacer(modifier = Modifier.size(if (compact) 2.dp else 6.dp))
             Text(
                 text = buildHighlightedString(title, titleHighlights),
-                style = KotlinConfTheme.typography.text2,
-                color = KotlinConfTheme.colors.secondaryText,
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.secondaryText,
                 maxLines = if (compact) 2 else Int.MAX_VALUE,
             )
         }
@@ -76,8 +76,8 @@ fun SpeakerAvatar(
             .build(),
         contentDescription = null,
         modifier = modifier
-            .clip(KotlinConfTheme.shapes.roundedCornerMd)
-            .background(KotlinConfTheme.colors.tileBackground),
+            .clip(AppTheme.shapes.roundedCornerMd)
+            .background(AppTheme.colors.tileBackground),
         contentScale = ContentScale.Crop,
         // Speakers without a photo, or one that fails to load
         error = painterResource(UiRes.drawable.person_silhouette),

@@ -17,7 +17,7 @@ import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.bookmark_24
 import org.jetbrains.kotlinconf.ui.generated.resources.view_grid_24
 import org.jetbrains.kotlinconf.ui.generated.resources.view_list_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import org.jetbrains.kotlinconf.ui.utils.WidePreviewLightDark
 
@@ -36,7 +36,7 @@ fun LargeMainHeader(
     ) {
         Text(
             text = title,
-            style = KotlinConfTheme.typography.h1,
+            style = AppTheme.typography.h1,
             modifier = Modifier.weight(1f)
         )
 

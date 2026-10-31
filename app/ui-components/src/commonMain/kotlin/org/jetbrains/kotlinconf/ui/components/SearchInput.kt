@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -39,9 +39,9 @@ internal fun SearchInput(
                 .focusRequester(focusRequester),
             interactionSource = interactionSource,
             singleLine = true,
-            textStyle = KotlinConfTheme.typography.text1
-                .copy(color = KotlinConfTheme.colors.primaryText),
-            cursorBrush = SolidColor(KotlinConfTheme.colors.primaryText),
+            textStyle = AppTheme.typography.text1
+                .copy(color = AppTheme.colors.primaryText),
+            cursorBrush = SolidColor(AppTheme.colors.primaryText),
         )
         androidx.compose.animation.AnimatedVisibility(
             searchValue.isEmpty(),
@@ -50,8 +50,8 @@ internal fun SearchInput(
         ) {
             Text(
                 text = hint,
-                style = KotlinConfTheme.typography.text1,
-                color = KotlinConfTheme.colors.placeholderText
+                style = AppTheme.typography.text1,
+                color = AppTheme.colors.placeholderText
             )
         }
     }

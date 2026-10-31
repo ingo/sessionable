@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.arrow_up_right_24
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 
@@ -33,9 +33,9 @@ fun OverlayTextButton(
         modifier
             .heightIn(min = 48.dp)
             .clip(ActionButtonShape)
-            .border(1.dp, KotlinConfTheme.colors.strokeHalf, ActionButtonShape)
+            .border(1.dp, AppTheme.colors.strokeHalf, ActionButtonShape)
             .clickable(onClick = onClick, role = Role.Button)
-            .background(KotlinConfTheme.colors.mainBackground)
+            .background(AppTheme.colors.mainBackground)
             .padding(vertical = 6.dp)
             .padding(start = 24.dp, end = 16.dp),
         contentAlignment = Alignment.Center,

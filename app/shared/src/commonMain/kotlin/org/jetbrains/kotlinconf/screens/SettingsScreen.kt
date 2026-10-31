@@ -44,7 +44,7 @@ import org.jetbrains.kotlinconf.generated.resources.theme_dark
 import org.jetbrains.kotlinconf.generated.resources.theme_light
 import org.jetbrains.kotlinconf.generated.resources.theme_system
 import org.jetbrains.kotlinconf.ui.components.Text
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 
 @Composable
 fun SettingsScreen(
@@ -86,7 +86,7 @@ private fun SectionHeading(
 ) {
     Text(
         text = text,
-        style = KotlinConfTheme.typography.h2,
+        style = AppTheme.typography.h2,
         modifier = modifier.semantics { heading() }
             .padding(top = 16.dp, bottom = 12.dp)
     )
@@ -141,7 +141,7 @@ private fun ThemeBox(
                         Modifier
                             .border(
                                 width = 2.dp,
-                                color = KotlinConfTheme.colors.primaryBackground,
+                                color = AppTheme.colors.primaryBackground,
                                 shape = RoundedCornerShape(20.dp)
                             )
                     } else Modifier
@@ -149,10 +149,10 @@ private fun ThemeBox(
                 .padding(6.dp)
                 .border(
                     width = 2.dp,
-                    color = KotlinConfTheme.colors.strokePale,
-                    shape = KotlinConfTheme.shapes.roundedCornerMd
+                    color = AppTheme.colors.strokePale,
+                    shape = AppTheme.shapes.roundedCornerMd
                 )
-                .clip(KotlinConfTheme.shapes.roundedCornerMd)
+                .clip(AppTheme.shapes.roundedCornerMd)
                 .heightIn(max = 112.dp)
                 .aspectRatio(1f)
         ) {
@@ -177,8 +177,8 @@ private fun ThemeBox(
                     Theme.DARK -> Res.string.settings_theme_dark
                 }
             ),
-            style = KotlinConfTheme.typography.text2,
-            color = KotlinConfTheme.colors.primaryText
+            style = AppTheme.typography.text2,
+            color = AppTheme.colors.primaryText
         )
     }
 }

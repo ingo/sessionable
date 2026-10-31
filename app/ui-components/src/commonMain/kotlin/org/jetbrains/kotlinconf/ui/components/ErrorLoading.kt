@@ -54,7 +54,7 @@ import org.jetbrains.kotlinconf.ui.generated.resources.UiRes
 import org.jetbrains.kotlinconf.ui.generated.resources.action_error_reload
 import org.jetbrains.kotlinconf.ui.generated.resources.info_28
 import org.jetbrains.kotlinconf.ui.generated.resources.loading
-import org.jetbrains.kotlinconf.ui.theme.KotlinConfTheme
+import org.jetbrains.kotlinconf.ui.theme.AppTheme
 import org.jetbrains.kotlinconf.ui.theme.PreviewHelper
 import org.jetbrains.kotlinconf.ui.theme.UI
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -92,7 +92,7 @@ fun MajorError(
         Icon(
             painter = painterResource(UiRes.drawable.info_28),
             contentDescription = null,
-            tint = KotlinConfTheme.colors.secondaryText,
+            tint = AppTheme.colors.secondaryText,
             modifier = Modifier.size(48.dp),
         )
         Spacer(Modifier.height(16.dp))
@@ -159,9 +159,9 @@ private fun ErrorText(
 ) {
     Text(
         message,
-        color = KotlinConfTheme.colors.secondaryText,
+        color = AppTheme.colors.secondaryText,
         modifier = modifier.widthIn(max = 220.dp),
-        style = KotlinConfTheme.typography.text1.copy(
+        style = AppTheme.typography.text1.copy(
             textAlign = TextAlign.Center,
         )
     )
@@ -188,7 +188,7 @@ fun Loading(
     } else {
         0f
     }
-    val color = KotlinConfTheme.colors.primaryText
+    val color = AppTheme.colors.primaryText
 
     Canvas(modifier = modifier.size(48.dp)) {
         val ringRadius = size.minDimension / 2 - 5.dp.toPx()
