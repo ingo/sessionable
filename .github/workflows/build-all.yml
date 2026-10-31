@@ -27,12 +27,13 @@ jobs:
         run: ./gradlew jvmTest
 
   test-events:
-    name: Test app (${{ matrix.event }})
+    name: Test app (${{ matrix.event || 'generic' }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        event: [agntcon-mcpcon-na-2026]
+        # "" is the generic build; the others are branded builds (profiles in event/EventProfiles.kt)
+        event: ["", agntcon-mcpcon-na-2026]
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -42,7 +43,7 @@ jobs:
           distribution: 'zulu'
           java-version: 21
       - name: Run core and app JVM tests
-        run: ./gradlew -Pevent=${{ matrix.event }} :core:jvmTest :app:shared:jvmTest
+        run: ./gradlew "-Pevent=${{ matrix.event }}" :core:jvmTest :app:shared:jvmTest
 
   build-jvm-release:
     name: Build desktop release
@@ -73,13 +74,13 @@ jobs:
         run: ./gradlew :app:androidApp:assembleDebug --stacktrace
 
   build-ios:
-    name: Build iOS (${{ matrix.event }})
+    name: Build iOS (${{ matrix.event || 'generic' }})
     runs-on: macOS-latest
     strategy:
       fail-fast: false
       matrix:
-        # Conference profiles in app/shared/.../event/EventProfiles.kt
-        event: [agntcon-mcpcon-na-2026]
+        # "" is the generic build; the others are branded builds (profiles in event/EventProfiles.kt)
+        event: ["", agntcon-mcpcon-na-2026]
     env:
       ORG_GRADLE_PROJECT_event: ${{ matrix.event }}
     steps:

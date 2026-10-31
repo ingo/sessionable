@@ -4,66 +4,43 @@ Guidance for Claude Code (claude.ai/code) when working in this repository.
 
 ## What this is
 
-An unofficial, open-source conference app for events that publish their schedule on
-[Sessionize](https://sessionize.com): Kotlin Multiplatform with Compose Multiplatform for Android, iOS,
-JVM desktop and web. There is no backend: the app reads the event's public Sessionize `view/All` feed and keeps
-everything the attendee adds (bookmarks, notes, ratings, people met) on the device.
-
-It is a derivative of JetBrains' open-source [KotlinConf app](https://github.com/JetBrains/kotlinconf-app)
-(Apache-2.0). Keep the credit, the licence and the "unofficial, not affiliated" wording intact.
+Sessionable: a conference app for any event that publishes its schedule on Sessionize, a fork of JetBrains' open-source
+[KotlinConf app](https://github.com/JetBrains/kotlinconf-app) (Apache-2.0). Kotlin Multiplatform with Compose
+Multiplatform for iOS, Android, JVM desktop and web. No backend: it reads the public Sessionize `view/All` feed and
+everything the attendee adds stays on the device. Two modes: the generic build (no `-Pevent`) connects to any
+conference by a pasted Sessionize link; a branded build (`-Pevent=<id>`) is fixed to one profile. Read `docs/FORKING.md`.
 
 ## Commands
 
 ```bash
-# Tests (JVM)
-./gradlew :core:jvmTest :app:shared:jvmTest
-
-# Web app (wasmJs, development mode)
-./gradlew :app:webApp:wasmJsBrowserDevelopmentRun
-
-# Desktop app
-./gradlew :app:desktopApp:hotRun -DmainClass=org.jetbrains.kotlinconf.MainKt
-
-# Bump the version across platforms + regenerate library definitions
-./gradlew prepareRelease
+./gradlew :core:jvmTest :app:shared:jvmTest          # tests (snapshots of real feeds in testdata/)
+./gradlew :app:androidApp:assembleDebug              # Android (needs the SDK; JDK 21)
+./gradlew :app:webApp:wasmJsBrowserDevelopmentRun    # web
+scripts/make-icons.sh                                # icons for all platforms from branding/*.svg
 ```
 
-Android uses the `app.androidApp` run configuration; iOS uses the `KotlinConfAppScheme` scheme. The conference
-profile is chosen at build time with `-Pevent=<id>`.
-
-## Modules
+## Layout
 
 ```
-:core                 shared data model and the Sessionize feed parser (Conference, Session, Speaker, ...). No UI.
-:app:ui-components    reusable Compose components and theme (KotlinConfTheme); own resource class UiRes.
-:app:shared           the client: screens, ViewModels, navigation, ConferenceService, DI graph.
-                      Targets: android, jvm, iosArm64, iosSimulatorArm64, wasmJs, js.
-:app:androidApp       Android entry point.   :app:desktopApp  JVM entry point.   :app:webApp  web entry points.
+:core                 shared data model and the Sessionize feed parser. No UI.
+:app:ui-components    reusable Compose components and theme; own resource class UiRes.
+:app:shared           screens, ViewModels, navigation, ConferenceService, DI graph (Metro).
+:app:androidApp / :app:desktopApp / :app:webApp / app/iosApp   platform entry points
+branding/             icon.svg, glyph.svg, brand.env: the source of every platform's icons
+scripts/              icons, iOS upload, web branding, web smoke test
 ```
 
-## Client architecture
-
-- **DI: Metro.** `AppGraph` (`AppScope`) is per process; `YearGraph` (`YearScope`) is a sub-graph per active
-  conference holding `YearlyApi` and `YearlyStorage`. ViewModels register with `@ContributesIntoMap(AppScope::class)`
-  and `@ViewModelKey`.
-- **`ConferenceService`** is the central singleton: it loads the feed through `YearlyApi`, exposes `agenda`, `speakers`,
-  `conferenceInfo`, notes, ratings and "people met", schedules local reminders, and runs optional bookmark sync with the
-  event's Sessionize web app.
-- **Event profiles** (`event/EventProfile.kt`, `EventProfiles.kt`): name, Sessionize id, time zone, links, theme and
-  map per conference. Everything event-specific lives there; nothing else should mention a conference by name.
-- **Navigation:** `androidx.navigation3`; routes are in `navigation/Routes.kt`, wiring in `NavHost.kt`.
-- **Storage:** multiplatform-settings with a per-conference key prefix. Keep `LATEST_STORAGE_VERSION` unchanged unless
-  you also write a migration; a different value wipes saved data.
-- **Source sets:** `nonAndroidMain` (ios, jvm, web), `nonWebMain` (android, ios, jvm), `webMain` (wasmJs + js).
+`event/EventProfiles.kt` holds what is specific to a conference. `EventSelection` is the conference being shown
+(Compose state); `ConferenceService` opens, switches and leaves conferences and is the central singleton. The generic
+build keeps connected conferences (`SavedEvent`) in `ApplicationStorage`. Routes are in `navigation/Routes.kt`.
 
 ## Conventions
 
-- **No network except Sessionize.** No analytics, trackers, crash reporters, remote images proxies or push services.
-  Anything new that makes a request must be listed in the privacy statement (About the app).
-- **Be kind to Sessionize's servers:** conditional requests where possible, no tight polling loops.
-- **Branding:** Sessionize's name and logo are trademarks of Web-ideja doo. Use the colours, not the logo, and keep the
-  "unofficial" notices.
-- **Version:** keep Android `build.gradle.kts`, iOS `project.pbxproj`/`Info.plist` and
-  `composeResources/values/version.xml` in step; use `./gradlew prepareRelease`.
-- **Resources:** `app:shared` uses `org.jetbrains.kotlinconf.generated.resources`; `app:ui-components` uses `UiRes`.
-  Don't mix them. Every user-facing string needs an English and a German entry.
+- **No network except Sessionize.** No analytics, trackers, crash reporters or push services.
+- **Storage:** keep `ApplicationStorageImpl.LATEST_STORAGE_VERSION` unchanged unless you add a migration; a different
+  value wipes installed users' data. Keep a shipped profile's `storageScope` stable for the same reason.
+- **Strings:** every user-facing string needs an English and a German entry.
+- **Photos and videos** are attached only from a session's own page (`MediaSection`), never imported in bulk.
+- **Versions:** keep Android `build.gradle.kts`, iOS `project.pbxproj`/`Info.plist` and `values/version.xml` in step.
+- **Credit:** keep the JetBrains credit, the Apache-2.0 licence and the "unofficial, not affiliated" wording.
+- JDK 21 is required; on this machine point Gradle at Homebrew's openjdk@21.
