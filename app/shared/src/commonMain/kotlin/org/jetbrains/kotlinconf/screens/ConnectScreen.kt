@@ -21,7 +21,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -34,7 +36,10 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.kotlinconf.generated.resources.Res
 import org.jetbrains.kotlinconf.generated.resources.connect_check
 import org.jetbrains.kotlinconf.generated.resources.connect_checking
+import org.jetbrains.kotlinconf.generated.resources.connect_cancel
 import org.jetbrains.kotlinconf.generated.resources.connect_forget
+import org.jetbrains.kotlinconf.generated.resources.connect_forget_confirm
+import org.jetbrains.kotlinconf.generated.resources.connect_forget_named
 import org.jetbrains.kotlinconf.generated.resources.connect_found
 import org.jetbrains.kotlinconf.generated.resources.connect_intro
 import org.jetbrains.kotlinconf.generated.resources.connect_link_hint
@@ -70,6 +75,7 @@ fun ConnectScreen(viewModel: ConnectViewModel = metroViewModel()) {
     val saved by viewModel.savedEvents.collectAsStateWithLifecycle()
     var link by rememberSaveable { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
+    var forgetting by rememberSaveable { mutableStateOf<String?>(null) }
     var zoneId by rememberSaveable { mutableStateOf(TimeZone.currentSystemDefault().id) }
 
     Column(
@@ -114,15 +120,28 @@ fun ConnectScreen(viewModel: ConnectViewModel = metroViewModel()) {
             when (val state = uiState) {
                 ConnectUiState.Idle -> Unit
                 ConnectUiState.Checking ->
-                    Text(stringResource(Res.string.connect_checking), color = AppTheme.colors.noteText)
+                    Text(
+                        stringResource(Res.string.connect_checking),
+                        color = AppTheme.colors.noteText,
+                        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+                    )
                 ConnectUiState.NotALink ->
-                    Text(stringResource(Res.string.connect_not_a_link), color = AppTheme.colors.orangeText)
+                    Text(
+                        stringResource(Res.string.connect_not_a_link),
+                        color = AppTheme.colors.orangeText,
+                        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+                    )
                 ConnectUiState.NotFound ->
-                    Text(stringResource(Res.string.connect_not_found), color = AppTheme.colors.orangeText)
+                    Text(
+                        stringResource(Res.string.connect_not_found),
+                        color = AppTheme.colors.orangeText,
+                        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+                    )
                 is ConnectUiState.Found -> {
                     Text(
                         stringResource(Res.string.connect_found, state.summary.sessions, state.summary.speakers),
                         color = AppTheme.colors.noteText,
+                        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
                     )
                     Heading(stringResource(Res.string.connect_name_label))
                     TextInput(name, onChange = { name = it }, hint = stringResource(Res.string.connect_name_hint))
@@ -156,7 +175,35 @@ fun ConnectScreen(viewModel: ConnectViewModel = metroViewModel()) {
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Button(event.name, onClick = { viewModel.open(event.sessionizeId) }, modifier = Modifier.weight(1f))
-                        Button(stringResource(Res.string.connect_forget), onClick = { viewModel.forget(event.sessionizeId) })
+                        val forgetLabel = stringResource(Res.string.connect_forget_named, event.name)
+                        Button(
+                            stringResource(Res.string.connect_forget),
+                            onClick = { forgetting = event.sessionizeId },
+                            modifier = Modifier.semantics { contentDescription = forgetLabel },
+                        )
+                    }
+                    if (forgetting == event.sessionizeId) {
+                        Text(
+                            stringResource(Res.string.connect_forget_confirm, event.name),
+                            color = AppTheme.colors.orangeText,
+                            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+                        )
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                            Button(
+                                stringResource(Res.string.connect_forget),
+                                onClick = {
+                                    forgetting = null
+                                    viewModel.forget(event.sessionizeId)
+                                },
+                                primary = true,
+                                modifier = Modifier.weight(1f),
+                            )
+                            Button(
+                                stringResource(Res.string.connect_cancel),
+                                onClick = { forgetting = null },
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
                     }
                 }
             }
