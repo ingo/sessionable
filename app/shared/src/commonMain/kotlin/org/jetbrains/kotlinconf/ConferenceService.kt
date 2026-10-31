@@ -122,7 +122,13 @@ class ConferenceService(
         // Keep bookmarks in step with the event's Sessionize web app while linked
         scope.launch {
             while (true) {
-                if (sessionizeAppUrl != null && currentSyncState()?.linked == true) syncFavorites()
+                try {
+                    if (sessionizeAppUrl != null && currentSyncState()?.linked == true) syncFavorites()
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    taggedLogger.log { "Sync round failed: ${e.message}" }
+                }
                 delay(SYNC_INTERVAL)
             }
         }
@@ -175,6 +181,7 @@ class ConferenceService(
         applicationStorage.setSavedEvents(savedEvents.value - event)
         val profile = event.toProfile()
         val graph = yearGraphFactory.create(profile.storageScope, profile)
+        graph.storage.getFavorites().first().forEach { cancelNotifications(it) }
         graph.storage.getAttachments().first().values.flatten().flatMap { it.files }.forEach { graph.media.delete(it) }
         graph.storage.clear()
     }

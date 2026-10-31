@@ -114,11 +114,20 @@ private fun copyFromUri(context: Context, uri: Uri): PickedMedia? {
     val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mime)
         ?: if (kind == MediaKind.VIDEO) "mp4" else "jpg"
     val file = captureFile(context, extension)
-    val copied = context.contentResolver.openInputStream(uri)?.use { input ->
-        file.outputStream().use { input.copyTo(it) }
-        true
-    } ?: false
-    if (!copied) return null
+    val copied = try {
+        context.contentResolver.openInputStream(uri)?.use { input ->
+            file.outputStream().use { input.copyTo(it) }
+            true
+        } ?: false
+    } catch (_: java.io.IOException) {
+        false
+    } catch (_: SecurityException) {
+        false
+    }
+    if (!copied) {
+        file.delete()
+        return null
+    }
     val still = if (kind == MediaKind.VIDEO) videoStill(context, file.path) else null
     return PickedMedia(file.path, kind, extension, still)
 }
