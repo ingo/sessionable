@@ -35,16 +35,6 @@ object EventProfiles {
 
     val all: List<EventProfile> = listOf(AgntconMcpconNa2026)
 
-    /**
-     * Real public schedules, offered as "try an example" on the connect screen of the generic build. Their
-     * organisers have enabled the Sessionize API; if one is switched off, remove it here.
-     */
-    val examples: List<SavedEvent> = listOf(
-        SavedEvent("asqam7rn", "AGNTCon + MCPCon North America 2026", "America/Los_Angeles"),
-        SavedEvent("1diujeu9", "Trondheim Developer Conference 2026", "Europe/Oslo"),
-        SavedEvent("2r0suvtg", "KotlinConf 2026", "Europe/Berlin"),
-    )
-
     fun byId(id: String): EventProfile =
         all.find { it.id == id } ?: error("Unknown event '$id'. Known events: ${all.joinToString { it.id }}")
 }

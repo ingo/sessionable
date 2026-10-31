@@ -31,11 +31,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.datetime.TimeZone
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.kotlinconf.event.EventProfiles
 import org.jetbrains.kotlinconf.generated.resources.Res
 import org.jetbrains.kotlinconf.generated.resources.connect_check
 import org.jetbrains.kotlinconf.generated.resources.connect_checking
-import org.jetbrains.kotlinconf.generated.resources.connect_examples
 import org.jetbrains.kotlinconf.generated.resources.connect_forget
 import org.jetbrains.kotlinconf.generated.resources.connect_found
 import org.jetbrains.kotlinconf.generated.resources.connect_intro
@@ -139,19 +137,6 @@ fun ConnectScreen(viewModel: ConnectViewModel = metroViewModel()) {
                         primary = true,
                         enabled = name.isNotBlank() && zoneValid,
                     )
-                }
-            }
-
-            val examples = EventProfiles.examples
-            if (examples.isNotEmpty()) {
-                Heading(stringResource(Res.string.connect_examples))
-                for (example in examples) {
-                    Button(example.name, onClick = {
-                        link = example.sessionizeId
-                        name = example.name
-                        zoneId = example.timeZoneId
-                        viewModel.check(example.sessionizeId)
-                    })
                 }
             }
 

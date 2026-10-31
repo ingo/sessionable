@@ -266,7 +266,6 @@ Bitte versuchen Sie es erneut.</string>
     <string name="connect_zone_help">Das Programm wird in dieser Zeitzone angezeigt. Tippe zum Suchen, zum Beispiel Berlin oder Los_Angeles.</string>
     <string name="connect_zone_unknown">Unbekannte Zeitzone</string>
     <string name="connect_open">Konferenz öffnen</string>
-    <string name="connect_examples">Beispiel ausprobieren</string>
     <string name="connect_saved">Deine Konferenzen</string>
     <string name="connect_forget">Entfernen</string>
     <string name="connect_privacy">Die App lädt nur das öffentliche Programm von Sessionize herunter. Deine Lesezeichen und Notizen bleiben auf diesem Gerät.</string>

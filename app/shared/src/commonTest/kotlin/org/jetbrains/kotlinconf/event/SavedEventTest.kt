@@ -54,14 +54,4 @@ class SavedEventTest {
         assertEquals(emptySet(), a.getFavorites().first())
         assertEquals(setOf(SessionId("2")), b.getFavorites().first())
     }
-
-    @Test
-    fun theExamplesAreUsable() {
-        for (example in EventProfiles.examples) {
-            example.toProfile().timeZone // throws for an unknown zone id
-            assertEquals(example.sessionizeId, parseSessionizeId(example.sessionizeUrl()))
-        }
-    }
-
-    private fun SavedEvent.sessionizeUrl() = "https://sessionize.com/api/v2/$sessionizeId/view/All"
 }
