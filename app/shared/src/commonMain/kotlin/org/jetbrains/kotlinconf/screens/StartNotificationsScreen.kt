@@ -69,8 +69,7 @@ fun StartNotificationsScreen(
                 Image(
                     imageVector = vectorResource(Res.drawable.notifications_bell),
                     contentDescription = null,
-                    modifier = Modifier.fillMaxWidth()
-                        .size(160.dp)
+                    modifier = Modifier.size(72.dp),
                 )
             }
             Text(
