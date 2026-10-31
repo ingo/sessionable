@@ -31,7 +31,7 @@ class MainActivity(
 
         permissionHandler.initialize(this)
 
-        processIntent(intent)
+        if (savedInstanceState == null) processIntent(intent)
 
         setContent {
             App(

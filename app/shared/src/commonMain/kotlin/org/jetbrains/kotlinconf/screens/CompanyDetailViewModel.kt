@@ -18,7 +18,6 @@ import org.jetbrains.kotlinconf.ConferenceService
 import org.jetbrains.kotlinconf.SessionId
 import org.jetbrains.kotlinconf.directory.Company
 import org.jetbrains.kotlinconf.directory.buildCompanies
-import org.jetbrains.kotlinconf.event.ActiveEvent
 import org.jetbrains.kotlinconf.utils.ErrorLoadingState
 
 @AssistedInject
@@ -28,7 +27,7 @@ class CompanyDetailViewModel(
 ) : ViewModel() {
     val company: StateFlow<ErrorLoadingState<Company>> = combine(service.speakers, service.agenda) { speakers, agenda ->
         val sessions = agenda.flatMap { it.timeSlots }.flatMap { it.sessions }
-        buildCompanies(speakers, sessions, ActiveEvent.showcaseRoom)
+        buildCompanies(speakers, sessions, service.activeEvent.value?.showcaseRoom)
             .find { it.name.equals(name, ignoreCase = true) }
             ?.let { ErrorLoadingState.Content(it) } ?: ErrorLoadingState.Error
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ErrorLoadingState.Loading)

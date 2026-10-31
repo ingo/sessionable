@@ -18,7 +18,6 @@ import org.jetbrains.kotlinconf.Speaker
 import org.jetbrains.kotlinconf.directory.Company
 import org.jetbrains.kotlinconf.directory.buildCompanies
 import org.jetbrains.kotlinconf.directory.search
-import org.jetbrains.kotlinconf.event.ActiveEvent
 import kotlinx.coroutines.flow.map
 import org.jetbrains.kotlinconf.utils.ErrorLoadingState
 import org.jetbrains.kotlinconf.utils.containsDiacritics
@@ -66,7 +65,7 @@ class SpeakersViewModel(
         service.speakers, service.agenda, searchText, showcaseOnly,
     ) { speakers, agenda, searchText, showcaseOnly ->
         val sessions = agenda.flatMap { it.timeSlots }.flatMap { it.sessions }
-        buildCompanies(speakers, sessions, ActiveEvent.showcaseRoom)
+        buildCompanies(speakers, sessions, service.activeEvent.value?.showcaseRoom)
             .filter { !showcaseOnly || it.showcaseSessions.isNotEmpty() }
             .search(searchText)
             .map { CompanyWithHighlights(it, nameHighlights = highlights(it.name, searchText)) }
