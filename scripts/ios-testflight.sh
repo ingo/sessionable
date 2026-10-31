@@ -2,13 +2,14 @@
 # Archives the iOS app for one conference and (optionally) uploads it to TestFlight.
 #
 #   scripts/ios-testflight.sh <event-id> <bundle-id> <display-name> <team-id> [--upload]
-#   scripts/ios-testflight.sh agntcon-mcpcon-na-2026 com.muschenetz.agntcon AGNTCon 4M7MX9FB66 --upload
+#   scripts/ios-testflight.sh "" com.example.sessionable Sessionable ABCDE12345 --upload
 #
-# The event id is a profile in app/shared/.../event/EventProfiles.kt. Signing is automatic with the
+# The event id is a profile in app/shared/.../event/EventProfiles.kt; empty builds the generic app. Signing is automatic with the
 # Apple account signed in to Xcode; it registers the bundle id if needed. Uploading needs an app
 # record with that bundle id in App Store Connect, and an App Store Connect API key (command-line
 # uploads cannot use the Xcode account): set ASC_KEY_ID and ASC_ISSUER_ID, with the key at
-# ~/.appstoreconnect/private_keys/AuthKey_<ASC_KEY_ID>.p8 (or ASC_KEY_PATH).
+# ~/.appstoreconnect/private_keys/AuthKey_<ASC_KEY_ID>.p8 (or ASC_KEY_PATH). When they are set the key is also
+# used to sign the archive, which is what lets this run on a CI machine with no Apple account signed in.
 # Requires JDK 21 (JAVA_HOME or Homebrew openjdk@21).
 set -euo pipefail
 
@@ -19,8 +20,9 @@ fi
 
 EVENT=$1 BUNDLE_ID=$2 DISPLAY_NAME=$3 TEAM_ID=$4 UPLOAD=${5:-}
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
-OUT=${OUT:-$ROOT/build/ios/$EVENT}
-ARCHIVE=$OUT/$EVENT.xcarchive
+NAME=${EVENT:-generic}
+OUT=${OUT:-$ROOT/build/ios/$NAME}
+ARCHIVE=$OUT/$NAME.xcarchive
 
 if [[ -z "${JAVA_HOME:-}" || ! -x "$JAVA_HOME/bin/java" ]] || ! "$JAVA_HOME/bin/java" -version 2>&1 | grep -q '"21'; then
   JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home
@@ -38,6 +40,13 @@ EVENT_SETTINGS=()
 [[ -d "$ASSETS/$EVENT launch.imageset" ]] && EVENT_SETTINGS+=(EVENT_LAUNCH_IMAGE="$EVENT launch")
 [[ -d "$ASSETS/$EVENT launch background.colorset" ]] && EVENT_SETTINGS+=(EVENT_LAUNCH_BACKGROUND="$EVENT launch background")
 
+# The App Store Connect API key signs the archive too, when there is one (CI)
+AUTH=()
+if [[ -n "${ASC_KEY_ID:-}" && -n "${ASC_ISSUER_ID:-}" ]]; then
+  ASC_KEY_PATH=${ASC_KEY_PATH:-$HOME/.appstoreconnect/private_keys/AuthKey_$ASC_KEY_ID.p8}
+  AUTH=(-authenticationKeyPath "$ASC_KEY_PATH" -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID")
+fi
+
 xcodebuild archive \
   -project "$ROOT/app/iosApp/Sessionable.xcodeproj" \
   -scheme SessionableScheme \
@@ -45,6 +54,7 @@ xcodebuild archive \
   -destination 'generic/platform=iOS' \
   -archivePath "$ARCHIVE" \
   -allowProvisioningUpdates \
+  ${AUTH[@]+"${AUTH[@]}"} \
   DEVELOPMENT_TEAM="$TEAM_ID" \
   CODE_SIGN_STYLE=Automatic \
   CODE_SIGN_IDENTITY="Apple Development" \

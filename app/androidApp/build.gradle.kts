@@ -41,8 +41,19 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // A release is signed when the keystore is given in the environment (see docs/RELEASING.md)
+    val releaseSigning = System.getenv("ANDROID_KEYSTORE_PATH")?.let { path ->
+        signingConfigs.create("release") {
+            storeFile = file(path)
+            storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("ANDROID_KEY_ALIAS")
+            keyPassword = System.getenv("ANDROID_KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = releaseSigning
             isDebuggable = false
             isMinifyEnabled = true
             proguardFiles(
