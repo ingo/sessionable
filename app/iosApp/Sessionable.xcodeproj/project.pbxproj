@@ -339,7 +339,7 @@
 				);
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Sessionable;
-				EVENT_LAUNCH_BACKGROUND = "";
+				EVENT_LAUNCH_BACKGROUND = "launch-background";
 				EVENT_LAUNCH_IMAGE = "launch-glyph";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -385,7 +385,7 @@
 				);
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Sessionable;
-				EVENT_LAUNCH_BACKGROUND = "";
+				EVENT_LAUNCH_BACKGROUND = "launch-background";
 				EVENT_LAUNCH_IMAGE = "launch-glyph";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (

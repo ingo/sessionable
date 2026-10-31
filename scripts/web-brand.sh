@@ -22,7 +22,7 @@ BRAND="$ROOT/app/webApp/branding/$EVENT"
 [[ -f "$DIST/index.html" ]] || { echo "No built web app in $DIST" >&2; exit 1; }
 
 # Colors and the short name come from brand.env in the branding folder (see docs/FORKING.md)
-BG="#0b2a30" ACCENT="#00bfa5" BUTTON="#00796b" SHORT_NAME="$TITLE"
+BG="#00a99d" ACCENT="#00bfa5" BUTTON="#00796b" SHORT_NAME="$TITLE"
 [[ -f "$BRAND/brand.env" ]] && source "$BRAND/brand.env"
 export BG ACCENT BUTTON SHORT_NAME
 
