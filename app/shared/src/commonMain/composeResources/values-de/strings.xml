@@ -314,4 +314,22 @@ Bitte versuchen Sie es erneut.</string>
     <string name="connect_forget">Entfernen</string>
     <string name="connect_privacy">Die App lädt nur das öffentliche Programm von Sessionize herunter. Deine Lesezeichen und Notizen bleiben auf diesem Gerät.</string>
     <string name="info_link_switch_conference">Konferenz wechseln</string>
+
+    <!-- Photos and videos on a session -->
+    <string name="session_media_title">Meine Fotos und Videos</string>
+    <string name="session_media_hint">Folien, die nicht geteilt wurden, ein Whiteboard, der Teil des Vortrags, den du behalten möchtest. Sie bleiben auf diesem Gerät.</string>
+    <string name="session_media_take_photo">Foto aufnehmen</string>
+    <string name="session_media_record_video">Video aufnehmen</string>
+    <string name="session_media_from_library">Aus Fotos hinzufügen</string>
+    <string name="session_media_adding">Wird hinzugefügt …</string>
+    <string name="session_media_remove">Entfernen</string>
+    <string name="session_media_cancel">Abbrechen</string>
+    <string name="session_media_photo">Foto %1$d</string>
+    <string name="session_media_video">Video %1$d</string>
+    <string name="session_media_actions">Gedrückt halten zum Entfernen</string>
+    <string name="session_media_remove_label">Entfernen</string>
+    <plurals name="media_unreadable">
+        <item quantity="one">%1$d Foto konnte nicht aus deiner Mediathek gelesen werden. Füge es erneut hinzu.</item>
+        <item quantity="other">%1$d Fotos konnten nicht aus deiner Mediathek gelesen werden. Füge sie erneut hinzu.</item>
+    </plurals>
 </resources>

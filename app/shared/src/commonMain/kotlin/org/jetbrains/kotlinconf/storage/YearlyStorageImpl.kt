@@ -1,5 +1,6 @@
 package org.jetbrains.kotlinconf.storage
 
+import org.jetbrains.kotlinconf.personal.Attachment
 import org.jetbrains.kotlinconf.sync.SessionizeSyncState
 import com.russhwolf.settings.ExperimentalSettingsApi
 import com.russhwolf.settings.ObservableSettings
@@ -52,6 +53,7 @@ class YearlyStorageImpl(
     val NOTES = key("notes")
     val MET_SPEAKERS = key("metSpeakers")
     val RATINGS = key("ratings")
+    val ATTACHMENTS = key("attachments")
 
     override suspend fun clear() {
         settings.keys.filter { it.startsWith("${scope}_") }.forEach { settings.remove(it) }
@@ -74,6 +76,9 @@ class YearlyStorageImpl(
 
     override fun getRatings(): Flow<Map<String, SessionRating>> = settings.getStringOrNullFlow(RATINGS).map { it.decodeOrNull<Map<String, SessionRating>>() ?: emptyMap() }
     override suspend fun setRatings(value: Map<String, SessionRating>) = settings.set(RATINGS, json.encodeToString(value))
+
+    override fun getAttachments(): Flow<Map<String, List<Attachment>>> = settings.getStringOrNullFlow(ATTACHMENTS).map { it.decodeOrNull<Map<String, List<Attachment>>>() ?: emptyMap() }
+    override suspend fun setAttachments(value: Map<String, List<Attachment>>) = settings.set(ATTACHMENTS, json.encodeToString(value))
 
     override fun getNotificationSettings(): Flow<NotificationSettings?> = settings.getStringOrNullFlow(NOTIFICATION_SETTINGS).map { it.decodeOrNull<NotificationSettings>() }
     override suspend fun setNotificationSettings(value: NotificationSettings) = settings.set(NOTIFICATION_SETTINGS, json.encodeToString(value))

@@ -1,5 +1,6 @@
 package org.jetbrains.kotlinconf.di
 
+import org.jetbrains.kotlinconf.di.FileStorageDir
 import com.russhwolf.settings.ObservableSettings
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.BindingContainer
@@ -17,6 +18,10 @@ object JvmBindings {
     @Provides
     @SingleIn(AppScope::class)
     fun provideSettings(): ObservableSettings = createSettings()
+
+    @Provides
+    @FileStorageDir
+    fun provideFileStorageDir(): String = "files"
 
 
     @Provides

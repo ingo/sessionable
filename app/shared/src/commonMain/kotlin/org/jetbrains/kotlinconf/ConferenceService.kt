@@ -48,9 +48,14 @@ import org.jetbrains.kotlinconf.event.BUNDLED_ASSET_PREFIX
 import org.jetbrains.kotlinconf.event.bundledMapSvg
 import org.jetbrains.kotlinconf.export.ExportSnapshot
 import org.jetbrains.kotlinconf.flags.FlagsManager
+import org.jetbrains.kotlinconf.media.MediaFiles
+import org.jetbrains.kotlinconf.media.PickedMedia
+import org.jetbrains.kotlinconf.personal.Attachment
 import org.jetbrains.kotlinconf.personal.PersonalNotes
 import org.jetbrains.kotlinconf.personal.SessionRating
+import org.jetbrains.kotlinconf.personal.withAdded
 import org.jetbrains.kotlinconf.personal.withMet
+import org.jetbrains.kotlinconf.personal.withRemoved
 import org.jetbrains.kotlinconf.personal.withRating
 import org.jetbrains.kotlinconf.generated.resources.Res
 import org.jetbrains.kotlinconf.generated.resources.notification_session_already_started
@@ -166,7 +171,9 @@ class ConferenceService(
         val event = savedEvents.value.find { it.sessionizeId == sessionizeId } ?: return
         if (activeEvent.value?.sessionizeId == sessionizeId) leaveEvent()
         applicationStorage.setSavedEvents(savedEvents.value - event)
-        yearGraphFactory.create(event.toProfile().storageScope).storage.clear()
+        val graph = yearGraphFactory.create(event.toProfile().storageScope)
+        graph.storage.getAttachments().first().values.flatten().flatMap { it.files }.forEach { graph.media.delete(it) }
+        graph.storage.clear()
     }
 
     /** Reads a conference's feed to check the link before connecting; null when it cannot be read or is empty. */
@@ -219,6 +226,13 @@ class ConferenceService(
         currentYearlyStorage.flatMapLatest { it.getRatings() }
             .stateIn(scope, SharingStarted.Eagerly, emptyMap())
 
+    val attachments: StateFlow<Map<String, List<Attachment>>> =
+        currentYearlyStorage.flatMapLatest { it.getAttachments() }
+            .stateIn(scope, SharingStarted.Eagerly, emptyMap())
+
+    /** The current event's folder of photos and videos; null until the event has loaded. */
+    val mediaFiles: MediaFiles? get() = currentYearGraph.value?.media
+
     private val personalMutex = Mutex()
 
     /** Saves even when the screen that asked has gone, so a note typed just before leaving is not lost. */
@@ -233,6 +247,34 @@ class ConferenceService(
 
     private suspend fun updateNotes(transform: (PersonalNotes) -> PersonalNotes) =
         savePersonal { it.setNotes(transform(it.getNotes().first())) }
+
+    /**
+     * Moves picked photos and videos into the event's folder and attaches them to a session. Finishes even when the
+     * screen that asked has gone, so nothing picked is lost halfway.
+     */
+    suspend fun addAttachments(sessionId: SessionId, picked: List<PickedMedia>) = withContext(NonCancellable) {
+        val media = mediaFiles ?: return@withContext
+        val now = nowMillis()
+        savePersonal { storage ->
+            val added = picked.mapIndexedNotNull { index, item ->
+                val file = media.adopt(item.path, item.extension)
+                val thumbnail = item.thumbnailPath?.let { media.adopt(it, "jpg") }
+                if (file == null) {
+                    thumbnail?.let { media.delete(it) }
+                    return@mapIndexedNotNull null
+                }
+                Attachment(id = file.substringBefore('.'), kind = item.kind, file = file, thumbnail = thumbnail, addedAt = now + index)
+            }
+            storage.setAttachments(storage.getAttachments().first().withAdded(sessionId, added))
+        }
+    }
+
+    /** Removes an attachment and its files. */
+    suspend fun removeAttachment(sessionId: SessionId, attachment: Attachment) {
+        val media = mediaFiles ?: return
+        savePersonal { storage -> storage.setAttachments(storage.getAttachments().first().withRemoved(sessionId, attachment.id)) }
+        attachment.files.forEach { media.delete(it) }
+    }
 
     suspend fun setMet(speakerId: SpeakerId, met: Boolean) =
         savePersonal { it.setMetSpeakers(it.getMetSpeakers().first().withMet(speakerId, met)) }

@@ -314,4 +314,22 @@ Please try again.</string>
     <string name="connect_forget">Remove</string>
     <string name="connect_privacy">The app only downloads the public schedule from Sessionize. Your bookmarks and notes stay on this device.</string>
     <string name="info_link_switch_conference">Switch conference</string>
+
+    <!-- Photos and videos on a session -->
+    <string name="session_media_title">My photos and videos</string>
+    <string name="session_media_hint">Slides that were not shared, a whiteboard, the part of the talk you want to keep. They stay on this device.</string>
+    <string name="session_media_take_photo">Take a photo</string>
+    <string name="session_media_record_video">Record a video</string>
+    <string name="session_media_from_library">Add from photos</string>
+    <string name="session_media_adding">Adding…</string>
+    <string name="session_media_remove">Remove</string>
+    <string name="session_media_cancel">Cancel</string>
+    <string name="session_media_photo">Photo %1$d</string>
+    <string name="session_media_video">Video %1$d</string>
+    <string name="session_media_actions">Touch and hold to remove</string>
+    <string name="session_media_remove_label">Remove</string>
+    <plurals name="media_unreadable">
+        <item quantity="one">%1$d photo could not be read from your library. Try adding it again.</item>
+        <item quantity="other">%1$d photos could not be read from your library. Try adding them again.</item>
+    </plurals>
 </resources>

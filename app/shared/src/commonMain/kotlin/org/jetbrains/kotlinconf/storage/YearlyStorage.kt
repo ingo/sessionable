@@ -1,5 +1,6 @@
 package org.jetbrains.kotlinconf.storage
 
+import org.jetbrains.kotlinconf.personal.Attachment
 import org.jetbrains.kotlinconf.sync.SessionizeSyncState
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.kotlinconf.Conference
@@ -34,6 +35,10 @@ interface YearlyStorage {
     /** The attendee's private session ratings, by session id. These never leave the device. */
     fun getRatings(): Flow<Map<String, SessionRating>>
     suspend fun setRatings(value: Map<String, SessionRating>)
+
+    /** The photos and videos the attendee attached, by session id. The files themselves are in [org.jetbrains.kotlinconf.media.MediaFiles]. */
+    fun getAttachments(): Flow<Map<String, List<Attachment>>>
+    suspend fun setAttachments(value: Map<String, List<Attachment>>)
 
     fun getNotificationSettings(): Flow<NotificationSettings?>
     suspend fun setNotificationSettings(value: NotificationSettings)

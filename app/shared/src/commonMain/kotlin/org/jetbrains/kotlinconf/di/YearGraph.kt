@@ -1,5 +1,6 @@
 package org.jetbrains.kotlinconf.di
 
+import org.jetbrains.kotlinconf.media.MediaFiles
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.GraphExtension
@@ -11,6 +12,7 @@ import org.jetbrains.kotlinconf.storage.YearlyStorage
 interface YearGraph {
     val storage: YearlyStorage
     val api: YearlyApi
+    val media: MediaFiles
 
     @ContributesTo(AppScope::class)
     @GraphExtension.Factory

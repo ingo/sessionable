@@ -1,5 +1,9 @@
 package org.jetbrains.kotlinconf.di
 
+import org.jetbrains.kotlinconf.di.FileStorageDir
+import platform.Foundation.NSUserDomainMask
+import platform.Foundation.NSSearchPathForDirectoriesInDomains
+import platform.Foundation.NSApplicationSupportDirectory
 import com.russhwolf.settings.ExperimentalSettingsApi
 import com.russhwolf.settings.NSUserDefaultsSettings
 import com.russhwolf.settings.ObservableSettings
@@ -20,5 +24,16 @@ interface IosBindings {
         @OptIn(ExperimentalSettingsApi::class)
         fun provideSettings(): ObservableSettings =
             NSUserDefaultsSettings(NSUserDefaults.standardUserDefaults)
+
+        /** Application Support, which the system neither purges nor shows in the Files app. */
+        @Provides
+        @SingleIn(AppScope::class)
+        @FileStorageDir
+        fun provideFileStorageDir(): String {
+            val storageDir = NSSearchPathForDirectoriesInDomains(
+                NSApplicationSupportDirectory, NSUserDomainMask, true
+            ).first() as String
+            return "$storageDir/files"
+        }
     }
 }

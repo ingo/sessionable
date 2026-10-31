@@ -1,5 +1,6 @@
 package org.jetbrains.kotlinconf.di
 
+import org.jetbrains.kotlinconf.di.FileStorageDir
 import android.app.Application
 import android.content.Context
 import androidx.preference.PreferenceManager
@@ -23,5 +24,12 @@ object AndroidBindings {
     @SingleIn(AppScope::class)
     fun provideSettings(application: Application): ObservableSettings =
         SharedPreferencesSettings(PreferenceManager.getDefaultSharedPreferences(application))
+
+    // res/xml/share_file_paths.xml exposes this folder to viewers ("files/")
+    @Provides
+    @SingleIn(AppScope::class)
+    @FileStorageDir
+    fun provideFileStorageDir(application: Application): String =
+        application.filesDir.resolve("files").absolutePath
 
 }

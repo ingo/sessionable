@@ -234,6 +234,7 @@ private fun PersonalSection(viewModel: SessionViewModel) {
     Column(Modifier.padding(top = 24.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
         RatingBlock(rating = rating, onThumb = viewModel::setThumb, onTakeaway = viewModel::setTakeaway)
         NoteBlock(stored = note, onSave = viewModel::setNote)
+        MediaSection(viewModel)
     }
 }
 
