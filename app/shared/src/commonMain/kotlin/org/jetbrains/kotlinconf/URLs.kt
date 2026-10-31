@@ -13,7 +13,7 @@ object URLs {
     val BLUESKY: String? get() = ActiveEvent.social.bluesky
 
     // Repository URL
-    const val GITHUB_REPO = "https://github.com/ingo/sessionize-app"
+    const val GITHUB_REPO = "https://github.com/ingo/sessionable"
 
     /** A new GitHub issue with the app version filled in, so a bug report says which build it is about. */
     fun reportProblem(appVersion: String): String =

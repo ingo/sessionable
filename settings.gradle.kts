@@ -1,6 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-rootProject.name = "KotlinConfApp"
+rootProject.name = "Sessionable"
 
 pluginManagement {
     repositories {
