@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -227,12 +228,16 @@ private fun TextInput(
         singleLine = true,
         textStyle = AppTheme.typography.text1.copy(color = colors.primaryText),
         cursorBrush = SolidColor(colors.primaryText),
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType,
+            autoCorrectEnabled = false,
+            capitalization = KeyboardCapitalization.None,
+        ),
         modifier = Modifier
             .fillMaxWidth()
             .border(1.dp, colors.strokeHalf, AppTheme.shapes.roundedCornerSm)
             .padding(horizontal = 16.dp, vertical = 12.dp)
-            .semantics { contentDescription = hint },
+            .semantics { if (value.isEmpty()) contentDescription = hint },
         decorationBox = { field ->
             if (value.isEmpty()) {
                 Text(hint, style = AppTheme.typography.text1, color = colors.placeholderText)
