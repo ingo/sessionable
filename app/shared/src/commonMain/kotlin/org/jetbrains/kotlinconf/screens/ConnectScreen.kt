@@ -20,6 +20,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
@@ -39,6 +40,9 @@ import org.jetbrains.kotlinconf.generated.resources.connect_found
 import org.jetbrains.kotlinconf.generated.resources.connect_intro
 import org.jetbrains.kotlinconf.generated.resources.connect_link_hint
 import org.jetbrains.kotlinconf.generated.resources.connect_name_hint
+import org.jetbrains.kotlinconf.generated.resources.connect_organiser_button
+import org.jetbrains.kotlinconf.generated.resources.connect_organiser_text
+import org.jetbrains.kotlinconf.generated.resources.connect_organiser_title
 import org.jetbrains.kotlinconf.generated.resources.connect_name_label
 import org.jetbrains.kotlinconf.generated.resources.connect_not_a_link
 import org.jetbrains.kotlinconf.generated.resources.connect_not_found
@@ -149,6 +153,14 @@ fun ConnectScreen(viewModel: ConnectViewModel = metroViewModel()) {
                     })
                 }
             }
+
+            val uriHandler = LocalUriHandler.current
+            Heading(stringResource(Res.string.connect_organiser_title))
+            Text(stringResource(Res.string.connect_organiser_text), color = AppTheme.colors.longText)
+            Button(
+                stringResource(Res.string.connect_organiser_button),
+                onClick = { uriHandler.openUri("https://sessionize.com/tryit") },
+            )
 
             if (saved.isNotEmpty()) {
                 Heading(stringResource(Res.string.connect_saved))

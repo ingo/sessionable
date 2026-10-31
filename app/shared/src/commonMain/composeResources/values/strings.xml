@@ -290,4 +290,7 @@ Please try again.</string>
         <item quantity="one">%1$d photo could not be read from your library. Try adding it again.</item>
         <item quantity="other">%1$d photos could not be read from your library. Try adding them again.</item>
     </plurals>
+    <string name="connect_organiser_title">Organising an event?</string>
+    <string name="connect_organiser_text">Create a free test event on Sessionize, add a few sessions, switch on its API under API / embed, and paste the link above.</string>
+    <string name="connect_organiser_button">Try Sessionize</string>
 </resources>
