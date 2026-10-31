@@ -132,16 +132,35 @@ class FullFeaturedSampleTest {
 
     @Test
     fun aRealSessionizeTestEventWithUtcTimes() {
-        val demo = feed("sessionize-demo-event.json").toConference(TimeZone.of("UTC"))
+        val data = feed("sessionize-demo-event.json")
+        val demo = data.toConference(TimeZone.of("UTC"))
 
-        assertEquals(10, demo.sessions.size)
+        assertEquals(11, demo.sessions.size, "ten sessions and a lunch break")
         assertEquals(10, demo.speakers.size)
         assertEquals(setOf("Room 1", "Room 2", "Room 3"), demo.sessions.map { it.location }.toSet())
         assertEquals(LocalDateTime.parse("2026-12-30T09:00"), demo.sessions.minOf { it.startsAt })
         assertEquals(LocalDateTime.parse("2026-12-31T14:20"), demo.sessions.maxOf { it.endsAt })
-        // The same instants shown in another zone, as the app does for a conference elsewhere
-        val berlin = feed("sessionize-demo-event.json").toConference(TimeZone.of("Europe/Berlin"))
-        assertEquals(LocalDateTime.parse("2026-12-30T10:00"), berlin.sessions.minOf { it.startsAt })
         assertEquals(2, demo.buildAgenda(emptySet(), LocalDateTime.parse("2026-12-30T10:00")).size)
+
+        // The same instants shown in another zone, as the app does for a conference elsewhere
+        val berlin = data.toConference(TimeZone.of("Europe/Berlin"))
+        assertEquals(LocalDateTime.parse("2026-12-30T10:00"), berlin.sessions.minOf { it.startsAt })
+    }
+
+    @Test
+    fun theRealFeedCarriesCategoriesLinksAndServiceSessions() {
+        val data = feed("sessionize-demo-event.json")
+        val demo = data.toConference(TimeZone.of("UTC"))
+        val info = data.toTagInfo()
+
+        assertEquals(listOf("Business", "Technical", "Scientific"), info.categories.take(3))
+        assertEquals(listOf("Lightning talk", "Session", "Workshop"), info.formats)
+        assertEquals(listOf("Introductory and overview", "Intermediate", "Advanced", "Expert"), info.levels)
+        assertEquals("https://example.com/recordings/olivia", demo.sessions.single { it.title == "Olivia's Session" }.videoUrl)
+        // Sessionize marks the break, but the app has nowhere to keep that yet: it is listed like a talk
+        val lunch = data.sessions.single { it.isServiceSession }
+        assertEquals("Lunch", lunch.title)
+        assertTrue(lunch.speakers.isEmpty())
+        assertNotNull(demo.sessions.single { it.title == "Lunch" })
     }
 }
