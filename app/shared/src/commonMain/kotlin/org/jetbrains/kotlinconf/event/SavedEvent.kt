@@ -17,11 +17,9 @@ data class SavedEvent(
         timeZoneId = timeZoneId,
         sessionizeId = sessionizeId,
     )
-
-    private companion object {
-        const val SCOPE_PREFIX = "sessionize-"
-    }
 }
+
+private const val SCOPE_PREFIX = "sessionize-"
 
 /** What a conference feed holds, shown before the attendee connects to it. */
 data class FeedSummary(val sessions: Int, val speakers: Int)
