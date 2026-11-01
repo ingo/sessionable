@@ -471,11 +471,12 @@ private fun FreeSlot(free: FreeBlock, past: Boolean, lines: Int, onClick: () -> 
             modifier = Modifier.align(Alignment.TopStart).background(colors.mainBackground),
         )
         if (canBrowse) {
+            // At the end of the row in every case, so the pills of neighbouring free slots line up; the one-line
+            // layout above puts it there too, and it cannot sit in the middle there without covering the time
             if (lines >= 3) {
-                // Centered in the open space below the time
-                BrowsePill(browseLabel, Modifier.align(Alignment.Center).padding(top = 12.dp))
+                BrowsePill(browseLabel, Modifier.align(Alignment.CenterEnd).padding(top = 12.dp))
             } else {
-                BrowsePill(browseLabel, Modifier.align(Alignment.BottomCenter), compact = true)
+                BrowsePill(browseLabel, Modifier.align(Alignment.BottomEnd), compact = true)
             }
         }
     }
