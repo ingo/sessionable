@@ -42,6 +42,8 @@ class ApplicationStorageImpl(
 
     override fun isOnboardingComplete(): Flow<Boolean> = settings.getBooleanFlow(Keys.ONBOARDING_COMPLETE, false)
     override suspend fun setOnboardingComplete(value: Boolean) = settings.set(Keys.ONBOARDING_COMPLETE, value)
+    override fun isTourSeen(): Flow<Boolean> = settings.getBooleanFlow(Keys.TOUR_SEEN, false)
+    override suspend fun setTourSeen(value: Boolean) = settings.set(Keys.TOUR_SEEN, value)
 
     override fun getTheme(): Flow<Theme> = settings.getStringOrNullFlow(Keys.THEME).map { Theme.entries.firstOrNull { entry -> entry.name == it } ?: Theme.SYSTEM }
     override suspend fun setTheme(value: Theme) = settings.set(Keys.THEME, value.name)
@@ -86,6 +88,7 @@ class ApplicationStorageImpl(
     private object Keys {
         const val STORAGE_VERSION = "storageVersion"
         const val ONBOARDING_COMPLETE = "onboardingComplete"
+        const val TOUR_SEEN = "tourSeen"
         const val THEME = "theme"
         const val FLAGS = "flags"
         const val SAVED_EVENTS = "savedEvents"

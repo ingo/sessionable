@@ -13,6 +13,17 @@
     <!-- Screen resources -->
 
 
+    <string name="tour_1_title">Merke vor, was du sehen willst</string>
+    <string name="tour_1_text">Stöbere im Tab Programm und tippe bei einer Session auf das Lesezeichen. Deine Lesezeichen füllen deinen Kalender.</string>
+    <string name="tour_2_title">Dein Tag auf einen Blick</string>
+    <string name="tour_2_text">Jetzt zeigt, was läuft und was als Nächstes kommt. Der Kalender zeigt deinen ganzen Tag, markiert Überschneidungen und schlägt Sessions für freie Zeit vor.</string>
+    <string name="tour_3_title">Notizen, Bewertungen und Fotos</string>
+    <string name="tour_3_text">Öffne eine Session, um Notizen, eine Bewertung, Fotos oder Folien hinzuzufügen. Markiere die Sprecher, die du triffst.</string>
+    <string name="tour_4_title">Nimm es mit nach Hause</string>
+    <string name="tour_4_text">Nach der Veranstaltung fasst dein Reisebericht alles zusammen und lässt sich teilen. Alles bleibt auf diesem Gerät.</string>
+    <string name="tour_skip">Überspringen</string>
+    <string name="tour_next">Weiter</string>
+    <string name="tour_done">Los geht’s</string>
     <string name="about_app_title">Über die App</string>
     <string name="about_app_description_sessionize">Diese App zeigt das Programm von %1$s, direkt aus dem öffentlichen Sessionize-Feed der Veranstaltung gelesen.</string>
     <string name="about_app_name">Sessionable</string>

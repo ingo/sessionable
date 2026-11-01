@@ -13,6 +13,17 @@
     <!-- Screen resources -->
 
 
+    <string name="tour_1_title">Guarda lo que quieres ver</string>
+    <string name="tour_1_text">Explora la pestaña Programa y toca el marcador de cualquier sesión. Tus marcadores llenan tu calendario.</string>
+    <string name="tour_2_title">Tu día de un vistazo</string>
+    <string name="tour_2_text">Ahora muestra lo que está en curso y lo siguiente. Calendario muestra todo tu día, marca solapamientos y sugiere sesiones para el tiempo libre.</string>
+    <string name="tour_3_title">Notas, valoraciones y fotos</string>
+    <string name="tour_3_text">Abre una sesión para añadir notas, una valoración, fotos o diapositivas. Marca a los ponentes que conoces.</string>
+    <string name="tour_4_title">Llévatelo a casa</string>
+    <string name="tour_4_text">Tras el evento, tu resumen del viaje lo recoge todo, listo para compartir. Todo se queda en este dispositivo.</string>
+    <string name="tour_skip">Omitir</string>
+    <string name="tour_next">Siguiente</string>
+    <string name="tour_done">Empezar</string>
     <string name="about_app_title">Acerca de la app</string>
     <string name="about_app_description_sessionize">Esta app muestra el programa de %1$s, leído directamente del feed público de Sessionize del evento.</string>
     <string name="about_app_name">Sessionable</string>
