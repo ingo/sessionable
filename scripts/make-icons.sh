@@ -107,7 +107,16 @@ mono = np.zeros((canvas, canvas, 4), dtype=np.uint8)
 mono[pad:pad + inner, pad:pad + inner, 3] = silhouette
 save(Image.fromarray(mono, "RGBA"), res / "drawable-nodpi/ic_launcher_mono.png")
 (res / "drawable-nodpi/ic_launcher_foreground.png").unlink(missing_ok=True)
-save(badge(432), res / "drawable-nodpi/splash_icon.png")
+# Android 12+ shows the splash icon through a circle two thirds the width of its canvas, so the badge is shrunk until
+# its corners fit inside that circle (the badge is wider than it is tall); older Android shows it unmasked, just smaller
+splash_canvas = 432
+left, top, right, bottom = badge_square.getbbox()
+reach = (((right - left) / 2) ** 2 + ((bottom - top) / 2) ** 2) ** 0.5   # distance from the center to a corner
+fit = 0.95 * (splash_canvas / 3) / (reach * splash_canvas / badge_square.width)
+splash_badge = badge(max(1, round(splash_canvas * fit)))
+splash_icon = Image.new("RGBA", (splash_canvas, splash_canvas), (255, 255, 255, 0))
+splash_icon.paste(splash_badge, ((splash_canvas - splash_badge.width) // 2, (splash_canvas - splash_badge.height) // 2))
+save(splash_icon, res / "drawable-nodpi/splash_icon.png")
 (res / "values/colors.xml").write_text('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="splash_background">%s</color>\n</resources>\n' % LAUNCH.upper())
 (res / "values-night/colors.xml").write_text((res / "values/colors.xml").read_text())
 (res / "drawable/ic_launcher.xml").write_text(
