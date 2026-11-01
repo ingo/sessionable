@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -16,7 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.kotlinconf.ScreenWithTitle
@@ -60,10 +63,20 @@ fun AboutAppScreen(
                 Image(
                     painterResource(Res.drawable.sessionable_badge),
                     contentDescription = null,
-                    modifier = Modifier.size(88.dp),
+                    modifier = Modifier.size(88.dp).align(Alignment.CenterHorizontally),
                 )
-                Text(stringResource(Res.string.about_app_name), style = AppTheme.typography.h1)
-                Text(stringResource(Res.string.about_app_tagline), style = AppTheme.typography.text1, color = AppTheme.colors.longText)
+                Text(
+                    stringResource(Res.string.about_app_name).uppercase(),
+                    style = AppTheme.typography.h1.copy(letterSpacing = 3.sp),
+                    color = if (AppTheme.colors.isDark) AppTheme.colors.accentText else AppTheme.colors.primaryBackground,
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                )
+                Text(
+                    stringResource(Res.string.about_app_tagline),
+                    style = AppTheme.typography.text1.copy(textAlign = TextAlign.Center),
+                    color = AppTheme.colors.longText,
+                    modifier = Modifier.fillMaxWidth(),
+                )
             }
 
             Column(
