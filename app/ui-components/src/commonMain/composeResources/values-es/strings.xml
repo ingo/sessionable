@@ -1,0 +1,52 @@
+<resources>
+    <!-- Common -->
+    <string name="lightning_talk">Charla relámpago</string>
+    <string name="now">Ahora</string>
+    <string name="loading">Cargando…</string>
+
+    <!-- Actions -->
+    <string name="action_bookmark">Marcador</string>
+    <string name="action_bookmark_session">Guardar %1$s en marcadores</string>
+    <string name="action_remove_session_from_bookmarks">Quitar %1$s de marcadores</string>
+
+    <string name="action_error_reload">Recargar</string>
+
+    <string name="action_rate_negative">Voto negativo</string>
+    <string name="action_rate_neutral">Voto neutral</string>
+    <string name="action_rate_positive">Voto positivo</string>
+
+    <string name="action_state_description_expanded">Expandido</string>
+    <string name="action_state_description_collapsed">Contraído</string>
+    <string name="action_state_description_bookmarked">Guardado en marcadores</string>
+    <string name="action_state_description_not_bookmarked">No guardado en marcadores</string>
+
+    <!-- Components -->
+    <string name="feedback_form_type_something">Escribe algo</string>
+    <string name="feedback_form_send">Enviar</string>
+    <string name="feedback_form_skip_comment">Omitir</string>
+    <string name="feedback_form_positive">¡Qué bueno que disfrutaste la sesión! ¿Cuál fue tu parte favorita?</string>
+    <string name="feedback_form_neutral">¿Qué te gustó de esta sesión? ¿Qué la habría hecho aún mejor?</string>
+    <string name="feedback_form_negative">Lamentamos que no te gustara la sesión. Ayúdanos a mejorar con un comentario constructivo y respetuoso.</string>
+
+    <string name="filter_by_tags">Filtrar por etiquetas</string>
+    <plurals name="filter_by_tags_tag_count">
+        <item quantity="one">%1$d etiqueta seleccionada</item>
+        <item quantity="other">%1$d etiquetas seleccionadas</item>
+    </plurals>
+
+    <string name="filter_label_category">Categoría</string>
+    <string name="filter_label_level">Nivel</string>
+    <string name="filter_label_session_format">Formato de sesión</string>
+
+    <string name="main_header_back">Atrás</string>
+    <string name="main_header_search_hint">Escribe para buscar</string>
+    <string name="main_header_search_clear">Borrar</string>
+
+    <string name="talk_card_icon_desc_education">Formación</string>
+    <string name="talk_card_icon_desc_codelab">Codelab</string>
+    <string name="filter_label_company">Empresa</string>
+    <string name="filter_company_show_all">Mostrar las %1$d empresas</string>
+    <string name="filter_company_show_fewer">Mostrar menos</string>
+    <string name="talk_card_find_on_map">Ver %1$s en el mapa</string>
+    <string name="talk_card_plenary">Sesión plenaria</string>
+</resources>

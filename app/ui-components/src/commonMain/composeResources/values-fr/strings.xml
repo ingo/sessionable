@@ -1,0 +1,52 @@
+<resources>
+    <!-- Common -->
+    <string name="lightning_talk">Lightning talk</string>
+    <string name="now">Maintenant</string>
+    <string name="loading">Chargement…</string>
+
+    <!-- Actions -->
+    <string name="action_bookmark">Favori</string>
+    <string name="action_bookmark_session">Ajouter %1$s aux favoris</string>
+    <string name="action_remove_session_from_bookmarks">Retirer %1$s des favoris</string>
+
+    <string name="action_error_reload">Recharger</string>
+
+    <string name="action_rate_negative">Évaluer négativement</string>
+    <string name="action_rate_neutral">Évaluer neutre</string>
+    <string name="action_rate_positive">Évaluer positivement</string>
+
+    <string name="action_state_description_expanded">Développé</string>
+    <string name="action_state_description_collapsed">Réduit</string>
+    <string name="action_state_description_bookmarked">Dans les favoris</string>
+    <string name="action_state_description_not_bookmarked">Pas dans les favoris</string>
+
+    <!-- Components -->
+    <string name="feedback_form_type_something">Écrivez quelque chose</string>
+    <string name="feedback_form_send">Envoyer</string>
+    <string name="feedback_form_skip_comment">Passer</string>
+    <string name="feedback_form_positive">Ravi que la session vous ait plu ! Qu’avez-vous préféré ?</string>
+    <string name="feedback_form_neutral">Qu’avez-vous apprécié dans cette session ? Qu’est-ce qui aurait pu la rendre encore meilleure ?</string>
+    <string name="feedback_form_negative">Désolé que la session ne vous ait pas plu. Aidez-nous à nous améliorer avec un commentaire constructif et respectueux.</string>
+
+    <string name="filter_by_tags">Filtrer par étiquettes</string>
+    <plurals name="filter_by_tags_tag_count">
+        <item quantity="one">%1$d étiquette sélectionnée</item>
+        <item quantity="other">%1$d étiquettes sélectionnées</item>
+    </plurals>
+
+    <string name="filter_label_category">Catégorie</string>
+    <string name="filter_label_level">Niveau</string>
+    <string name="filter_label_session_format">Format de session</string>
+
+    <string name="main_header_back">Retour</string>
+    <string name="main_header_search_hint">Saisissez pour rechercher</string>
+    <string name="main_header_search_clear">Effacer</string>
+
+    <string name="talk_card_icon_desc_education">Formation</string>
+    <string name="talk_card_icon_desc_codelab">Codelab</string>
+    <string name="filter_label_company">Entreprise</string>
+    <string name="filter_company_show_all">Afficher les %1$d entreprises</string>
+    <string name="filter_company_show_fewer">Afficher moins</string>
+    <string name="talk_card_find_on_map">Trouver %1$s sur le plan</string>
+    <string name="talk_card_plenary">Session plénière</string>
+</resources>

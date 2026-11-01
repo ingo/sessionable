@@ -1,0 +1,301 @@
+<resources>
+    <!-- General resources -->
+
+    <string name="navigate_back">Atrás</string>
+
+    <string name="nav_destination_info">Info</string>
+    <string name="nav_destination_my_schedule">Calendario</string>
+    <string name="nav_destination_now">Ahora</string>
+    <string name="nav_destination_schedule">Programa</string>
+    <string name="nav_destination_speakers">Ponentes</string>
+    <string name="nav_destination_map">Mapa</string>
+
+    <!-- Screen resources -->
+
+
+    <string name="about_app_title">Acerca de la app</string>
+    <string name="about_app_description_sessionize">Esta app muestra el programa de %1$s, leído directamente del feed público de Sessionize del evento.</string>
+    <string name="about_app_unofficial">Esta es una app no oficial. No ha sido creada, avalada ni respaldada por Sessionize ni por los organizadores del evento. Está basada en la app de código abierto de KotlinConf de JetBrains y se publica bajo la licencia Apache 2.0.</string>
+    <string name="about_app_privacy">Tus notas, valoraciones y marcadores se quedan en este dispositivo. La app no tiene cuenta, ni analíticas, ni rastreo. Solo descarga el programa público de Sessionize.</string>
+    <string name="about_app_link_github">Repositorio de GitHub</string>
+    <string name="about_app_link_rate">Valorar la app</string>
+    <string name="about_app_link_licenses">Licencias</string>
+
+    <string name="info_title">Info</string>
+    <string name="info_link_about_conf">Acerca de la conferencia</string>
+    <string name="info_link_how_to_find_venue">Cómo llegar</string>
+    <string name="info_link_about_app">Acerca de la app</string>
+    <string name="info_link_code_of_conduct">Código de conducta</string>
+    <string name="info_link_settings">Ajustes</string>
+    <string name="info_link_description_twitter">Twitter</string>
+    <string name="info_link_description_slack">Slack</string>
+    <string name="info_link_description_bluesky">Bluesky</string>
+
+    <string name="about_conference_title">Acerca de la conferencia</string>
+
+
+    <string name="about_conference_day1_title_line1">Keynote</string>
+    <string name="about_conference_day1_title_line2">de apertura</string>
+
+    <string name="about_conference_day2_title_line1">Keynote del</string>
+    <string name="about_conference_day2_title_line2">segundo día</string>
+
+    <string name="about_conference_codelabs_title_line1">Code</string>
+    <string name="about_conference_codelabs_title_line2">Labs</string>
+
+    <string name="about_conference_party_line1"></string>
+    <string name="about_conference_party_line2">¡Fiesta!</string>
+    <string name="about_conference_party_description">¡Diviértete y convive con la comunidad en la mayor fiesta Kotlin del año!</string>
+
+    <string name="about_conference_closingpanel_title_line1">Panel</string>
+    <string name="about_conference_closingpanel_title_line2">de clausura</string>
+
+
+
+    <string name="notifications_title">Notificaciones</string>
+    <string name="notifications_description">Ajusta tus preferencias para recibir solo las notificaciones que te interesan y evitar interrupciones innecesarias.</string>
+    <string name="notifications_session_reminders_title">Recordatorios de sesiones</string>
+    <string name="notifications_session_reminders_description">Recibe recordatorios de las sesiones que guardaste en marcadores del programa para no perdértelas.</string>
+    <string name="notifications_schedule_update_title">Cambios en el programa</string>
+    <string name="notifications_schedule_update_description">¡Mantente al día de los cambios importantes! Recibe un aviso si el programa del evento se actualiza de forma significativa.</string>
+    <string name="notifications_lets_get_started">¡Empecemos!</string>
+
+    <string name="document_error_no_data">Este documento no está disponible en este momento.</string>
+
+    <string name="code_of_conduct">Código de conducta</string>
+
+
+
+
+
+    <string name="licenses_title">Licencias</string>
+    <plurals name="licenses_number_of_results">
+        <item quantity="one">%1$d biblioteca encontrada</item>
+        <item quantity="other">%1$d bibliotecas encontradas</item>
+    </plurals>
+
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_theme_title">Tema de color</string>
+    <string name="settings_theme_system">Sistema</string>
+    <string name="settings_theme_light">Claro</string>
+    <string name="settings_theme_dark">Oscuro</string>
+    <string name="settings_notifications_title">Notificaciones</string>
+
+    <string name="schedule_action_filter_bookmarked">Filtrar marcadores</string>
+    <string name="schedule_action_search">Buscar</string>
+    <string name="schedule_in_x_minutes">en %1$d min</string>
+    <string name="schedule_error_no_data">Nuestro programa parece atrapado en el tráfico.
+Inténtalo de nuevo.
+    </string>
+    <string name="schedule_error_no_results">Sin resultados</string>
+    <string name="schedule_label_no_bookmarks">Aún no hay marcadores</string>
+    <plurals name="schedule_number_of_results">
+        <item quantity="one">%1$d sesión encontrada</item>
+        <item quantity="other">%1$d sesiones encontradas</item>
+    </plurals>
+
+    <string name="session_title">Sesión</string>
+    <string name="session_screen_error">Los detalles de esta sesión no están disponibles en este momento.</string>
+    <string name="session_feedback_sent">Tu comentario ha sido enviado.</string>
+    <string name="session_watch_video">Ver grabación</string>
+    <string name="session_slides">Diapositivas</string>
+    <string name="session_room_state_description_expanded">Expandido</string>
+    <string name="session_room_state_description_collapsed">Contraído</string>
+
+    <string name="feedback_thanks_for_rating">¡Gracias por tu valoración!</string>
+    <string name="feedback_how_was_the_talk">¿Qué tal la charla?</string>
+    <string name="feedback_how_was_the_workshop">¿Qué tal el taller?</string>
+
+    <string name="notification_session_starts_in_5_min">%1$s · En 5 minutos</string>
+    <string name="notification_session_starting_soon">%1$s · Empieza pronto</string>
+    <string name="notification_session_already_started">%1$s · ¡Ya empezó!</string>
+    <string name="notification_session_finished">%1$s terminó</string>
+    <string name="notification_session_how_was_it">¿Qué tal la charla?</string>
+
+    <string name="map_title">Mapa</string>
+    <string name="map_ground_floor">Planta baja</string>
+    <string name="map_first_floor">Primera planta</string>
+    <string name="map_zoom_in">Acercar</string>
+    <string name="map_zoom_out">Alejar</string>
+    <string name="map_how_to_find_venue">Cómo llegar</string>
+    <string name="map_error_no_data">El mapa se ha ido por un atajo.
+Inténtalo de nuevo.</string>
+
+    <string name="speakers_title">Ponentes</string>
+    <string name="speakers_error_no_results">Sin resultados</string>
+    <string name="speakers_error_no_data">Nuestros ponentes están jugando al escondite.
+Inténtalo de nuevo.</string>
+    <plurals name="speakers_number_of_results">
+        <item quantity="one">%1$d ponente encontrado</item>
+        <item quantity="other">%1$d ponentes encontrados</item>
+    </plurals>
+
+    <string name="speaker_detail_title">Ponente</string>
+    <string name="speaker_detail_error_not_found">Lo sentimos, no encontramos los detalles de este ponente.</string>
+
+
+    <string name="my_schedule_title">Calendario</string>
+    <string name="my_schedule_all_day">Todo el día</string>
+    <string name="my_schedule_clash">Solapamiento</string>
+    <string name="my_schedule_free">Libre %1$s</string>
+    <plurals name="my_schedule_free_browse">
+        <item quantity="one">Ver 1 sesión</item>
+        <item quantity="other">Ver %1$d sesiones</item>
+    </plurals>
+    <string name="my_schedule_no_sessions">No hay sesiones este día.</string>
+    <string name="my_schedule_close">Cerrar</string>
+    <string name="my_schedule_bookmark">Guardar</string>
+    <string name="sync_title">Sincronizar con Sessionize</string>
+    <string name="sync_info_link">Sincronizar marcadores con la app de Sessionize</string>
+    <string name="sync_my_schedule_link">Sincronizar con Sessionize</string>
+    <string name="sync_my_schedule_linked">Sincronizado con Sessionize ✓</string>
+    <string name="sync_intro">Mantén tus marcadores al día con la app web de Sessionize de esta conferencia (%1$s), por ejemplo con un programa que planeaste en el portátil.</string>
+    <string name="sync_have_code_title">¿Tienes un código de sincronización?</string>
+    <string name="sync_have_code_steps">En la app web, abre el menú, elige Sync favorites y luego I don’t have the sync code. Introduce aquí el código de 6 dígitos que aparece.</string>
+    <string name="sync_code_hint">Código de 6 dígitos</string>
+    <string name="sync_link">Sincronizar</string>
+    <string name="sync_no_code_title">O empieza aquí</string>
+    <string name="sync_no_code_steps">Muestra un código aquí y, en la app web, elige Sync favorites, luego I want to use sync code e introdúcelo.</string>
+    <string name="sync_show_code">Mostrar un código de sincronización</string>
+    <string name="sync_waiting">Esperando a la app web…</string>
+    <string name="sync_linked_title">Sincronizado con la app web de Sessionize</string>
+    <string name="sync_linked_text">Los marcadores que añadas o quites aquí o en la app web aparecerán en ambas en un minuto o dos.</string>
+    <string name="sync_last_synced">Última sincronización a las %1$s</string>
+    <string name="sync_not_synced_yet">Aún sin sincronizar</string>
+    <string name="sync_now">Sincronizar ahora</string>
+    <string name="sync_stop">Dejar de sincronizar</string>
+    <string name="sync_error_code">Ese código no funcionó. Los códigos caducan a los pocos minutos; genera uno nuevo en la app web.</string>
+    <string name="sync_error_network">No se pudo conectar con Sessionize. Comprueba tu conexión e inténtalo de nuevo.</string>
+    <string name="sync_error_expired">El código caducó antes de usarse. Muestra uno nuevo.</string>
+    <string name="up_next_now">En curso</string>
+    <string name="up_next_next">A continuación</string>
+    <string name="up_next_later">Más tarde hoy</string>
+    <string name="up_next_earlier">Antes hoy: %1$d</string>
+    <string name="up_next_min_left">quedan %1$s</string>
+    <string name="up_next_starts_in">en %1$s</string>
+    <string name="up_next_minutes">%1$d min</string>
+    <string name="up_next_hours_minutes">%1$d h %2$d min</string>
+    <string name="up_next_pick_one">Se solapan. Elige una.</string>
+    <string name="up_next_change_floor">Cambia de planta: %1$s → %2$s</string>
+    <string name="up_next_nothing_now">Ahora no hay nada en marcadores.</string>
+    <string name="up_next_nothing_next">No hay más sesiones en marcadores hoy.</string>
+    <string name="up_next_clash">Se solapa con otra sesión en marcadores</string>
+    <string name="now_good_morning">Buenos días</string>
+    <string name="now_good_afternoon">Buenas tardes</string>
+    <string name="now_good_evening">Buenas noches</string>
+    <string name="now_welcome_hint">Guarda en marcadores las sesiones que quieres ver. Aparecerán aquí, con cómo llegar a la siguiente.</string>
+    <string name="now_before">%1$s empieza %2$s. Así se ve tu primer día.</string>
+    <string name="now_between">Hoy no hay nada. A continuación: %1$s.</string>
+    <string name="now_after">¡Gracias por venir a %1$s!</string>
+    <string name="now_on_now">En curso</string>
+    <string name="now_starting_next">Empieza a continuación · %1$s</string>
+    <string name="my_schedule_bookmarked">%1$d en marcadores</string>
+    <string name="my_schedule_clashes">%1$d solapamientos</string>
+    <string name="session_starts_in">Empieza en %1$s</string>
+    <string name="session_starts_on">Empieza %1$s a las %2$s</string>
+    <string name="session_live">En curso · quedan %1$s</string>
+    <string name="session_ended">Esta sesión ha terminado</string>
+
+    <!-- Notes, ratings, people, companies and export -->
+    <string name="session_add_to_calendar">Añadir al calendario</string>
+    <string name="session_share">Compartir sesión</string>
+    <string name="session_find_on_map">Ver en el mapa</string>
+    <string name="session_my_notes">Mis notas</string>
+    <string name="session_my_notes_hint">Solo en este dispositivo</string>
+    <string name="session_my_rating">Mi valoración</string>
+    <string name="session_rating_thumb_up">Me gustó</string>
+    <string name="session_rating_thumb_down">No es para mí</string>
+    <string name="session_takeaway_hint">Idea clave en una frase</string>
+    <string name="speaker_links">Enlaces</string>
+    <string name="speaker_met">Marcar como conocido</string>
+    <string name="speaker_met_done">Conocido</string>
+    <string name="speaker_notes_hint">Una nota sobre esta persona. Solo en este dispositivo</string>
+    <string name="speaker_company_link">Más de %1$s</string>
+    <string name="speakers_tab_speakers">Ponentes</string>
+    <string name="speakers_tab_companies">Empresas</string>
+    <string name="speakers_tab_met">Conocidos</string>
+    <string name="speakers_met_empty">Nadie todavía. Abre un ponente y toca “Marcar como conocido” para guardar aquí una nota y su enlace.</string>
+    <string name="companies_showcase_filter">Solutions Showcase</string>
+    <string name="companies_error_no_data">Aún no hay empresas.</string>
+    <string name="company_title">Empresa</string>
+    <string name="company_website">Sitio web de la empresa</string>
+    <string name="company_speakers">Ponentes</string>
+    <string name="company_sessions">Sesiones</string>
+    <string name="company_showcase">En el Solutions Showcase</string>
+    <string name="company_error_not_found">No pudimos encontrar esta empresa.</string>
+    <string name="my_schedule_add_to_calendar">Al calendario</string>
+    <string name="my_schedule_share">Compartir</string>
+    <string name="my_schedule_trip_report">Crónica del viaje</string>
+    <string name="export_speakers">Ponentes</string>
+    <string name="export_room">Sala</string>
+    <string name="export_my_notes">Mis notas</string>
+    <string name="export_rating">Valoración</string>
+    <string name="export_slides">Diapositivas</string>
+    <string name="export_recording">Grabación</string>
+    <string name="export_schedule_heading">Mi programa</string>
+    <string name="export_trip_report_heading">Crónica del viaje</string>
+    <string name="export_people_met">Personas que conocí</string>
+    <string name="export_no_sessions">Aún no hay sesiones en marcadores</string>
+    <plurals name="companies_number_of_results">
+        <item quantity="one">%1$d empresa encontrada</item>
+        <item quantity="other">%1$d empresas encontradas</item>
+    </plurals>
+    <plurals name="company_session_count">
+        <item quantity="one">%1$d sesión</item>
+        <item quantity="other">%1$d sesiones</item>
+    </plurals>
+    <plurals name="company_showcase_count">
+        <item quantity="one">%1$d charla en el Showcase</item>
+        <item quantity="other">%1$d charlas en el Showcase</item>
+    </plurals>
+    <string name="my_schedule_state_live">En curso</string>
+    <string name="my_schedule_state_past">Terminada</string>
+
+    <!-- Connect to a conference (generic build) -->
+    <string name="connect_title">Conectar con una conferencia</string>
+    <string name="connect_intro">Pega el enlace de Sessionize o el id de la conferencia. Los organizadores lo encuentran en Sessionize, en API / embed, como el enlace del endpoint "All", por ejemplo sessionize.com/api/v2/abcd1234/view/All.</string>
+    <string name="connect_link_hint">Enlace o id de Sessionize</string>
+    <string name="connect_check">Comprobar</string>
+    <string name="connect_checking">Leyendo el programa…</string>
+    <string name="connect_not_found">No se encontró ningún programa. Revisa el enlace y que el organizador haya activado la API para el endpoint "All".</string>
+    <string name="connect_not_a_link">Eso no parece un enlace ni un id de Sessionize.</string>
+    <string name="connect_event_page">Esa es la dirección de la app web de la conferencia. Sessionable necesita en su lugar el enlace de la API, que tiene el aspecto sessionize.com/api/v2/…/view/All, o solo el id de ese enlace. El organizador lo encuentra en Sessionize, en API / Embedding.</string>
+    <string name="connect_found">Se encontraron %1$d sesiones y %2$d ponentes.</string>
+    <string name="connect_name_label">Nombre de la conferencia</string>
+    <string name="connect_name_hint">Por ejemplo, Summit 2027</string>
+    <string name="connect_zone_label">Zona horaria del lugar</string>
+    <string name="connect_zone_help">El programa se muestra en esta zona horaria. Escribe para buscar, por ejemplo Berlin o Los_Angeles.</string>
+    <string name="connect_zone_unknown">Zona horaria desconocida</string>
+    <string name="connect_open">Abrir la conferencia</string>
+    <string name="connect_saved">Tus conferencias</string>
+    <string name="connect_forget">Quitar</string>
+    <string name="connect_forget_named">Olvidar %1$s</string>
+    <string name="connect_forget_confirm">¿Borrar de este dispositivo los marcadores, notas y fotos de %1$s?</string>
+    <string name="connect_cancel">Cancelar</string>
+    <string name="connect_privacy">La app solo descarga el programa público de Sessionize. Tus marcadores y notas se quedan en este dispositivo.</string>
+    <string name="info_link_report_problem">Informar de un problema</string>
+    <string name="info_link_switch_conference">Cambiar de conferencia</string>
+
+    <!-- Photos and videos on a session -->
+    <string name="session_media_title">Mis fotos y vídeos</string>
+    <string name="session_media_hint">Diapositivas que no se compartieron, una pizarra, la parte de la charla que quieres conservar. Se quedan en este dispositivo.</string>
+    <string name="session_media_take_photo">Hacer una foto</string>
+    <string name="session_media_record_video">Grabar un vídeo</string>
+    <string name="session_media_from_library">Añadir desde Fotos</string>
+    <string name="session_media_adding">Añadiendo…</string>
+    <string name="session_media_remove">Quitar</string>
+    <string name="session_media_cancel">Cancelar</string>
+    <string name="session_media_photo">Foto %1$d</string>
+    <string name="session_media_video">Vídeo %1$d</string>
+    <string name="session_media_actions">Mantén pulsado para quitar</string>
+    <string name="session_media_remove_label">Quitar</string>
+    <plurals name="media_unreadable">
+        <item quantity="one">No se pudo leer %1$d foto de tu biblioteca. Intenta añadirla de nuevo.</item>
+        <item quantity="other">No se pudieron leer %1$d fotos de tu biblioteca. Intenta añadirlas de nuevo.</item>
+    </plurals>
+    <string name="connect_organiser_title">¿Organizas un evento?</string>
+    <string name="connect_organiser_text">Crea un evento de prueba gratuito en Sessionize, añade algunas sesiones, activa su API en API / embed y pega arriba el enlace.</string>
+    <string name="connect_organiser_button">Probar Sessionize</string>
+    <string name="session_watch_live">Ver en directo</string>
+    <string name="now_first_up">Primero</string>
+</resources>
