@@ -39,7 +39,8 @@ build keeps connected conferences (`SavedEvent`) in `ApplicationStorage`. Routes
 - **No network except Sessionize.** No analytics, trackers, crash reporters or push services.
 - **Storage:** keep `ApplicationStorageImpl.LATEST_STORAGE_VERSION` unchanged unless you add a migration; a different
   value wipes installed users' data. Keep a shipped profile's `storageScope` stable for the same reason.
-- **Strings:** every user-facing string needs an English and a German entry.
+- **Strings:** every user-facing string needs an entry in every language: English (the source), German, Spanish,
+  French and Brazilian Portuguese. `StringsParityTest` fails when a language lacks a key or changes a placeholder.
 - **Photos and videos** are attached only from a session's own page (`MediaSection`), never imported in bulk.
 - **Versions:** keep Android `build.gradle.kts`, iOS `project.pbxproj`/`Info.plist` and `values/version.xml` in step.
 - **Credit:** keep the JetBrains credit, the Apache-2.0 licence and the "unofficial, not affiliated" wording.

@@ -38,7 +38,7 @@ fork starts at "make it yours", not at "why was it rejected".
   check parsing, time zones, schedule grouping and the personal calendar. Most event apps get time zones wrong at
   least once.
 - **The features attendees ask for, already there.** Now and My schedule, clashes, notes, ratings, people met,
-  calendar export, a trip report, a venue map, search, companies, English and German.
+  calendar export, a trip report, a venue map, search, companies, in English, German, Spanish, French and Brazilian Portuguese.
 - **Open and credited.** It is Apache-2.0, built on JetBrains' KotlinConf app, which has years of conference use behind
   its design. You keep the credit and the "unofficial" wording; you change the name, colors and icon.
 
@@ -124,7 +124,8 @@ clean. Take the store images from the device sizes the stores ask for.
 - Notes on sessions and speakers, private ratings, people met, add to calendar (`.ics`), share, a Markdown trip report.
 - Photos and videos, attached from a session's own page (camera, library or files; not in the web build).
 - Optional sync of bookmarks with the event's Sessionize web app, for profiles that set `sessionizeAppUrl`.
-- English and German.
+- English, German, Spanish, French and Brazilian Portuguese. The attendee gets the phone's language when it is one of
+  these, English otherwise. The schedule itself is in whatever language the organiser wrote it in Sessionize.
 
 ## Build and test
 

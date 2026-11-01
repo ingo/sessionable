@@ -14,7 +14,10 @@ Ask the person only for what you cannot find out: the items in step 1.
 - **No network except Sessionize.** No analytics, trackers, crash reporters or push services.
 - **Keep `storageScope` stable** once an app has shipped. Changing it wipes installed users' bookmarks and notes.
 - **Do not change `ApplicationStorageImpl.LATEST_STORAGE_VERSION`** unless you write a migration.
-- **Every user-facing string has an English and a German entry** (`composeResources/values*/strings.xml`).
+- **Every user-facing string has an entry in every language** (English, German, Spanish, French, Brazilian Portuguese in
+  `composeResources/values*/strings.xml`); `StringsParityTest` checks it. To add a language, copy the English files to
+  `values-<code>/`, translate them, and add the language to `CFBundleLocalizations` in `Info.plist` and `knownRegions` in
+  the Xcode project. Ask the person whether their event needs another language, such as Japanese or Dutch.
 - **Keep the credits:** the JetBrains credit, the Apache-2.0 licence and the "unofficial, not affiliated" wording. Do
   not use the trademarks of the parts this builds on (KotlinConf, Kodee, Sessionize) as the app's name or icon.
 - **Versions agree** in Android `build.gradle.kts`, the iOS `project.pbxproj` and `Info.plist`, and
