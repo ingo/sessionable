@@ -57,7 +57,7 @@ fun AboutAppScreen(
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Column(
-                modifier = Modifier.padding(top = 24.dp, bottom = 16.dp),
+                modifier = Modifier.fillMaxWidth().padding(top = 24.dp, bottom = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Image(
