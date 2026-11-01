@@ -1,5 +1,6 @@
 package org.jetbrains.kotlinconf.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,10 +20,14 @@ import org.jetbrains.kotlinconf.ScreenWithTitle
 import org.jetbrains.kotlinconf.event.ActiveEvent
 import org.jetbrains.kotlinconf.generated.resources.Res
 import org.jetbrains.kotlinconf.generated.resources.about_app_description_sessionize
+import org.jetbrains.kotlinconf.generated.resources.about_app_feature_notes
+import org.jetbrains.kotlinconf.generated.resources.about_app_feature_plan
+import org.jetbrains.kotlinconf.generated.resources.about_app_feature_private
 import org.jetbrains.kotlinconf.generated.resources.about_app_link_github
 import org.jetbrains.kotlinconf.generated.resources.about_app_link_licenses
 import org.jetbrains.kotlinconf.generated.resources.about_app_link_rate
-import org.jetbrains.kotlinconf.generated.resources.about_app_privacy
+import org.jetbrains.kotlinconf.generated.resources.about_app_name
+import org.jetbrains.kotlinconf.generated.resources.about_app_tagline
 import org.jetbrains.kotlinconf.generated.resources.about_app_title
 import org.jetbrains.kotlinconf.generated.resources.about_app_unofficial
 import org.jetbrains.kotlinconf.generated.resources.app_version
@@ -45,22 +50,31 @@ fun AboutAppScreen(
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Column(
-                modifier = Modifier.padding(vertical = 24.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.padding(top = 24.dp, bottom = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Text(
-                    stringResource(Res.string.about_app_description_sessionize, ActiveEvent.name),
-                    color = AppTheme.colors.longText,
-                )
-                Text(
-                    stringResource(Res.string.about_app_unofficial),
-                    color = AppTheme.colors.longText,
-                )
-                Text(
-                    stringResource(Res.string.about_app_privacy),
-                    color = AppTheme.colors.longText,
-                )
+                Text(stringResource(Res.string.about_app_name), style = AppTheme.typography.h1)
+                Text(stringResource(Res.string.about_app_tagline), style = AppTheme.typography.text1, color = AppTheme.colors.longText)
             }
+
+            Column(
+                modifier = Modifier
+                    .clip(AppTheme.shapes.roundedCornerMd)
+                    .background(AppTheme.colors.tileBackground)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp),
+            ) {
+                Text(stringResource(Res.string.about_app_feature_plan), color = AppTheme.colors.longText)
+                Text(stringResource(Res.string.about_app_feature_notes), color = AppTheme.colors.longText)
+                Text(stringResource(Res.string.about_app_feature_private), color = AppTheme.colors.longText)
+            }
+
+            Text(
+                stringResource(Res.string.about_app_description_sessionize, ActiveEvent.name),
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.noteText,
+                modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+            )
 
             PageMenuItem(
                 stringResource(Res.string.about_app_link_github),
@@ -78,6 +92,13 @@ fun AboutAppScreen(
             }
 
             PageMenuItem(stringResource(Res.string.about_app_link_licenses), onClick = onLicenses)
+
+            Text(
+                stringResource(Res.string.about_app_unofficial),
+                style = AppTheme.typography.text2,
+                color = AppTheme.colors.noteText,
+                modifier = Modifier.padding(top = 16.dp),
+            )
 
             Spacer(Modifier.height(8.dp))
 

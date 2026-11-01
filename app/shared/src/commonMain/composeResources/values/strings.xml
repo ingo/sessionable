@@ -15,8 +15,12 @@
 
     <string name="about_app_title">About the app</string>
     <string name="about_app_description_sessionize">This app shows the %1$s schedule, read directly from the event's public Sessionize feed.</string>
-    <string name="about_app_unofficial">This is an unofficial app. It is not made, endorsed or supported by Sessionize or the organisers of the event. It is based on the open-source KotlinConf app by JetBrains and is published under the Apache License 2.0.</string>
-    <string name="about_app_privacy">Your notes, ratings and bookmarks stay on this device. The app has no account, no analytics and no tracking. It only downloads the public schedule from Sessionize.</string>
+    <string name="about_app_name">Sessionable</string>
+    <string name="about_app_tagline">A free app that makes attending conferences hosted on Sessionize easier.</string>
+    <string name="about_app_feature_plan">Plan your days: browse the schedule, bookmark sessions and see what clashes.</string>
+    <string name="about_app_feature_notes">Take notes, rate sessions and add photos. Everything stays on your device.</string>
+    <string name="about_app_feature_private">No account, no ads, no tracking. The app only downloads the public schedule from Sessionize.</string>
+    <string name="about_app_unofficial">Independent and unofficial: not made or endorsed by Sessionize or the event organisers. Open source under the Apache License 2.0, with thanks to JetBrains for the KotlinConf app it grew from.</string>
     <string name="about_app_link_github">GitHub repository</string>
     <string name="about_app_link_rate">Rate the app</string>
     <string name="about_app_link_licenses">Licenses</string>
