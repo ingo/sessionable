@@ -3,6 +3,8 @@
 #
 #   branding/icon.png    the app icon: square, at least 1024 px, fully opaque (the stores round the corners)
 #   branding/brand.env   the colors of the web app's loading page
+#   branding/splash.png  optional: the picture on the launch screens (white on transparent); without it the white
+#                        part of the icon is used
 #
 #   scripts/make-icons.sh
 #
@@ -44,6 +46,15 @@ badge_full = Image.fromarray(cut, "RGBA").crop(box)
 side = max(badge_full.size)
 badge_square = Image.new("RGBA", (side, side), (255, 255, 255, 0))
 badge_square.paste(badge_full, ((side - badge_full.width) // 2, (side - badge_full.height) // 2))
+
+# A picture made for the launch screens (white on transparent, any shape) replaces the badge cut out of the icon
+launch_art = root / "branding/splash.png"
+if launch_art.exists():
+    art_full = Image.open(launch_art).convert("RGBA")
+    art_full = art_full.crop(art_full.getbbox())
+    side = max(art_full.size)
+    badge_square = Image.new("RGBA", (side, side), (255, 255, 255, 0))
+    badge_square.paste(art_full, ((side - art_full.width) // 2, (side - art_full.height) // 2))
 
 def badge(px):
     return badge_square.resize((px, px), Image.LANCZOS)
