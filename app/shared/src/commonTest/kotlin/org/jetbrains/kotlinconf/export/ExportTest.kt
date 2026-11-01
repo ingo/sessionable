@@ -12,6 +12,9 @@ import org.jetbrains.kotlinconf.asSessionCard
 import org.jetbrains.kotlinconf.personal.PersonalNotes
 import org.jetbrains.kotlinconf.personal.SessionRating
 import org.jetbrains.kotlinconf.personal.Thumb
+import org.jetbrains.kotlinconf.utils.DateTimeFormatting
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -19,6 +22,10 @@ import kotlin.test.assertTrue
 import kotlin.time.Instant
 
 class ExportTest {
+    // The expected text is English; the dates in it follow the language the tests run in otherwise
+    @BeforeTest fun english() { DateTimeFormatting.languageOverride = "en" }
+    @AfterTest fun reset() { DateTimeFormatting.languageOverride = null }
+
     private val pacific = TimeZone.of("America/Los_Angeles")
     private val event = ExportEvent("agntcon-mcpcon-na-2026", "AGNTCon + MCPCon North America 2026", pacific, "150 W San Carlos St, San Jose")
     private val stamp = Instant.parse("2026-10-22T12:00:00Z")

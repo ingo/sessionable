@@ -16,7 +16,7 @@ import org.jetbrains.kotlinconf.personal.Thumb
 import org.jetbrains.kotlinconf.utils.DateTimeFormatting
 import kotlin.time.Instant
 
-/** The words in exported text, so the app's language is used (the dates stay in English like the rest of the app). */
+/** The words in exported text, so the app's language is used; the dates follow it too (see [DateTimeFormatting]). */
 data class ExportLabels(
     val speakers: String = "Speakers",
     val room: String = "Room",
