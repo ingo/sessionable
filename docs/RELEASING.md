@@ -35,8 +35,8 @@ Each upload gets the version code `1000 + run number`. Testers join the internal
 
 ## Store listing
 
-- Support URL: https://thunderclatter.com/
-- Privacy policy URL: the policy page (`docs/site/privacy.html`) published under thunderclatter.com once its DNS is live.
+- Support URL: https://www.thunderclatter.com/sessionable/
+- Privacy policy URL: https://www.thunderclatter.com/sessionable/privacy/ (source in the `ingo/thunderclatter` repo, `sessionable/privacy/index.html`; keep `docs/site/privacy.html` in step). Enter it only once it answers 200 over HTTPS.
   The page must return 200 before it is entered in App Store Connect and Play Console.
 - Say in the description that the app is unofficial and not affiliated with Sessionize.
 
