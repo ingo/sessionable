@@ -36,3 +36,11 @@ fun parseSessionizeId(input: String): String? {
     apiPath.find(text)?.let { return it.groupValues[1] }
     return text.takeIf { idPattern.matches(it) }
 }
+
+private val eventPage = Regex("^(https?://)?[A-Za-z0-9-]+\\.sessionize\\.com(/|$|\\?|#)", RegexOption.IGNORE_CASE)
+
+/** An address of an event's own Sessionize web app (`https://<event>.sessionize.com`), which does not hold the API id. */
+fun isSessionizeEventPage(input: String): Boolean {
+    val text = input.trim()
+    return parseSessionizeId(text) == null && eventPage.containsMatchIn(text)
+}

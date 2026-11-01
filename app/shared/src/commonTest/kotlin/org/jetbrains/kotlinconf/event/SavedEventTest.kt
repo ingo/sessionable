@@ -10,7 +10,9 @@ import org.jetbrains.kotlinconf.storage.YearlyStorageImpl
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class SavedEventTest {
     @Test
@@ -28,6 +30,18 @@ class SavedEventTest {
         assertNull(parseSessionizeId("https://example.com/schedule"))
         assertNull(parseSessionizeId("not an id"))
         assertNull(parseSessionizeId("abc"))
+    }
+
+    @Test
+    fun anEventsWebAppAddressIsRecognisedAsNotTheApiLink() {
+        assertTrue(isSessionizeEventPage("https://agntcon-mcpcon-na-2026.sessionize.com"))
+        assertTrue(isSessionizeEventPage("agntcon-mcpcon-na-2026.sessionize.com/schedule"))
+        assertTrue(isSessionizeEventPage("  http://my-event.sessionize.com/?x=1 "))
+        assertFalse(isSessionizeEventPage("https://sessionize.com/api/v2/asqam7rn/view/All"))
+        assertFalse(isSessionizeEventPage("asqam7rn"))
+        assertFalse(isSessionizeEventPage("https://example.com/schedule"))
+        assertFalse(isSessionizeEventPage("https://evilsessionize.com"))
+        assertNull(parseSessionizeId("https://agntcon-mcpcon-na-2026.sessionize.com"))
     }
 
     @Test

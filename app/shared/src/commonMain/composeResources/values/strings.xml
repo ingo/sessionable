@@ -259,6 +259,7 @@ Please try again.</string>
     <string name="connect_checking">Reading the schedule…</string>
     <string name="connect_not_found">No schedule found. Check the link, and that the organiser has enabled the API for the "All" endpoint.</string>
     <string name="connect_not_a_link">That does not look like a Sessionize link or id.</string>
+    <string name="connect_event_page">That is the conference's web app address. Sessionable needs its API link instead, which looks like sessionize.com/api/v2/…/view/All, or just the id from that link. The organiser can find it under API / Embedding in Sessionize.</string>
     <string name="connect_found">Found %1$d sessions and %2$d speakers.</string>
     <string name="connect_name_label">Name of the conference</string>
     <string name="connect_name_hint">For example Summit 2027</string>

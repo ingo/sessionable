@@ -12,12 +12,14 @@ import kotlinx.coroutines.launch
 import org.jetbrains.kotlinconf.ConferenceService
 import org.jetbrains.kotlinconf.event.FeedSummary
 import org.jetbrains.kotlinconf.event.SavedEvent
+import org.jetbrains.kotlinconf.event.isSessionizeEventPage
 import org.jetbrains.kotlinconf.event.parseSessionizeId
 
 sealed interface ConnectUiState {
     data object Idle : ConnectUiState
     data object Checking : ConnectUiState
     data object NotALink : ConnectUiState
+    data object EventPage : ConnectUiState
     data object NotFound : ConnectUiState
     data class Found(val sessionizeId: String, val summary: FeedSummary) : ConnectUiState
 }
@@ -40,7 +42,7 @@ class ConnectViewModel(
         job?.cancel()
         val id = parseSessionizeId(input)
         if (id == null) {
-            uiState.value = ConnectUiState.NotALink
+            uiState.value = if (isSessionizeEventPage(input)) ConnectUiState.EventPage else ConnectUiState.NotALink
             return
         }
         uiState.value = ConnectUiState.Checking

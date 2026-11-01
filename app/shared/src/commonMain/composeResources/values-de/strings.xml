@@ -259,6 +259,7 @@ Bitte versuchen Sie es erneut.</string>
     <string name="connect_checking">Programm wird gelesen…</string>
     <string name="connect_not_found">Kein Programm gefunden. Prüfe den Link und ob der Veranstalter die API für den Endpunkt "All" aktiviert hat.</string>
     <string name="connect_not_a_link">Das sieht nicht wie ein Sessionize-Link oder eine ID aus.</string>
+    <string name="connect_event_page">Das ist die Adresse der Web-App der Konferenz. Sessionable braucht stattdessen den API-Link, der wie sessionize.com/api/v2/…/view/All aussieht, oder nur die ID aus diesem Link. Die Veranstalter finden ihn in Sessionize unter API / Embedding.</string>
     <string name="connect_found">%1$d Sessions und %2$d Sprecher gefunden.</string>
     <string name="connect_name_label">Name der Konferenz</string>
     <string name="connect_name_hint">Zum Beispiel Summit 2027</string>
