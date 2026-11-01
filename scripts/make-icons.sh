@@ -59,6 +59,46 @@ if launch_art.exists():
 def badge(px):
     return badge_square.resize((px, px), Image.LANCZOS)
 
+# The name under the badge on the iOS and web launch screens (SPLASH_TEXT in branding/brand.env; none if unset or no
+# bold sans-serif font is installed). Android 12 and later show only an icon in a circle, so it has no room for text.
+def wordmark_font(px):
+    from PIL import ImageFont
+    for name in ("/System/Library/Fonts/Supplemental/Arial Bold.ttf", "/Library/Fonts/Arial Bold.ttf",
+                 "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"):
+        if os.path.exists(name):
+            return ImageFont.truetype(name, px)
+    return None
+
+SPLASH_TEXT = ""
+for line in (root / "branding/brand.env").read_text().splitlines():
+    if line.startswith("SPLASH_TEXT="):
+        SPLASH_TEXT = line.split("=", 1)[1].strip().strip('"')
+
+def lockup(px):
+    """The launch art with the name below it, px wide."""
+    from PIL import ImageDraw
+    art = badge_square.crop(badge_square.getbbox())
+    if not SPLASH_TEXT or wordmark_font(10) is None:
+        return badge(px)
+    side = max(art.size)
+    spacing = 0.08
+    size = int(side * 0.15)
+    def text_width(font):
+        return sum(font.getlength(c) for c in SPLASH_TEXT) + spacing * font.size * (len(SPLASH_TEXT) - 1)
+    font = wordmark_font(size)
+    while text_width(font) > side * 0.95:
+        size -= 2
+        font = wordmark_font(size)
+    gap = int(side * 0.08)
+    image = Image.new("RGBA", (side, art.height + gap + int(size * 1.3)), (255, 255, 255, 0))
+    image.paste(art, ((side - art.width) // 2, 0))
+    draw = ImageDraw.Draw(image)
+    x = (side - text_width(font)) / 2
+    for c in SPLASH_TEXT:
+        draw.text((x, art.height + gap), c, font=font, fill=(255, 255, 255, 255))
+        x += font.getlength(c) + spacing * size
+    return image.resize((px, round(px * image.height / image.width)), Image.LANCZOS)
+
 def save(image, path):
     path.parent.mkdir(parents=True, exist_ok=True)
     image.save(path)
@@ -85,7 +125,7 @@ if composer.exists():
 # iOS launch image shown while the app starts
 launch = ios / "Assets.xcassets/launch-glyph.imageset"
 for scale in (1, 2, 3):
-    save(badge(120 * scale), launch / f"launch-glyph@{scale}x.png")
+    save(lockup(170 * scale), launch / f"launch-glyph@{scale}x.png")
 (launch / "launch-glyph.svg").unlink(missing_ok=True)
 (launch / "Contents.json").write_text(json.dumps({
     "images": [{"filename": f"launch-glyph@{s}x.png", "idiom": "universal", "scale": f"{s}x"} for s in (1, 2, 3)],
@@ -143,11 +183,13 @@ save(size(512), root / "app/androidApp/src/main/ic_launcher-playstore.png")
 # Web: icons and splash screens
 def splash():
     buffer = io.BytesIO()
-    badge(256).save(buffer, "PNG")
+    art = lockup(256)
+    height = art.height
+    art.save(buffer, "PNG")
     data = base64.b64encode(buffer.getvalue()).decode()
     return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512">'
             f'<rect width="512" height="512" fill="{LAUNCH}"/>'
-            f'<image x="128" y="128" width="256" height="256" href="data:image/png;base64,{data}"/></svg>\n')
+            f'<image x="128" y="{(512 - height) // 2}" width="256" height="{height}" href="data:image/png;base64,{data}"/></svg>\n')
 
 targets = [root / "app/webApp/src/webMain/resources"]
 branding = root / "app/webApp/branding"

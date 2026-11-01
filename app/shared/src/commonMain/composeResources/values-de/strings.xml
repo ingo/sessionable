@@ -15,8 +15,12 @@
 
     <string name="about_app_title">Über die App</string>
     <string name="about_app_description_sessionize">Diese App zeigt das Programm von %1$s, direkt aus dem öffentlichen Sessionize-Feed der Veranstaltung gelesen.</string>
-    <string name="about_app_unofficial">Dies ist eine inoffizielle App. Sie wird weder von Sessionize noch von den Veranstaltern erstellt, empfohlen oder unterstützt. Sie basiert auf der Open-Source-App der KotlinConf von JetBrains und steht unter der Apache License 2.0.</string>
-    <string name="about_app_privacy">Deine Notizen, Bewertungen und Lesezeichen bleiben auf diesem Gerät. Die App hat kein Konto, keine Analyse und kein Tracking. Sie lädt nur das öffentliche Programm von Sessionize herunter.</string>
+    <string name="about_app_name">Sessionable</string>
+    <string name="about_app_tagline">Eine kostenlose App, die den Besuch von Konferenzen auf Sessionize einfacher macht.</string>
+    <string name="about_app_feature_plan">Plane deine Tage: Programm durchstöbern, Sessions merken und Überschneidungen erkennen.</string>
+    <string name="about_app_feature_notes">Mach Notizen, bewerte Sessions und füge Fotos hinzu. Alles bleibt auf deinem Gerät.</string>
+    <string name="about_app_feature_private">Kein Konto, keine Werbung, kein Tracking. Die App lädt nur das öffentliche Programm von Sessionize herunter.</string>
+    <string name="about_app_unofficial">Unabhängig und inoffiziell: weder von Sessionize noch von den Veranstaltern erstellt oder empfohlen. Open Source unter der Apache License 2.0, mit Dank an JetBrains für die KotlinConf-App, aus der sie entstanden ist.</string>
     <string name="about_app_link_github">GitHub-Repository</string>
     <string name="about_app_link_rate">App bewerten</string>
     <string name="about_app_link_licenses">Lizenzen</string>
