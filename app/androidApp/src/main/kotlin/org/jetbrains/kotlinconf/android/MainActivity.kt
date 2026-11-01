@@ -9,11 +9,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.lifecycle.lifecycleScope
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.binding
 import dev.zacsweers.metrox.android.ActivityKey
+import kotlinx.coroutines.launch
 import org.jetbrains.kotlinconf.App
 import org.jetbrains.kotlinconf.EXTRA_LOCAL_NOTIFICATION_ID
 import org.jetbrains.kotlinconf.PermissionHandler
@@ -62,6 +64,10 @@ class MainActivity(
 
     private fun processIntent(intent: Intent?) {
         if (intent == null) return
+
+        intent.data?.toString()?.let { link ->
+            lifecycleScope.launch { appGraph.conferenceService.receiveConnectLink(link) }
+        }
 
         try {
             val notificationId = intent.getStringExtra(EXTRA_LOCAL_NOTIFICATION_ID)

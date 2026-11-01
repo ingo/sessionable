@@ -2,6 +2,9 @@ package org.jetbrains.kotlinconf
 
 import androidx.compose.ui.uikit.OnFocusBehavior
 import androidx.compose.ui.window.ComposeUIViewController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import dev.zacsweers.metro.createGraphFactory
 import org.jetbrains.kotlinconf.di.IosAppGraph
 import org.jetbrains.kotlinconf.flags.Flags
@@ -29,6 +32,12 @@ private val appGraph = createGraphFactory<IosAppGraph.Factory>()
             hideKeyboardOnDrag = true,
         )
     )
+
+/** Called from Swift with a `sessionable://connect?id=...` link opened from the camera app. */
+@Suppress("unused")
+fun handleConnectLink(link: String) {
+    CoroutineScope(Dispatchers.Main).launch { appGraph.conferenceService.receiveConnectLink(link) }
+}
 
 @Suppress("unused") // Called from Swift
 fun MainViewController(): UIViewController = ComposeUIViewController(

@@ -71,5 +71,16 @@
 	<string>To take photos and videos of a session and keep them with your notes. They stay on this device.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>To record the sound of a session when you record a video of it.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>Sessionable connect link</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>sessionable</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

@@ -35,6 +35,10 @@ class ConnectViewModel(
     val uiState: StateFlow<ConnectUiState>
         field = MutableStateFlow<ConnectUiState>(ConnectUiState.Idle)
 
+    val pendingConnectId: StateFlow<String?> = service.pendingConnectId
+
+    fun consumeConnectId() = service.consumeConnectId()
+
     private var job: Job? = null
 
     /** Reads the feed behind [input] to make sure it is a conference with a schedule. */

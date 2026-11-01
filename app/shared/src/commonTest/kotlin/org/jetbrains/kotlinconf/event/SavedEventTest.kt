@@ -45,6 +45,18 @@ class SavedEventTest {
     }
 
     @Test
+    fun aConnectLinkCarriesTheSessionizeId() {
+        assertEquals("asqam7rn", parseConnectLink("sessionable://connect?id=asqam7rn"))
+        assertEquals("asqam7rn", parseConnectLink("  sessionable://connect/?id=asqam7rn  "))
+        assertEquals("asqam7rn", parseConnectLink("SESSIONABLE://connect?name=x&id=asqam7rn#top"))
+        assertNull(parseConnectLink("sessionable://connect?id="))
+        assertNull(parseConnectLink("sessionable://connect?id=a b"))
+        assertNull(parseConnectLink("sessionable://connect"))
+        assertNull(parseConnectLink("sessionable://other?id=asqam7rn"))
+        assertNull(parseConnectLink("https://sessionable.example/connect?id=asqam7rn"))
+    }
+
+    @Test
     fun savedEventBecomesAProfileWithItsOwnStorage() {
         val profile = SavedEvent("abcd1234", "My Conf", "Europe/Berlin").toProfile()
 
