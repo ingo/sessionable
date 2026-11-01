@@ -18,6 +18,9 @@ class ExportSnapshot(
     val met: Set<SpeakerId>,
 )
 
+/** What the trip report holds, in numbers. */
+class TripReportSummary(val sessions: Int, val notes: Int, val rated: Int, val met: Int)
+
 /**
  * The share and calendar actions of the app: builds the text or file from the current [snapshot]
  * and hands it to the platform's share sheet.
@@ -74,6 +77,17 @@ class Exporter(
                 event = event,
                 labels = labels,
             ),
+        )
+    }
+
+    fun tripReportSummary(): TripReportSummary {
+        val snap = snapshot()
+        val sessions = sessionsForTripReport(snap.sessions, snap.notes, snap.ratings)
+        return TripReportSummary(
+            sessions = sessions.size,
+            notes = sessions.count { snap.notes.sessionNote(it.id).isNotBlank() },
+            rated = sessions.count { snap.ratings[it.id.id]?.isEmpty == false },
+            met = snap.met.size,
         )
     }
 

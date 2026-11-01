@@ -191,6 +191,14 @@ Inténtalo de nuevo.</string>
     <string name="now_before">%1$s empieza %2$s. Así se ve tu primer día.</string>
     <string name="now_between">Hoy no hay nada. A continuación: %1$s.</string>
     <string name="now_after">¡Gracias por venir a %1$s!</string>
+    <string name="now_trip_report_title">Tu resumen del viaje</string>
+    <string name="now_trip_report_text">A qué fuiste, con tus notas y valoraciones, listo para enviártelo.</string>
+    <string name="now_trip_report_empty">Guarda sesiones, valóralas o escribe notas, y tu resumen del viaje se crea solo.</string>
+    <string name="now_trip_report_share">Compartir resumen</string>
+    <string name="trip_stat_sessions">Sesiones</string>
+    <string name="trip_stat_notes">Notas</string>
+    <string name="trip_stat_rated">Valoradas</string>
+    <string name="trip_stat_met">Personas</string>
     <string name="now_on_now">En curso</string>
     <string name="now_starting_next">Empieza a continuación · %1$s</string>
     <string name="my_schedule_bookmarked">%1$d en marcadores</string>
@@ -229,7 +237,6 @@ Inténtalo de nuevo.</string>
     <string name="company_error_not_found">No pudimos encontrar esta empresa.</string>
     <string name="my_schedule_add_to_calendar">Al calendario</string>
     <string name="my_schedule_share">Compartir</string>
-    <string name="my_schedule_trip_report">Crónica del viaje</string>
     <string name="export_speakers">Ponentes</string>
     <string name="export_room">Sala</string>
     <string name="export_my_notes">Mis notas</string>
