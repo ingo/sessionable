@@ -37,6 +37,7 @@ import org.jetbrains.kotlinconf.generated.resources.Res
 import org.jetbrains.kotlinconf.generated.resources.connect_check
 import org.jetbrains.kotlinconf.generated.resources.connect_checking
 import org.jetbrains.kotlinconf.generated.resources.connect_cancel
+import org.jetbrains.kotlinconf.generated.resources.connect_event_page
 import org.jetbrains.kotlinconf.generated.resources.connect_forget
 import org.jetbrains.kotlinconf.generated.resources.connect_forget_confirm
 import org.jetbrains.kotlinconf.generated.resources.connect_forget_named
@@ -128,6 +129,12 @@ fun ConnectScreen(viewModel: ConnectViewModel = metroViewModel()) {
                 ConnectUiState.NotALink ->
                     Text(
                         stringResource(Res.string.connect_not_a_link),
+                        color = AppTheme.colors.orangeText,
+                        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+                    )
+                ConnectUiState.EventPage ->
+                    Text(
+                        stringResource(Res.string.connect_event_page),
                         color = AppTheme.colors.orangeText,
                         modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
                     )

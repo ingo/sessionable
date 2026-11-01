@@ -1,5 +1,6 @@
 package org.jetbrains.kotlinconf.di
 
+import com.russhwolf.settings.ExperimentalSettingsApi
 import com.russhwolf.settings.MapSettings
 import com.russhwolf.settings.ObservableSettings
 import com.russhwolf.settings.observable.makeObservable
@@ -11,8 +12,10 @@ import dev.zacsweers.metro.createGraphFactory
 import org.jetbrains.kotlinconf.EmptyLocalNotificationService
 import org.jetbrains.kotlinconf.LocalNotificationService
 import org.jetbrains.kotlinconf.event.EventSelection
+import org.jetbrains.kotlinconf.event.FixedEvent
 import org.jetbrains.kotlinconf.event.SavedEvent
 import org.jetbrains.kotlinconf.flags.Flags
+import org.junit.Assume.assumeTrue
 import kotlin.test.Test
 import kotlinx.coroutines.runBlocking
 import kotlin.test.assertEquals
@@ -31,15 +34,21 @@ interface LaunchTestGraph : AppGraph {
     @Provides @SingleIn(AppScope::class) fun notifications(): LocalNotificationService = EmptyLocalNotificationService()
 }
 
+@OptIn(ExperimentalSettingsApi::class)
 /** Stands in for the device's storage, so a second graph sees what the first one saved, as after a restart. */
 object LaunchTestStorage {
     var settings: ObservableSettings = MapSettings().makeObservable()
 }
 
-/** The real dependency graph, as the app builds it at launch. */
+/**
+ * The real dependency graph, as the app builds it at launch. Connecting and leaving belong to the generic build;
+ * a branded build is fixed to one conference.
+ */
+@OptIn(ExperimentalSettingsApi::class)
 class LaunchGraphTest {
     @Test
     fun theConferenceThatWasOpenIsRestoredAfterARestart() = runBlocking {
+        assumeTrue(FixedEvent == null)
         LaunchTestStorage.settings = MapSettings().makeObservable()
         val event = SavedEvent("abc123", "Test Conf", "Europe/Berlin")
         createGraphFactory<LaunchTestGraph.Factory>().create().conferenceService.connectEvent(event)
@@ -54,6 +63,7 @@ class LaunchGraphTest {
 
     @Test
     fun leavingAConferenceClearsTheSelectionAndStaysOnTheConnectScreenAfterARestart() = runBlocking {
+        assumeTrue(FixedEvent == null)
         LaunchTestStorage.settings = MapSettings().makeObservable()
         val service = createGraphFactory<LaunchTestGraph.Factory>().create().conferenceService
         service.connectEvent(SavedEvent("abc123", "Test Conf", "Europe/Berlin"))
