@@ -13,6 +13,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -76,6 +77,14 @@ fun ConnectScreen(viewModel: ConnectViewModel = metroViewModel()) {
     var link by rememberSaveable { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
     var forgetting by rememberSaveable { mutableStateOf<String?>(null) }
+    val pendingId by viewModel.pendingConnectId.collectAsStateWithLifecycle()
+    LaunchedEffect(pendingId) {
+        pendingId?.let {
+            link = it
+            viewModel.check(it)
+            viewModel.consumeConnectId()
+        }
+    }
     var zoneId by rememberSaveable { mutableStateOf(TimeZone.currentSystemDefault().id) }
 
     Column(
