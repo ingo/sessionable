@@ -9,6 +9,19 @@ Sessionize feed, and everything you add stays on your device.
 - **Brand it:** fork this repository, change a few files, and ship an app for your own conference.
   See [docs/FORKING.md](docs/FORKING.md).
 
+<p>
+  <img src="docs/screenshots/app-connect.png" width="190" alt="The connect screen: paste a Sessionize link or id">
+  <img src="docs/screenshots/app-connect-found.png" width="190" alt="A conference found: its sessions and speakers, then name and time zone">
+  <img src="docs/screenshots/app-schedule.png" width="190" alt="The schedule with day tabs, bookmarks and search">
+  <img src="docs/screenshots/app-speakers.png" width="190" alt="The speakers list">
+</p>
+
+**Why fork it rather than build your own?** Because the schedule is the easy part. The app already carries what the
+stores and your attendees expect: it collects nothing and says so in the privacy manifest, its launch is covered by
+tests, an automated accessibility audit has been run and its findings fixed, icons for every platform come from one
+image, and CI builds and uploads to TestFlight and Google Play. There is no server to run. The reasons, and what you
+still have to do yourself, are in [docs/FORKING.md](docs/FORKING.md#why-fork-this-instead-of-building-your-own).
+
 ## Credit
 
 This is a fork of the [KotlinConf app](https://github.com/JetBrains/kotlinconf-app) by

@@ -60,6 +60,8 @@ final class AccessibilityAuditTests: XCTestCase {
         // iOS shows a one-time tip about swipe typing on first use of the keyboard
         let tip = app.buttons["Continue"]
         if tip.waitForExistence(timeout: 3) { tip.tap() }
+        // Return closes the keyboard, so later taps land on the fields and not on a scrolled form under it
+        app.typeText("\n")
         app.buttons["Check"].tap()
         XCTAssertTrue(
             app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH 'Found'")).firstMatch
@@ -107,7 +109,13 @@ final class AccessibilityAuditTests: XCTestCase {
         }
         audit("notifications-onboarding")
         let start = app.buttons["Let’s get started!"]
-        XCTAssertTrue(start.waitForExistence(timeout: 10), "onboarding did not appear")
+        // At large text sizes the button is below the fold
+        for _ in 0..<5 where !start.isHittable { app.swipeUp() }
+        guard start.waitForExistence(timeout: 5), start.isHittable else {
+            findings.append("could not reach 'Let’s get started!' on the notifications screen; check it by hand at this text size")
+            report("\(name)-stopped-onboarding")
+            return
+        }
         start.tap()
         // The system asks for notification permission; allow it so the reminder UI is reachable
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
