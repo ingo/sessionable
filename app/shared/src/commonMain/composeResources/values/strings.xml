@@ -13,6 +13,17 @@
     <!-- Screen resources -->
 
 
+    <string name="tour_1_title">Bookmark what you want to see</string>
+    <string name="tour_1_text">Browse the Schedule tab and tap the bookmark on any session. Your bookmarks fill your calendar.</string>
+    <string name="tour_2_title">Your day at a glance</string>
+    <string name="tour_2_text">Now shows what is on and what is next. Calendar shows your whole day, flags clashes and suggests sessions for free time.</string>
+    <string name="tour_3_title">Notes, ratings and photos</string>
+    <string name="tour_3_text">Open a session to add notes, a rating, photos or slides. Mark the speakers you meet.</string>
+    <string name="tour_4_title">Take it home</string>
+    <string name="tour_4_text">After the event your trip report sums it all up, ready to share. Everything stays on this device.</string>
+    <string name="tour_skip">Skip</string>
+    <string name="tour_next">Next</string>
+    <string name="tour_done">Get started</string>
     <string name="about_app_title">About the app</string>
     <string name="about_app_description_sessionize">This app shows the %1$s schedule, read directly from the event's public Sessionize feed.</string>
     <string name="about_app_name">Sessionable</string>

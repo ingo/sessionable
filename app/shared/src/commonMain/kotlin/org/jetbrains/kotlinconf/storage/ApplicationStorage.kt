@@ -8,6 +8,8 @@ import org.jetbrains.kotlinconf.Theme
 interface ApplicationStorage {
     fun isOnboardingComplete(): Flow<Boolean>
     suspend fun setOnboardingComplete(value: Boolean)
+    fun isTourSeen(): Flow<Boolean>
+    suspend fun setTourSeen(value: Boolean)
 
     fun getTheme(): Flow<Theme>
     suspend fun setTheme(value: Theme)

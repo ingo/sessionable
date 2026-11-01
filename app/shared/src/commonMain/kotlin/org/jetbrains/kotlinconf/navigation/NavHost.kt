@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.navigation3.runtime.EntryProviderScope
@@ -35,6 +36,8 @@ import org.jetbrains.kotlinconf.LocalNotificationId
 import org.jetbrains.kotlinconf.SessionId
 import org.jetbrains.kotlinconf.ThemeChangeAnimation
 import org.jetbrains.kotlinconf.URLs
+import kotlinx.coroutines.launch
+import org.jetbrains.kotlinconf.screens.TourScreen
 import org.jetbrains.kotlinconf.screens.AboutAppScreen
 import org.jetbrains.kotlinconf.screens.AboutConference
 import org.jetbrains.kotlinconf.screens.MyScheduleScreen
@@ -166,6 +169,13 @@ internal fun NavHost(
                         entries = navState.toDecoratedEntries(entryProvider),
                         onBack = navigator::goBack,
                     )
+                }
+
+                // A short tour the first time the app opens, after the notifications question
+                val tourSeen by remember { conferenceService.isTourSeen() }.collectAsStateWithLifecycle(true)
+                val tourScope = rememberCoroutineScope()
+                if (!tourSeen && navState.currentBackstack.lastOrNull() !is StartNotificationsScreen) {
+                    TourScreen(onDone = { tourScope.launch { conferenceService.markTourSeen() } })
                 }
             }
         }

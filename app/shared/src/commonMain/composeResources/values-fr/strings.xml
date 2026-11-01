@@ -13,6 +13,17 @@
     <!-- Screen resources -->
 
 
+    <string name="tour_1_title">Gardez ce que vous voulez voir</string>
+    <string name="tour_1_text">Parcourez l’onglet Programme et touchez le marque-page d’une session. Vos favoris remplissent votre calendrier.</string>
+    <string name="tour_2_title">Votre journée en un coup d’œil</string>
+    <string name="tour_2_text">Maintenant montre ce qui se passe et la suite. Calendrier montre toute votre journée, signale les chevauchements et propose des sessions pour le temps libre.</string>
+    <string name="tour_3_title">Notes, évaluations et photos</string>
+    <string name="tour_3_text">Ouvrez une session pour ajouter des notes, une évaluation, des photos ou des diapositives. Notez les intervenants que vous rencontrez.</string>
+    <string name="tour_4_title">Emportez-le chez vous</string>
+    <string name="tour_4_text">Après l’événement, votre compte rendu résume tout, prêt à partager. Tout reste sur cet appareil.</string>
+    <string name="tour_skip">Passer</string>
+    <string name="tour_next">Suivant</string>
+    <string name="tour_done">Commencer</string>
     <string name="about_app_title">À propos de l’app</string>
     <string name="about_app_description_sessionize">Cette app affiche le programme de %1$s, lu directement depuis le flux Sessionize public de l’événement.</string>
     <string name="about_app_name">Sessionable</string>

@@ -391,6 +391,12 @@ class ConferenceService(
         return applicationStorage.isOnboardingComplete()
     }
 
+    fun isTourSeen(): Flow<Boolean> = applicationStorage.isTourSeen()
+
+    suspend fun markTourSeen() {
+        applicationStorage.setTourSeen(true)
+    }
+
     suspend fun completeOnboarding() {
         applicationStorage.setOnboardingComplete(true)
     }

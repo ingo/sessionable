@@ -13,6 +13,17 @@
     <!-- Screen resources -->
 
 
+    <string name="tour_1_title">Favorite o que quer ver</string>
+    <string name="tour_1_text">Explore a aba Programação e toque no marcador de uma sessão. Seus favoritos preenchem seu calendário.</string>
+    <string name="tour_2_title">Seu dia num relance</string>
+    <string name="tour_2_text">Agora mostra o que está acontecendo e o que vem a seguir. Calendário mostra seu dia inteiro, avisa sobre sobreposições e sugere sessões para o tempo livre.</string>
+    <string name="tour_3_title">Anotações, avaliações e fotos</string>
+    <string name="tour_3_text">Abra uma sessão para adicionar anotações, uma avaliação, fotos ou slides. Marque os palestrantes que você conhecer.</string>
+    <string name="tour_4_title">Leve para casa</string>
+    <string name="tour_4_text">Depois do evento, seu resumo da viagem reúne tudo, pronto para compartilhar. Tudo fica neste dispositivo.</string>
+    <string name="tour_skip">Pular</string>
+    <string name="tour_next">Avançar</string>
+    <string name="tour_done">Começar</string>
     <string name="about_app_title">Sobre o app</string>
     <string name="about_app_description_sessionize">Este app mostra a programação de %1$s, lida diretamente do feed público do evento no Sessionize.</string>
     <string name="about_app_name">Sessionable</string>
