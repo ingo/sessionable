@@ -85,6 +85,9 @@ comparison.
 4. **Replace the icon.** Put a square, opaque picture of at least 1024 px at `branding/icon.png`, set the web loading
    page colors in `branding/brand.env`, and run `scripts/make-icons.sh`. It writes the iOS, Android and web icons,
    the iOS launch image and the web splash screens.
+   The launch screens show the white part of your icon on the brand color. For something better, put a picture of your
+   own at `branding/splash.png` (white on a transparent background, any shape, the full artwork inside the picture);
+   `scripts/make-icons.sh` fits it into each platform's launch screen, including Android 12's circular mask.
 5. **Fix the credits and links.** `URLs.kt` has the project's GitHub repository (used by "Report a problem").
    Keep the JetBrains credit, the Apache-2.0 licence and the "unofficial, not affiliated" wording, which the
    licence and the trademarks of the parts this builds on require.
