@@ -9,7 +9,8 @@
 # record with that bundle id in App Store Connect, and an App Store Connect API key (command-line
 # uploads cannot use the Xcode account): set ASC_KEY_ID and ASC_ISSUER_ID, with the key at
 # ~/.appstoreconnect/private_keys/AuthKey_<ASC_KEY_ID>.p8 (or ASC_KEY_PATH). When they are set the key is also
-# used to sign the archive, which is what lets this run on a CI machine with no Apple account signed in.
+# used to sign the archive, which is what lets this run on a CI machine with no Apple account signed in; it also
+# revokes the "Created via API" development certificates earlier builds left behind (the account has a limit).
 # Requires JDK 21 (JAVA_HOME or Homebrew openjdk@21).
 set -euo pipefail
 
@@ -45,6 +46,19 @@ AUTH=()
 if [[ -n "${ASC_KEY_ID:-}" && -n "${ASC_ISSUER_ID:-}" ]]; then
   ASC_KEY_PATH=${ASC_KEY_PATH:-$HOME/.appstoreconnect/private_keys/AuthKey_$ASC_KEY_ID.p8}
   AUTH=(-authenticationKeyPath "$ASC_KEY_PATH" -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID")
+fi
+
+# Each CI build leaves a certificate behind and the account holds a limited number, so clear the old ones first. Not
+# fatal: a build can still work while the account is under the limit.
+if [[ ${#AUTH[@]} -gt 0 ]]; then
+  VENV=$(mktemp -d)
+  if python3 -m venv "$VENV" && "$VENV/bin/pip" install --quiet pyjwt cryptography requests &&
+    ASC_KEY_PATH="$ASC_KEY_PATH" "$VENV/bin/python" "$ROOT/scripts/asc-revoke-ci-certificates.py"; then
+    :
+  else
+    echo "warning: could not clear old CI certificates" >&2
+  fi
+  rm -rf "$VENV"
 fi
 
 xcodebuild archive \
