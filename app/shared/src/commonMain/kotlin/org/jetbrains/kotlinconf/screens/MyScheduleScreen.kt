@@ -69,7 +69,8 @@ import org.jetbrains.kotlinconf.export.rememberExporter
 import org.jetbrains.kotlinconf.generated.resources.Res
 import org.jetbrains.kotlinconf.generated.resources.my_schedule_add_to_calendar
 import org.jetbrains.kotlinconf.generated.resources.my_schedule_share
-import org.jetbrains.kotlinconf.generated.resources.my_schedule_trip_report
+import org.jetbrains.kotlinconf.generated.resources.calendar_add_24
+import org.jetbrains.kotlinconf.generated.resources.share_24
 import org.jetbrains.kotlinconf.generated.resources.my_schedule_all_day
 import org.jetbrains.kotlinconf.generated.resources.my_schedule_bookmark
 import org.jetbrains.kotlinconf.generated.resources.my_schedule_clash
@@ -174,23 +175,20 @@ fun MyScheduleScreen(
         }
 
         Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 6.dp),
         ) {
             val exporter = rememberExporter()
-            listOf(
-                Res.string.my_schedule_add_to_calendar to exporter::addScheduleToCalendar,
-                Res.string.my_schedule_share to exporter::shareSchedule,
-                Res.string.my_schedule_trip_report to exporter::shareTripReport,
-            ).forEach { (label, action) ->
-                Text(
-                    stringResource(label),
-                    style = AppTheme.typography.text2,
-                    color = AppTheme.colors.accentText,
-                    // 12dp above and below the text makes each link a 44dp tap target
-                    modifier = Modifier.clickable(role = Role.Button, onClick = action).padding(vertical = 12.dp),
-                )
-            }
+            TopMenuButton(
+                icon = Res.drawable.calendar_add_24,
+                contentDescription = stringResource(Res.string.my_schedule_add_to_calendar),
+                onClick = exporter::addScheduleToCalendar,
+            )
+            TopMenuButton(
+                icon = Res.drawable.share_24,
+                contentDescription = stringResource(Res.string.my_schedule_share),
+                onClick = exporter::shareSchedule,
+            )
         }
 
         Box(Modifier.weight(1f).fillMaxWidth()) {

@@ -37,6 +37,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -67,6 +68,7 @@ import org.jetbrains.kotlinconf.generated.resources.up_next_starts_in
 import org.jetbrains.kotlinconf.minus
 import org.jetbrains.kotlinconf.ui.components.Text
 import org.jetbrains.kotlinconf.ui.theme.AppTheme
+import org.jetbrains.kotlinconf.export.rememberExporter
 import org.jetbrains.kotlinconf.utils.DateTimeFormatting
 import org.jetbrains.kotlinconf.utils.bottomInsetPadding
 import kotlin.time.Duration
@@ -94,7 +96,12 @@ internal fun UpNextContent(
             .padding(bottom = 24.dp),
     ) {
         GreetingCard(upNext, now)
-        if (upNext == null) return@Column
+        if (upNext == null) {
+            // The event is over: the report is what is left to do
+            val exporter = rememberExporter()
+            TripReportCard(summary = remember(exporter) { exporter.tripReportSummary() }, onShare = exporter::shareTripReport)
+            return@Column
+        }
 
         if (upNext.nothingBookmarked) {
             // Nothing planned yet: what's going on across the conference, to pick from

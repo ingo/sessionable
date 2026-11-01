@@ -191,6 +191,14 @@ Veuillez réessayer.</string>
     <string name="now_before">%1$s commence %2$s. Voici à quoi ressemble votre premier jour.</string>
     <string name="now_between">Rien au programme aujourd’hui. Prochaine session : %1$s.</string>
     <string name="now_after">Merci d’être venu à %1$s !</string>
+    <string name="now_trip_report_title">Votre compte rendu</string>
+    <string name="now_trip_report_text">Ce à quoi vous avez assisté, avec vos notes et évaluations, prêt à vous l’envoyer.</string>
+    <string name="now_trip_report_empty">Ajoutez des sessions aux favoris, évaluez-les ou prenez des notes, et votre compte rendu se construit tout seul.</string>
+    <string name="now_trip_report_share">Partager le compte rendu</string>
+    <string name="trip_stat_sessions">Sessions</string>
+    <string name="trip_stat_notes">Notes</string>
+    <string name="trip_stat_rated">Évaluées</string>
+    <string name="trip_stat_met">Rencontrés</string>
     <string name="now_on_now">En cours</string>
     <string name="now_starting_next">Prochaine session · %1$s</string>
     <string name="my_schedule_bookmarked">%1$d en favori</string>
@@ -229,7 +237,6 @@ Veuillez réessayer.</string>
     <string name="company_error_not_found">Nous n’avons pas trouvé cette entreprise.</string>
     <string name="my_schedule_add_to_calendar">Ajouter au calendrier</string>
     <string name="my_schedule_share">Partager</string>
-    <string name="my_schedule_trip_report">Compte rendu</string>
     <string name="export_speakers">Intervenants</string>
     <string name="export_room">Salle</string>
     <string name="export_my_notes">Mes notes</string>
