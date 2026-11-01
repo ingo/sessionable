@@ -454,31 +454,28 @@ private fun FreeSlot(free: FreeBlock, past: Boolean, lines: Int, onClick: () -> 
         .clickable(enabled = canBrowse, onClick = onClick)
         .padding(horizontal = 8.dp, vertical = BlockVerticalPadding)
 
-    if (lines < 2) {
-        // One line: time and link side by side
-        Row(blockModifier, horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(freeLabel, style = AppTheme.typography.text2, color = colors.noteText, maxLines = 1, modifier = Modifier.background(colors.mainBackground))
+    val timeText: @Composable () -> Unit = {
+        Text(freeLabel, style = AppTheme.typography.text2, color = colors.noteText, maxLines = 1, modifier = Modifier.background(colors.mainBackground))
+    }
+    // The time and the link sit together in the middle of the free space, both ways
+    if (lines < 3) {
+        Row(
+            blockModifier,
+            horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            timeText()
             if (canBrowse) BrowsePill(browseLabel, compact = true)
         }
         return
     }
-    Box(blockModifier) {
-        Text(
-            freeLabel,
-            style = AppTheme.typography.text2,
-            color = colors.noteText,
-            maxLines = 1,
-            modifier = Modifier.align(Alignment.TopStart).background(colors.mainBackground),
-        )
-        if (canBrowse) {
-            // At the end of the row in every case, so the pills of neighbouring free slots line up; the one-line
-            // layout above puts it there too, and it cannot sit in the middle there without covering the time
-            if (lines >= 3) {
-                BrowsePill(browseLabel, Modifier.align(Alignment.CenterEnd).padding(top = 12.dp))
-            } else {
-                BrowsePill(browseLabel, Modifier.align(Alignment.BottomEnd), compact = true)
-            }
-        }
+    Column(
+        blockModifier,
+        verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterVertically),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        timeText()
+        if (canBrowse) BrowsePill(browseLabel)
     }
 }
 
