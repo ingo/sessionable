@@ -33,6 +33,7 @@ class SavedEventTest {
     }
 
     @Test
+<<<<<<< HEAD
     fun anEventsWebAppAddressIsRecognisedAsNotTheApiLink() {
         assertTrue(isSessionizeEventPage("https://agntcon-mcpcon-na-2026.sessionize.com"))
         assertTrue(isSessionizeEventPage("agntcon-mcpcon-na-2026.sessionize.com/schedule"))
@@ -42,6 +43,17 @@ class SavedEventTest {
         assertFalse(isSessionizeEventPage("https://example.com/schedule"))
         assertFalse(isSessionizeEventPage("https://evilsessionize.com"))
         assertNull(parseSessionizeId("https://agntcon-mcpcon-na-2026.sessionize.com"))
+=======
+    fun aConnectLinkCarriesTheSessionizeId() {
+        assertEquals("asqam7rn", parseConnectLink("sessionable://connect?id=asqam7rn"))
+        assertEquals("asqam7rn", parseConnectLink("  sessionable://connect/?id=asqam7rn  "))
+        assertEquals("asqam7rn", parseConnectLink("SESSIONABLE://connect?name=x&id=asqam7rn#top"))
+        assertNull(parseConnectLink("sessionable://connect?id="))
+        assertNull(parseConnectLink("sessionable://connect?id=a b"))
+        assertNull(parseConnectLink("sessionable://connect"))
+        assertNull(parseConnectLink("sessionable://other?id=asqam7rn"))
+        assertNull(parseConnectLink("https://sessionable.example/connect?id=asqam7rn"))
+>>>>>>> 262c44c1 (Open Sessionable from a sessionable://connect?id=<id> link, for QR codes scanned with the camera app)
     }
 
     @Test

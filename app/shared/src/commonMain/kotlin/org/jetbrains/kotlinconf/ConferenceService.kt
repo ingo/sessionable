@@ -46,6 +46,7 @@ import org.jetbrains.kotlinconf.event.SavedEvent
 import org.jetbrains.kotlinconf.network.SessionizeFeed
 import org.jetbrains.kotlinconf.event.BUNDLED_ASSET_PREFIX
 import org.jetbrains.kotlinconf.event.bundledMapSvg
+import org.jetbrains.kotlinconf.event.parseConnectLink
 import org.jetbrains.kotlinconf.export.ExportSnapshot
 import org.jetbrains.kotlinconf.flags.FlagsManager
 import org.jetbrains.kotlinconf.media.MediaFiles
@@ -163,6 +164,29 @@ class ConferenceService(
     suspend fun switchEvent(sessionizeId: String) {
         val event = savedEvents.value.find { it.sessionizeId == sessionizeId } ?: return
         connectEvent(event)
+    }
+
+    /** The conference id from a connect link that the connect screen has yet to pick up. */
+    val pendingConnectId: StateFlow<String?>
+        field = MutableStateFlow<String?>(null)
+
+    /**
+     * Handles a `sessionable://connect?id=...` link (see [parseConnectLink]). A conference that is already saved is
+     * opened; any other goes to the connect screen to be checked and named. Does nothing in a branded build.
+     */
+    suspend fun receiveConnectLink(link: String) {
+        if (FixedEvent != null) return
+        val id = parseConnectLink(link) ?: return
+        if (savedEvents.value.any { it.sessionizeId == id }) {
+            switchEvent(id)
+        } else {
+            leaveEvent()
+            pendingConnectId.value = id
+        }
+    }
+
+    fun consumeConnectId() {
+        pendingConnectId.value = null
     }
 
     /** Back to the connect screen. Bookmarks and notes of the conference stay on the device. */

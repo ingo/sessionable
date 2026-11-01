@@ -62,3 +62,17 @@ scripts/ios-testflight.sh <event-id> <bundle-id> <display-name> <team-id> --uplo
 ```
 
 Pass `-Pevent=<id>` to any of them to build a branded app instead of the generic one.
+
+## Connect by QR code
+
+An organiser can put a QR code on a poster or the programme that opens the generic Sessionable build and checks the
+conference. The QR holds this link, with the id from the event's Sessionize API link
+(`https://sessionize.com/api/v2/<id>/view/All`):
+
+```
+sessionable://connect?id=<id>
+```
+
+The phone's camera app offers to open it in Sessionable, which fills in the id and checks the feed. The attendee
+still names the conference and confirms its time zone. A conference that is already saved is opened directly. Branded
+builds ignore the link. The app has no scanner of its own and needs no extra permission.

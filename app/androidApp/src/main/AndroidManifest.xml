@@ -26,6 +26,13 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- sessionable://connect?id=<Sessionize id>, from a QR code scanned with the camera app -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="sessionable" android:host="connect"/>
+            </intent-filter>
         </activity>
 
         <!-- Lets the share sheet read the calendar file the app exports (see ShareHandler.android.kt) -->
