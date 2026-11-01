@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.heading
@@ -160,7 +161,12 @@ fun ConnectScreen(viewModel: ConnectViewModel = metroViewModel()) {
                         modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
                     )
                     Heading(stringResource(Res.string.connect_name_label))
-                    TextInput(name, onChange = { name = it }, hint = stringResource(Res.string.connect_name_hint))
+                    TextInput(
+                        name,
+                        onChange = { name = it },
+                        hint = stringResource(Res.string.connect_name_hint),
+                        label = stringResource(Res.string.connect_name_label),
+                    )
 
                     Heading(stringResource(Res.string.connect_zone_label))
                     TimeZoneField(zoneId, onChange = { zoneId = it })
@@ -268,6 +274,8 @@ private fun TextInput(
     onChange: (String) -> Unit,
     hint: String,
     keyboardType: KeyboardType = KeyboardType.Text,
+    /** What a screen reader calls the field; the hint is only an example of what to type. */
+    label: String = hint,
 ) {
     val colors = AppTheme.colors
     BasicTextField(
@@ -285,10 +293,16 @@ private fun TextInput(
             .fillMaxWidth()
             .border(1.dp, colors.strokeHalf, AppTheme.shapes.roundedCornerSm)
             .padding(horizontal = 16.dp, vertical = 12.dp)
-            .semantics { if (value.isEmpty()) contentDescription = hint },
+            .semantics { contentDescription = label },
         decorationBox = { field ->
             if (value.isEmpty()) {
-                Text(hint, style = AppTheme.typography.text1, color = colors.placeholderText)
+                // The field's own label already says this; keep the placeholder from being read a second time
+                Text(
+                    hint,
+                    style = AppTheme.typography.text1,
+                    color = colors.placeholderText,
+                    modifier = Modifier.clearAndSetSemantics {},
+                )
             }
             field()
         },

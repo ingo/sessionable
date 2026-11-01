@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -43,7 +45,9 @@ private fun TopMenuButtonImpl(
     BasicTooltipBox(
         positionProvider = rememberTooltipPositionProvider(),
         tooltip = { Tooltip(contentDescription) },
-        state = rememberBasicTooltipState()
+        state = rememberBasicTooltipState(),
+        // The tooltip wrapper is the element a screen reader lands on, so it carries the button's name
+        modifier = Modifier.semantics(mergeDescendants = true) { this.contentDescription = contentDescription },
     ) {
         Icon(
             modifier = modifier
