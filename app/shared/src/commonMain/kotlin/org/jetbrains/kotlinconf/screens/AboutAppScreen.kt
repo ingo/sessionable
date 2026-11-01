@@ -3,7 +3,9 @@ package org.jetbrains.kotlinconf.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.kotlinconf.ScreenWithTitle
 import org.jetbrains.kotlinconf.event.ActiveEvent
@@ -32,6 +35,7 @@ import org.jetbrains.kotlinconf.generated.resources.about_app_title
 import org.jetbrains.kotlinconf.generated.resources.about_app_unofficial
 import org.jetbrains.kotlinconf.generated.resources.app_version
 import org.jetbrains.kotlinconf.generated.resources.arrow_up_right_24
+import org.jetbrains.kotlinconf.generated.resources.sessionable_badge
 import org.jetbrains.kotlinconf.ui.components.PageMenuItem
 import org.jetbrains.kotlinconf.ui.components.Text
 import org.jetbrains.kotlinconf.ui.theme.AppTheme
@@ -53,6 +57,11 @@ fun AboutAppScreen(
                 modifier = Modifier.padding(top = 24.dp, bottom = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
+                Image(
+                    painterResource(Res.drawable.sessionable_badge),
+                    contentDescription = null,
+                    modifier = Modifier.size(88.dp),
+                )
                 Text(stringResource(Res.string.about_app_name), style = AppTheme.typography.h1)
                 Text(stringResource(Res.string.about_app_tagline), style = AppTheme.typography.text1, color = AppTheme.colors.longText)
             }
