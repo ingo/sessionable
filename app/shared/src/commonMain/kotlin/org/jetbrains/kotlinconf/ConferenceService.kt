@@ -455,7 +455,23 @@ class ConferenceService(
         notes = notes.value,
         ratings = ratings.value,
         met = metSpeakers.value,
+        attachments = attachments.value,
     )
+
+    /** The same, as it changes. */
+    val exportSnapshots: Flow<ExportSnapshot> = combine(
+        sessionCards, speakersById, notes, ratings, metSpeakers, attachments,
+    ) { values ->
+        @Suppress("UNCHECKED_CAST")
+        ExportSnapshot(
+            sessions = values[0] as List<SessionCardView>,
+            speakers = values[1] as Map<SpeakerId, Speaker>,
+            notes = values[2] as PersonalNotes,
+            ratings = values[3] as Map<String, SessionRating>,
+            met = values[4] as Set<SpeakerId>,
+            attachments = values[5] as Map<String, List<Attachment>>,
+        )
+    }
 
     fun speakerById(speakerId: SpeakerId): Speaker? = speakersById.value[speakerId]
 

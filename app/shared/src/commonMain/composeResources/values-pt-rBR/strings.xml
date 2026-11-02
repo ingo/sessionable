@@ -204,8 +204,49 @@ Tente novamente.</string>
     <string name="now_after">Obrigado por participar de %1$s!</string>
     <string name="now_trip_report_title">Seu resumo da viagem</string>
     <string name="now_trip_report_text">A que você assistiu, com suas anotações e avaliações, pronto para enviar a si mesmo.</string>
+    <string name="now_trip_report_open">Abrir resumo da viagem</string>
+    <string name="trip_report_intro">As sessões a que você assistiu, com suas anotações, avaliações, os slides e as fotos e vídeos que você anexou.</string>
+    <string name="trip_report_download">Baixar relatório (.zip)</string>
+    <string name="trip_report_download_hint">O relatório em Markdown e como página web, os slides do Sessionize e suas fotos e vídeos, em um arquivo zip para enviar ou salvar.</string>
+    <string name="trip_report_download_size">Suas fotos e vídeos: %1$s, mais os slides.</string>
+    <string name="trip_report_share_text">Compartilhar como texto</string>
+    <string name="trip_report_share_text_hint">O relatório em Markdown, com links para os slides e sem fotos nem vídeos.</string>
+    <string name="trip_report_downloading_slides">Baixando slides %1$d de %2$d…</string>
+    <string name="trip_report_packing">Empacotando o relatório…</string>
+    <string name="trip_report_ready">Relatório pronto (%1$s)</string>
+    <string name="trip_report_share_again">Compartilhar o relatório novamente</string>
+    <string name="trip_report_too_large">O relatório ficaria maior que 4 GB. Remova alguns vídeos longos e tente de novo.</string>
+    <string name="trip_report_failed">Não foi possível criar o relatório. Verifique o espaço livre no dispositivo e tente de novo.</string>
+    <string name="trip_report_empty">Favorite as sessões a que você vai, ou adicione uma anotação, uma avaliação, uma foto ou um vídeo, e eles aparecem aqui.</string>
+    <string name="trip_report_in_report">No relatório</string>
+    <string name="trip_report_note">Anotação</string>
+    <string name="trip_report_rating">Avaliação</string>
+    <string name="trip_report_preview">Pré-visualização</string>
+    <string name="trip_report_preview_hint">Assim o relatório será lido. Toque em uma foto ou vídeo para abri-lo.</string>
+    <string name="export_my_media">Minhas fotos e vídeos</string>
+    <string name="export_photo">Foto</string>
+    <string name="export_video">Vídeo</string>
+    <plurals name="trip_report_sessions">
+        <item quantity="one">%1$d sessão</item>
+        <item quantity="other">%1$d sessões</item>
+    </plurals>
+    <plurals name="trip_report_photos">
+        <item quantity="one">%1$d foto</item>
+        <item quantity="other">%1$d fotos</item>
+    </plurals>
+    <plurals name="trip_report_videos">
+        <item quantity="one">%1$d vídeo</item>
+        <item quantity="other">%1$d vídeos</item>
+    </plurals>
+    <plurals name="trip_report_with_slides">
+        <item quantity="one">%1$d com slides</item>
+        <item quantity="other">%1$d com slides</item>
+    </plurals>
+    <plurals name="trip_report_slides_linked">
+        <item quantity="one">%1$d apresentação não pôde ser baixada e está vinculada.</item>
+        <item quantity="other">%1$d apresentações não puderam ser baixadas e estão vinculadas.</item>
+    </plurals>
     <string name="now_trip_report_empty">Favorite sessões, avalie ou faça anotações, e seu resumo da viagem se monta sozinho.</string>
-    <string name="now_trip_report_share">Compartilhar resumo</string>
     <string name="trip_stat_sessions">Sessões</string>
     <string name="trip_stat_notes">Anotações</string>
     <string name="trip_stat_rated">Avaliadas</string>

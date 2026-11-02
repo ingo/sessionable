@@ -85,6 +85,7 @@ internal fun UpNextContent(
     onFree: (FreeBlock) -> Unit,
     onBookmark: (SessionId, Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    onTripReport: () -> Unit = {},
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -99,7 +100,7 @@ internal fun UpNextContent(
         if (upNext == null) {
             // The event is over: the report is what is left to do
             val exporter = rememberExporter()
-            TripReportCard(summary = remember(exporter) { exporter.tripReportSummary() }, onShare = exporter::shareTripReport)
+            TripReportCard(summary = remember(exporter) { exporter.tripReportSummary() }, onOpen = onTripReport)
             return@Column
         }
 

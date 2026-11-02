@@ -29,6 +29,14 @@ class OkioMediaFiles(
 
     override fun path(file: String): String = resolve(file).toString()
 
+    override suspend fun size(file: String): Long = withContext(Dispatchers.IO) {
+        try {
+            fileSystem.metadataOrNull(resolve(file))?.size ?: 0L
+        } catch (_: IOException) {
+            0L
+        }
+    }
+
     private fun newName(extension: String): String {
         val ext = extension.lowercase().filter { it.isLetterOrDigit() }.take(5).ifEmpty { "bin" }
         return "${Random.nextLong().toULong().toString(16)}.$ext"
