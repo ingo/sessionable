@@ -45,6 +45,9 @@ data object StartNotificationsScreen : AppRoute
 
 @Serializable
 @SerialName("Settings")
+data object MyEventScreen : AppRoute
+
+@Serializable
 data object TripReportScreen : AppRoute
 
 @Serializable

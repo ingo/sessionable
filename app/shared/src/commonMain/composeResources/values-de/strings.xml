@@ -246,6 +246,29 @@ Bitte versuchen Sie es erneut.</string>
         <item quantity="one">%1$d Foliensatz konnte nicht geladen werden und ist stattdessen verlinkt.</item>
         <item quantity="other">%1$d Foliensätze konnten nicht geladen werden und sind stattdessen verlinkt.</item>
     </plurals>
+    <string name="recap_title">Das war der Tag</string>
+    <string name="recap_attended">Sessions, die du besucht hast</string>
+    <string name="recap_empty">Heute nichts vorgemerkt. Merke Sessions vor, dann füllt sich dein Rückblick.</string>
+    <string name="recap_added">Hinzugefügt: %1$s</string>
+    <string name="recap_met">Getroffen: %1$s</string>
+    <string name="recap_tomorrow">Morgen als Erstes</string>
+    <string name="recap_tomorrow_none">Für morgen ist noch nichts vorgemerkt.</string>
+    <string name="recap_last_day">Das war der letzte Tag. Dein Reisebericht ist bereit.</string>
+    <string name="my_event_title">Mein Event</string>
+    <string name="my_event_days">Nach Tag</string>
+    <string name="my_event_day">%1$d vorgemerkt · %2$d besucht · %3$d bewertet</string>
+    <string name="my_event_notes">Notizen und Erkenntnisse</string>
+    <string name="my_event_search">Notizen durchsuchen</string>
+    <string name="my_event_notes_empty">Noch keine Notizen oder Erkenntnisse. Füge sie auf einer Session- oder Sprecherseite hinzu, dann sammeln sie sich hier.</string>
+    <string name="my_event_notes_none_found">Nichts gefunden.</string>
+    <string name="my_event_media">Fotos und Videos</string>
+    <string name="my_event_media_empty">Noch keine Fotos oder Videos. Hänge sie auf einer Session-Seite an.</string>
+    <string name="my_event_met">Leute, die ich getroffen habe</string>
+    <string name="my_event_met_empty">Noch niemand als getroffen markiert. Markiere Sprecher auf ihrer Seite.</string>
+    <plurals name="recap_notes">
+        <item quantity="one">%1$d Notiz</item>
+        <item quantity="other">%1$d Notizen</item>
+    </plurals>
     <string name="now_trip_report_empty">Merke Sessions vor, bewerte sie oder schreibe Notizen, und dein Reisebericht entsteht von selbst.</string>
     <string name="trip_stat_sessions">Sessions</string>
     <string name="trip_stat_notes">Notizen</string>

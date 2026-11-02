@@ -246,6 +246,29 @@ Tente novamente.</string>
         <item quantity="one">%1$d apresentação não pôde ser baixada e está vinculada.</item>
         <item quantity="other">%1$d apresentações não puderam ser baixadas e estão vinculadas.</item>
     </plurals>
+    <string name="recap_title">Isso foi tudo por hoje</string>
+    <string name="recap_attended">Sessões a que você assistiu</string>
+    <string name="recap_empty">Nada favoritado hoje. Favorite sessões e seu resumo se preenche aqui.</string>
+    <string name="recap_added">Adicionado: %1$s</string>
+    <string name="recap_met">Você conheceu: %1$s</string>
+    <string name="recap_tomorrow">Amanhã, primeiro</string>
+    <string name="recap_tomorrow_none">Nada favoritado para amanhã ainda.</string>
+    <string name="recap_last_day">Esse foi o último dia. Seu resumo da viagem está pronto.</string>
+    <string name="my_event_title">Meu evento</string>
+    <string name="my_event_days">Por dia</string>
+    <string name="my_event_day">%1$d favoritadas · %2$d assistidas · %3$d avaliadas</string>
+    <string name="my_event_notes">Anotações e aprendizados</string>
+    <string name="my_event_search">Buscar anotações</string>
+    <string name="my_event_notes_empty">Ainda não há anotações nem aprendizados. Adicione na página de uma sessão ou palestrante e eles se reúnem aqui.</string>
+    <string name="my_event_notes_none_found">Nada encontrado.</string>
+    <string name="my_event_media">Fotos e vídeos</string>
+    <string name="my_event_media_empty">Ainda não há fotos nem vídeos. Anexe pela página de uma sessão.</string>
+    <string name="my_event_met">Pessoas que conheci</string>
+    <string name="my_event_met_empty">Ninguém marcado como conhecido. Marque palestrantes na página deles.</string>
+    <plurals name="recap_notes">
+        <item quantity="one">%1$d anotação</item>
+        <item quantity="other">%1$d anotações</item>
+    </plurals>
     <string name="now_trip_report_empty">Favorite sessões, avalie ou faça anotações, e seu resumo da viagem se monta sozinho.</string>
     <string name="trip_stat_sessions">Sessões</string>
     <string name="trip_stat_notes">Anotações</string>

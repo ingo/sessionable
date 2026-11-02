@@ -246,6 +246,29 @@ Please try again.</string>
         <item quantity="one">%1$d slide deck could not be downloaded and is linked instead.</item>
         <item quantity="other">%1$d slide decks could not be downloaded and are linked instead.</item>
     </plurals>
+    <string name="recap_title">That is a wrap for today</string>
+    <string name="recap_attended">Sessions you went to</string>
+    <string name="recap_empty">Nothing bookmarked today. Bookmark sessions and your recap fills in here.</string>
+    <string name="recap_added">Added: %1$s</string>
+    <string name="recap_met">You met: %1$s</string>
+    <string name="recap_tomorrow">Tomorrow, first up</string>
+    <string name="recap_tomorrow_none">Nothing bookmarked for tomorrow yet.</string>
+    <string name="recap_last_day">That was the last day. Your trip report is ready.</string>
+    <string name="my_event_title">My event</string>
+    <string name="my_event_days">By day</string>
+    <string name="my_event_day">%1$d bookmarked · %2$d went · %3$d rated</string>
+    <string name="my_event_notes">Notes and takeaways</string>
+    <string name="my_event_search">Search notes</string>
+    <string name="my_event_notes_empty">No notes or takeaways yet. Add them on a session or speaker page and they collect here.</string>
+    <string name="my_event_notes_none_found">Nothing matches.</string>
+    <string name="my_event_media">Photos and videos</string>
+    <string name="my_event_media_empty">No photos or videos yet. Attach them from a session page.</string>
+    <string name="my_event_met">People I met</string>
+    <string name="my_event_met_empty">Nobody marked as met yet. Mark speakers on their page.</string>
+    <plurals name="recap_notes">
+        <item quantity="one">%1$d note</item>
+        <item quantity="other">%1$d notes</item>
+    </plurals>
     <string name="now_trip_report_empty">Bookmark, rate or write notes on sessions, and your trip report builds itself.</string>
     <string name="trip_stat_sessions">Sessions</string>
     <string name="trip_stat_notes">Notes</string>

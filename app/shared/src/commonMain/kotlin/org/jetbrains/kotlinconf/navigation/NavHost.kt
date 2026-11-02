@@ -49,6 +49,7 @@ import org.jetbrains.kotlinconf.screens.MapScreen
 import org.jetbrains.kotlinconf.screens.NestedMapScreen
 import org.jetbrains.kotlinconf.screens.ScheduleScreen
 import org.jetbrains.kotlinconf.screens.SessionScreen
+import org.jetbrains.kotlinconf.screens.MyEventScreen
 import org.jetbrains.kotlinconf.screens.ReportPreviewScreen
 import org.jetbrains.kotlinconf.screens.SettingsScreen
 import org.jetbrains.kotlinconf.screens.TripReportScreen
@@ -259,6 +260,7 @@ private fun EntryProviderScope<AppRoute>.screens(
         InfoScreen(
             onAboutConf = { navigator.add(AboutConferenceScreen) },
             onHowToFindVenue = { address -> mapHandler.openNavigation(address) },
+            onMyEvent = { navigator.add(MyEventScreen) },
             onAboutApp = { navigator.add(AboutAppScreen) },
             onCodeOfConduct = ActiveEvent.codeOfConductUrl?.let { url -> { uriHandler.openUri(url) } },
             onTwitter = URLs.TWITTER?.let { url -> { uriHandler.openUri(url) } },
@@ -296,6 +298,15 @@ private fun EntryProviderScope<AppRoute>.screens(
             onNavigateToMap = { roomName ->
                 navigator.add(NestedMapScreen(roomName))
             },
+        )
+    }
+
+    entry<MyEventScreen> {
+        MyEventScreen(
+            onBack = onBack,
+            onSession = { navigator.add(SessionScreen(it)) },
+            onSpeaker = { navigator.add(SpeakerDetailScreen(it)) },
+            onTripReport = { navigator.add(TripReportScreen) },
         )
     }
 
