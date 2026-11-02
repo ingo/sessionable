@@ -246,6 +246,29 @@ Inténtalo de nuevo.</string>
         <item quantity="one">%1$d presentación no se pudo descargar y se enlaza en su lugar.</item>
         <item quantity="other">%1$d presentaciones no se pudieron descargar y se enlazan en su lugar.</item>
     </plurals>
+    <string name="recap_title">Eso es todo por hoy</string>
+    <string name="recap_attended">Sesiones a las que fuiste</string>
+    <string name="recap_empty">Hoy no guardaste nada. Guarda sesiones y tu resumen se llenará aquí.</string>
+    <string name="recap_added">Añadido: %1$s</string>
+    <string name="recap_met">Conociste a: %1$s</string>
+    <string name="recap_tomorrow">Mañana, lo primero</string>
+    <string name="recap_tomorrow_none">Aún no hay nada guardado para mañana.</string>
+    <string name="recap_last_day">Ese fue el último día. Tu resumen del viaje está listo.</string>
+    <string name="my_event_title">Mi evento</string>
+    <string name="my_event_days">Por día</string>
+    <string name="my_event_day">%1$d guardadas · %2$d asistidas · %3$d valoradas</string>
+    <string name="my_event_notes">Notas y conclusiones</string>
+    <string name="my_event_search">Buscar notas</string>
+    <string name="my_event_notes_empty">Aún no hay notas ni conclusiones. Añádelas en la página de una sesión o ponente y se reunirán aquí.</string>
+    <string name="my_event_notes_none_found">Nada coincide.</string>
+    <string name="my_event_media">Fotos y vídeos</string>
+    <string name="my_event_media_empty">Aún no hay fotos ni vídeos. Adjúntalos desde la página de una sesión.</string>
+    <string name="my_event_met">Personas que conocí</string>
+    <string name="my_event_met_empty">Nadie marcado como conocido. Marca a los ponentes en su página.</string>
+    <plurals name="recap_notes">
+        <item quantity="one">%1$d nota</item>
+        <item quantity="other">%1$d notas</item>
+    </plurals>
     <string name="now_trip_report_empty">Guarda sesiones, valóralas o escribe notas, y tu resumen del viaje se crea solo.</string>
     <string name="trip_stat_sessions">Sesiones</string>
     <string name="trip_stat_notes">Notas</string>

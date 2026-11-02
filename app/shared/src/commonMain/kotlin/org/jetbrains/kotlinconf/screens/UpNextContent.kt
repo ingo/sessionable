@@ -86,6 +86,7 @@ internal fun UpNextContent(
     onBookmark: (SessionId, Boolean) -> Unit,
     modifier: Modifier = Modifier,
     onTripReport: () -> Unit = {},
+    recap: DayRecap? = null,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -97,6 +98,10 @@ internal fun UpNextContent(
             .padding(bottom = 24.dp),
     ) {
         GreetingCard(upNext, now)
+        if (upNext != null && recap != null) {
+            DayRecapCard(recap, onSession = onSession, onTripReport = onTripReport)
+            return@Column
+        }
         if (upNext == null) {
             // The event is over: the report is what is left to do
             val exporter = rememberExporter()

@@ -34,6 +34,7 @@ fun NowScreen(
 ) {
     val upNext by viewModel.upNext.collectAsStateWithLifecycle()
     val now by viewModel.now.collectAsStateWithLifecycle()
+    val recap by viewModel.recap.collectAsStateWithLifecycle()
     var freeWindow by remember { mutableStateOf<Pair<LocalDateTime, LocalDateTime>?>(null) }
 
     Column(
@@ -53,6 +54,7 @@ fun NowScreen(
                 onFree = { freeWindow = it.startsAt to it.endsAt },
                 onBookmark = viewModel::setBookmark,
                 onTripReport = onTripReport,
+                recap = recap,
             )
             val window = freeWindow
             val day = upNext?.day

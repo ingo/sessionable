@@ -38,6 +38,7 @@ private fun AppRoute.toBrowserHistoryFragment() = when (val key = this) {
     SpeakersScreen -> buildBrowserHistoryFragment("speakers")
     MapScreen -> buildBrowserHistoryFragment("map")
     InfoScreen -> buildBrowserHistoryFragment("info")
+    MyEventScreen -> buildBrowserHistoryFragment("my_event")
     TripReportScreen -> buildBrowserHistoryFragment("trip_report")
     ReportPreviewScreen -> buildBrowserHistoryFragment("trip_report")
     is NestedMapScreen -> buildBrowserHistoryFragment(
@@ -94,6 +95,7 @@ actual fun BrowserIntegration(navState: NavState) {
                     "speakers" -> SpeakersScreen
                     "map" -> MapScreen
                     "info" -> InfoScreen
+                    "my_event" -> MyEventScreen
                     "trip_report" -> TripReportScreen
                     "map_detail" -> params["roomName"]?.let { NestedMapScreen(it) }
                     "company" -> params["name"]?.let { CompanyScreen(it) }

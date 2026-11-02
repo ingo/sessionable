@@ -31,6 +31,7 @@ import org.jetbrains.kotlinconf.generated.resources.Res
 import org.jetbrains.kotlinconf.generated.resources.arrow_up_right_24
 import org.jetbrains.kotlinconf.generated.resources.bluesky
 import org.jetbrains.kotlinconf.generated.resources.info_link_about_app
+import org.jetbrains.kotlinconf.generated.resources.my_event_title
 import org.jetbrains.kotlinconf.generated.resources.info_link_about_conf
 import org.jetbrains.kotlinconf.generated.resources.info_link_code_of_conduct
 import org.jetbrains.kotlinconf.generated.resources.info_link_description_bluesky
@@ -57,6 +58,7 @@ import org.jetbrains.kotlinconf.utils.topInsetPadding
 fun InfoScreen(
     onAboutConf: () -> Unit,
     onHowToFindVenue: (String) -> Unit,
+    onMyEvent: () -> Unit,
     onAboutApp: () -> Unit,
     onCodeOfConduct: (() -> Unit)?,
     onTwitter: (() -> Unit)?,
@@ -94,6 +96,7 @@ fun InfoScreen(
                 )
             }
             PageMenuItem(stringResource(Res.string.info_link_about_conf), onClick = onAboutConf)
+            PageMenuItem(stringResource(Res.string.my_event_title), onClick = onMyEvent)
             if (venueAddress != null) {
                 PageMenuItem(
                     stringResource(Res.string.info_link_how_to_find_venue),

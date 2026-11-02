@@ -246,6 +246,29 @@ Veuillez réessayer.</string>
         <item quantity="one">%1$d présentation n’a pas pu être téléchargée et est liée à la place.</item>
         <item quantity="other">%1$d présentations n’ont pas pu être téléchargées et sont liées à la place.</item>
     </plurals>
+    <string name="recap_title">C’est tout pour aujourd’hui</string>
+    <string name="recap_attended">Sessions auxquelles vous avez assisté</string>
+    <string name="recap_empty">Rien en favori aujourd’hui. Ajoutez des sessions et votre bilan se remplira ici.</string>
+    <string name="recap_added">Ajouté : %1$s</string>
+    <string name="recap_met">Vous avez rencontré : %1$s</string>
+    <string name="recap_tomorrow">Demain, en premier</string>
+    <string name="recap_tomorrow_none">Rien en favori pour demain pour l’instant.</string>
+    <string name="recap_last_day">C’était le dernier jour. Votre compte rendu est prêt.</string>
+    <string name="my_event_title">Mon événement</string>
+    <string name="my_event_days">Par jour</string>
+    <string name="my_event_day">%1$d en favori · %2$d suivies · %3$d évaluées</string>
+    <string name="my_event_notes">Notes et enseignements</string>
+    <string name="my_event_search">Rechercher dans les notes</string>
+    <string name="my_event_notes_empty">Pas encore de notes ni d’enseignements. Ajoutez-en sur la page d’une session ou d’un intervenant et ils se rassemblent ici.</string>
+    <string name="my_event_notes_none_found">Aucun résultat.</string>
+    <string name="my_event_media">Photos et vidéos</string>
+    <string name="my_event_media_empty">Pas encore de photos ni de vidéos. Joignez-en depuis la page d’une session.</string>
+    <string name="my_event_met">Personnes rencontrées</string>
+    <string name="my_event_met_empty">Personne n’est marqué comme rencontré. Marquez les intervenants sur leur page.</string>
+    <plurals name="recap_notes">
+        <item quantity="one">%1$d note</item>
+        <item quantity="other">%1$d notes</item>
+    </plurals>
     <string name="now_trip_report_empty">Ajoutez des sessions aux favoris, évaluez-les ou prenez des notes, et votre compte rendu se construit tout seul.</string>
     <string name="trip_stat_sessions">Sessions</string>
     <string name="trip_stat_notes">Notes</string>

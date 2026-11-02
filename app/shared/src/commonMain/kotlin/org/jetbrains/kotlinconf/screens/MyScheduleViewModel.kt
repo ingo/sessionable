@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.jetbrains.kotlinconf.ConferenceService
+import org.jetbrains.kotlinconf.event.ActiveEvent
 import org.jetbrains.kotlinconf.TimeProvider
 import kotlinx.coroutines.flow.combine
 import kotlinx.datetime.LocalDateTime
@@ -32,6 +33,11 @@ class MyScheduleViewModel(
     /** "What's up now", following the clock (null after the conference). */
     val upNext: StateFlow<UpNext?> = combine(days, timeProvider.time) { days, now -> upNext(days, now) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), upNext(days.value, timeProvider.now()))
+
+    /** The look back at the day, once its last bookmarked session is over (null otherwise). */
+    val recap: StateFlow<DayRecap?> = combine(upNext, days, service.exportSnapshots) { up, days, snapshot ->
+        up?.let { dayRecap(it, days, snapshot, ActiveEvent.timeZone) }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     val syncLinked: StateFlow<Boolean> = service.sessionizeSyncState
         .map { it?.linked == true }
