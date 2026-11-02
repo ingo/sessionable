@@ -49,7 +49,9 @@ import org.jetbrains.kotlinconf.screens.MapScreen
 import org.jetbrains.kotlinconf.screens.NestedMapScreen
 import org.jetbrains.kotlinconf.screens.ScheduleScreen
 import org.jetbrains.kotlinconf.screens.SessionScreen
+import org.jetbrains.kotlinconf.screens.ReportPreviewScreen
 import org.jetbrains.kotlinconf.screens.SettingsScreen
+import org.jetbrains.kotlinconf.screens.TripReportScreen
 import org.jetbrains.kotlinconf.screens.SpeakerDetailScreen
 import org.jetbrains.kotlinconf.screens.SpeakersScreen
 import org.jetbrains.kotlinconf.screens.StartNotificationsScreen
@@ -218,7 +220,10 @@ private fun EntryProviderScope<AppRoute>.screens(
         LaunchedEffect(Unit) {
             service.completeOnboarding()
         }
-        NowScreen(onSession = { navigator.add(SessionScreen(it)) })
+        NowScreen(
+            onSession = { navigator.add(SessionScreen(it)) },
+            onTripReport = { navigator.add(TripReportScreen) },
+        )
     }
 
     entry<SessionizeSyncScreen> {
@@ -292,6 +297,18 @@ private fun EntryProviderScope<AppRoute>.screens(
                 navigator.add(NestedMapScreen(roomName))
             },
         )
+    }
+
+    entry<TripReportScreen> {
+        TripReportScreen(
+            onBack = onBack,
+            onSession = { navigator.add(SessionScreen(it)) },
+            onPreview = { navigator.add(ReportPreviewScreen) },
+        )
+    }
+
+    entry<ReportPreviewScreen> {
+        ReportPreviewScreen(onBack = onBack)
     }
 
     entry<AboutAppScreen> {

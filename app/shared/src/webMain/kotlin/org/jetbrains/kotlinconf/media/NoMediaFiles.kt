@@ -8,6 +8,8 @@ import org.jetbrains.kotlinconf.di.YearScope
 @ContributesBinding(YearScope::class)
 @SingleIn(YearScope::class)
 class NoMediaFiles : MediaFiles {
+    override suspend fun size(file: String): Long = 0L
+
     override val isSupported: Boolean = false
     override fun path(file: String): String = file
     override suspend fun adopt(tempPath: String, extension: String): String? = null

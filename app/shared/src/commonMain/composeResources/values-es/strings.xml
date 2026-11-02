@@ -204,8 +204,49 @@ Inténtalo de nuevo.</string>
     <string name="now_after">¡Gracias por venir a %1$s!</string>
     <string name="now_trip_report_title">Tu resumen del viaje</string>
     <string name="now_trip_report_text">A qué fuiste, con tus notas y valoraciones, listo para enviártelo.</string>
+    <string name="now_trip_report_open">Abrir resumen del viaje</string>
+    <string name="trip_report_intro">Las sesiones a las que fuiste, con tus notas, valoraciones, las diapositivas y las fotos y vídeos que adjuntaste.</string>
+    <string name="trip_report_download">Descargar informe (.zip)</string>
+    <string name="trip_report_download_hint">El informe en Markdown y como página web, las diapositivas de Sessionize y tus fotos y vídeos, en un archivo zip para enviar o guardar.</string>
+    <string name="trip_report_download_size">Tus fotos y vídeos: %1$s, más las diapositivas.</string>
+    <string name="trip_report_share_text">Compartir como texto</string>
+    <string name="trip_report_share_text_hint">El informe en Markdown, con enlaces a las diapositivas y sin fotos ni vídeos.</string>
+    <string name="trip_report_downloading_slides">Descargando diapositivas %1$d de %2$d…</string>
+    <string name="trip_report_packing">Empaquetando el informe…</string>
+    <string name="trip_report_ready">Informe listo (%1$s)</string>
+    <string name="trip_report_share_again">Compartir el informe de nuevo</string>
+    <string name="trip_report_too_large">El informe superaría los 4 GB. Quita algunos vídeos largos e inténtalo de nuevo.</string>
+    <string name="trip_report_failed">No se pudo crear el informe. Comprueba el espacio libre del dispositivo e inténtalo de nuevo.</string>
+    <string name="trip_report_empty">Guarda las sesiones a las que vas, o añade una nota, una valoración, una foto o un vídeo, y aparecerán aquí.</string>
+    <string name="trip_report_in_report">En el informe</string>
+    <string name="trip_report_note">Nota</string>
+    <string name="trip_report_rating">Valoración</string>
+    <string name="trip_report_preview">Vista previa</string>
+    <string name="trip_report_preview_hint">Así se leerá el informe. Toca una foto o un vídeo para abrirlo.</string>
+    <string name="export_my_media">Mis fotos y vídeos</string>
+    <string name="export_photo">Foto</string>
+    <string name="export_video">Vídeo</string>
+    <plurals name="trip_report_sessions">
+        <item quantity="one">%1$d sesión</item>
+        <item quantity="other">%1$d sesiones</item>
+    </plurals>
+    <plurals name="trip_report_photos">
+        <item quantity="one">%1$d foto</item>
+        <item quantity="other">%1$d fotos</item>
+    </plurals>
+    <plurals name="trip_report_videos">
+        <item quantity="one">%1$d vídeo</item>
+        <item quantity="other">%1$d vídeos</item>
+    </plurals>
+    <plurals name="trip_report_with_slides">
+        <item quantity="one">%1$d con diapositivas</item>
+        <item quantity="other">%1$d con diapositivas</item>
+    </plurals>
+    <plurals name="trip_report_slides_linked">
+        <item quantity="one">%1$d presentación no se pudo descargar y se enlaza en su lugar.</item>
+        <item quantity="other">%1$d presentaciones no se pudieron descargar y se enlazan en su lugar.</item>
+    </plurals>
     <string name="now_trip_report_empty">Guarda sesiones, valóralas o escribe notas, y tu resumen del viaje se crea solo.</string>
-    <string name="now_trip_report_share">Compartir resumen</string>
     <string name="trip_stat_sessions">Sesiones</string>
     <string name="trip_stat_notes">Notas</string>
     <string name="trip_stat_rated">Valoradas</string>

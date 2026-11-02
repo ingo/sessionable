@@ -11,6 +11,9 @@ interface MediaFiles {
     /** The absolute path of a stored file, to show or open it. */
     fun path(file: String): String
 
+    /** The size of a stored file in bytes, 0 when it is missing. */
+    suspend fun size(file: String): Long
+
     /**
      * Moves a file the picker made (a temporary copy) into the folder under a new name and returns that
      * name, or null when it could not be moved.

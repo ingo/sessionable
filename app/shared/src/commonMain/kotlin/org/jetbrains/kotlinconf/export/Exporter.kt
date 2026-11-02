@@ -5,6 +5,7 @@ import org.jetbrains.kotlinconf.SessionCardView
 import org.jetbrains.kotlinconf.SessionId
 import org.jetbrains.kotlinconf.Speaker
 import org.jetbrains.kotlinconf.SpeakerId
+import org.jetbrains.kotlinconf.personal.Attachment
 import org.jetbrains.kotlinconf.personal.PersonalNotes
 import org.jetbrains.kotlinconf.personal.SessionRating
 import kotlin.time.Clock
@@ -16,6 +17,7 @@ class ExportSnapshot(
     val notes: PersonalNotes,
     val ratings: Map<String, SessionRating>,
     val met: Set<SpeakerId>,
+    val attachments: Map<String, List<Attachment>> = emptyMap(),
 )
 
 /** What the trip report holds, in numbers. */
@@ -69,7 +71,7 @@ class Exporter(
         share.shareText(
             "${labels.tripReportHeading}: ${event.name}",
             tripReportMarkdown(
-                bookmarked = sessionsForTripReport(snap.sessions, snap.notes, snap.ratings),
+                bookmarked = sessionsForTripReport(snap.sessions, snap.notes, snap.ratings, snap.attachments),
                 speakersById = snap.speakers,
                 notes = snap.notes,
                 ratings = snap.ratings,
@@ -82,7 +84,7 @@ class Exporter(
 
     fun tripReportSummary(): TripReportSummary {
         val snap = snapshot()
-        val sessions = sessionsForTripReport(snap.sessions, snap.notes, snap.ratings)
+        val sessions = sessionsForTripReport(snap.sessions, snap.notes, snap.ratings, snap.attachments)
         return TripReportSummary(
             sessions = sessions.size,
             notes = sessions.count { snap.notes.sessionNote(it.id).isNotBlank() },

@@ -204,8 +204,49 @@ Bitte versuchen Sie es erneut.</string>
     <string name="now_after">Danke, dass du bei %1$s warst!</string>
     <string name="now_trip_report_title">Dein Reisebericht</string>
     <string name="now_trip_report_text">Was du besucht hast, mit deinen Notizen und Bewertungen, bereit zum Verschicken an dich selbst.</string>
+    <string name="now_trip_report_open">Reisebericht öffnen</string>
+    <string name="trip_report_intro">Die Sessions, die du besucht hast, mit deinen Notizen, Bewertungen, den Folien und den Fotos und Videos, die du angehängt hast.</string>
+    <string name="trip_report_download">Bericht herunterladen (.zip)</string>
+    <string name="trip_report_download_hint">Der Bericht als Markdown und als Webseite, die Folien von Sessionize und deine Fotos und Videos in einer Zip-Datei zum Mailen oder Speichern.</string>
+    <string name="trip_report_download_size">Deine Fotos und Videos: %1$s, dazu die Folien.</string>
+    <string name="trip_report_share_text">Als Text teilen</string>
+    <string name="trip_report_share_text_hint">Der Bericht in Markdown, mit Links zu den Folien und ohne Fotos und Videos.</string>
+    <string name="trip_report_downloading_slides">Folien werden geladen: %1$d von %2$d…</string>
+    <string name="trip_report_packing">Bericht wird gepackt…</string>
+    <string name="trip_report_ready">Bericht fertig (%1$s)</string>
+    <string name="trip_report_share_again">Bericht noch einmal teilen</string>
+    <string name="trip_report_too_large">Der Bericht wäre größer als 4 GB. Entferne einige lange Videos und versuche es erneut.</string>
+    <string name="trip_report_failed">Der Bericht konnte nicht erstellt werden. Prüfe den freien Speicher des Geräts und versuche es erneut.</string>
+    <string name="trip_report_empty">Merke die Sessions vor, die du besuchst, oder füge eine Notiz, eine Bewertung, ein Foto oder ein Video hinzu, dann erscheinen sie hier.</string>
+    <string name="trip_report_in_report">Im Bericht</string>
+    <string name="trip_report_note">Notiz</string>
+    <string name="trip_report_rating">Bewertung</string>
+    <string name="trip_report_preview">Vorschau</string>
+    <string name="trip_report_preview_hint">So liest sich der Bericht. Tippe auf ein Foto oder Video, um es zu öffnen.</string>
+    <string name="export_my_media">Meine Fotos und Videos</string>
+    <string name="export_photo">Foto</string>
+    <string name="export_video">Video</string>
+    <plurals name="trip_report_sessions">
+        <item quantity="one">%1$d Session</item>
+        <item quantity="other">%1$d Sessions</item>
+    </plurals>
+    <plurals name="trip_report_photos">
+        <item quantity="one">%1$d Foto</item>
+        <item quantity="other">%1$d Fotos</item>
+    </plurals>
+    <plurals name="trip_report_videos">
+        <item quantity="one">%1$d Video</item>
+        <item quantity="other">%1$d Videos</item>
+    </plurals>
+    <plurals name="trip_report_with_slides">
+        <item quantity="one">%1$d mit Folien</item>
+        <item quantity="other">%1$d mit Folien</item>
+    </plurals>
+    <plurals name="trip_report_slides_linked">
+        <item quantity="one">%1$d Foliensatz konnte nicht geladen werden und ist stattdessen verlinkt.</item>
+        <item quantity="other">%1$d Foliensätze konnten nicht geladen werden und sind stattdessen verlinkt.</item>
+    </plurals>
     <string name="now_trip_report_empty">Merke Sessions vor, bewerte sie oder schreibe Notizen, und dein Reisebericht entsteht von selbst.</string>
-    <string name="now_trip_report_share">Reisebericht teilen</string>
     <string name="trip_stat_sessions">Sessions</string>
     <string name="trip_stat_notes">Notizen</string>
     <string name="trip_stat_rated">Bewertet</string>

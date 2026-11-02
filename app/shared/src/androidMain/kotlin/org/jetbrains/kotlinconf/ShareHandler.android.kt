@@ -1,5 +1,6 @@
 package org.jetbrains.kotlinconf
 
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import androidx.compose.runtime.Composable
@@ -32,6 +33,19 @@ private class AndroidShareHandler(private val context: Context) : ShareHandler {
         val send = Intent(Intent.ACTION_SEND).apply {
             type = mimeType
             putExtra(Intent.EXTRA_STREAM, uri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        start(send)
+    }
+
+    // The report bundle is written to <cache>/report/, which the provider's paths include
+    override fun shareFileAt(path: String, mimeType: String) {
+        val file = File(path)
+        val uri = FileProvider.getUriForFile(context, context.packageName + ".shareprovider", file)
+        val send = Intent(Intent.ACTION_SEND).apply {
+            type = mimeType
+            putExtra(Intent.EXTRA_STREAM, uri)
+            clipData = ClipData.newRawUri(file.name, uri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
         start(send)

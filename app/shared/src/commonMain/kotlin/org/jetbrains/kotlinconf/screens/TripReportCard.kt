@@ -21,7 +21,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.kotlinconf.export.TripReportSummary
 import org.jetbrains.kotlinconf.generated.resources.Res
 import org.jetbrains.kotlinconf.generated.resources.now_trip_report_empty
-import org.jetbrains.kotlinconf.generated.resources.now_trip_report_share
+import org.jetbrains.kotlinconf.generated.resources.now_trip_report_open
 import org.jetbrains.kotlinconf.generated.resources.now_trip_report_text
 import org.jetbrains.kotlinconf.generated.resources.now_trip_report_title
 import org.jetbrains.kotlinconf.generated.resources.trip_stat_met
@@ -33,7 +33,7 @@ import org.jetbrains.kotlinconf.ui.theme.AppTheme
 
 /** The trip report on the Now tab once the event is over: a summary of it, and the way to send it to yourself. */
 @Composable
-internal fun TripReportCard(summary: TripReportSummary, onShare: () -> Unit, modifier: Modifier = Modifier) {
+internal fun TripReportCard(summary: TripReportSummary, onOpen: () -> Unit, modifier: Modifier = Modifier) {
     val white = AppTheme.colors.primaryTextWhiteFixed
     Column(
         verticalArrangement = Arrangement.spacedBy(14.dp),
@@ -61,14 +61,14 @@ internal fun TripReportCard(summary: TripReportSummary, onShare: () -> Unit, mod
             Stat(summary.met, Res.string.trip_stat_met, Modifier.weight(1f))
         }
         Text(
-            stringResource(Res.string.now_trip_report_share),
+            stringResource(Res.string.now_trip_report_open),
             style = AppTheme.typography.h4.copy(textAlign = TextAlign.Center),
             color = AppTheme.colors.primaryBackground,
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(AppTheme.shapes.roundedCornerMd)
                 .background(white)
-                .clickable(role = Role.Button, onClick = onShare)
+                .clickable(role = Role.Button, onClick = onOpen)
                 .padding(vertical = 14.dp),
         )
     }

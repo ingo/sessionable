@@ -3,6 +3,8 @@
     <cache-path name="share" path="share/"/>
     <!-- Photos and videos being taken -->
     <cache-path name="capture" path="capture/"/>
+    <!-- The report bundle -->
+    <cache-path name="report" path="report/"/>
     <!-- Photos and videos attached to sessions (the app's FileStorageDir), to open in a viewer -->
     <files-path name="media" path="files/"/>
 </paths>
