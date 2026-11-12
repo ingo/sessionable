@@ -45,3 +45,8 @@ app/desktopApp/files
 
 # Local secrets (App Store Connect API key variables)
 .env
+
+# Ruby (feedback poller)
+.bundle/
+vendor/bundle
+build/
