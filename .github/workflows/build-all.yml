@@ -5,22 +5,28 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build-jvm:
     name: Build desktop
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
         with:
           distribution: 'zulu'
           java-version: 21
+      - name: Set up Gradle (cache)
+        uses: gradle/actions/setup-gradle@748248ddd2a24f49513d8f472f81c3a07d4d50e1 # v4.4.4
       - name: Assemble desktop jar
         run: ./gradlew :app:desktopApp:jar
       - name: Run JVM tests
@@ -29,6 +35,7 @@ jobs:
   test-events:
     name: Test app (${{ matrix.event || 'generic' }})
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
@@ -36,46 +43,55 @@ jobs:
         event: ["", agntcon-mcpcon-na-2026]
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
         with:
           distribution: 'zulu'
           java-version: 21
+      - name: Set up Gradle (cache)
+        uses: gradle/actions/setup-gradle@748248ddd2a24f49513d8f472f81c3a07d4d50e1 # v4.4.4
       - name: Run core and app JVM tests
         run: ./gradlew "-Pevent=${{ matrix.event }}" :core:jvmTest :app:shared:jvmTest
 
   build-jvm-release:
     name: Build desktop release
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
         with:
           distribution: 'zulu'
           java-version: 21
+      - name: Set up Gradle (cache)
+        uses: gradle/actions/setup-gradle@748248ddd2a24f49513d8f472f81c3a07d4d50e1 # v4.4.4
       - name: Build desktop release distributable
         run: ./gradlew :app:desktopApp:createReleaseDistributable --stacktrace
 
   build-android:
     name: Build Android
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
         with:
           distribution: 'zulu'
           java-version: 21
+      - name: Set up Gradle (cache)
+        uses: gradle/actions/setup-gradle@748248ddd2a24f49513d8f472f81c3a07d4d50e1 # v4.4.4
       - name: Android debug build
         run: ./gradlew :app:androidApp:assembleDebug --stacktrace
 
   build-ios:
     name: Build iOS (${{ matrix.event || 'generic' }})
-    runs-on: macOS-latest
+    runs-on: macos-latest
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
@@ -85,27 +101,41 @@ jobs:
       ORG_GRADLE_PROJECT_event: ${{ matrix.event }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
         with:
           distribution: 'zulu'
           java-version: 21
+      - name: Set up Gradle (cache)
+        uses: gradle/actions/setup-gradle@748248ddd2a24f49513d8f472f81c3a07d4d50e1 # v4.4.4
       - name: Set Xcode version
         run: sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
-      - name: iOS debug build
-        run: cd app/iosApp && xcodebuild -scheme SessionableScheme -configuration Debug -sdk iphonesimulator -arch arm64 CODE_SIGNING_ALLOWED='NO'
+      # Same project, scheme, configuration and destination as the TestFlight archive in scripts/ios-testflight.sh,
+      # minus signing, so an iOS-only break fails the PR instead of the release after merge.
+      - name: iOS release build (device, unsigned)
+        run: |
+          xcodebuild build \
+            -project app/iosApp/Sessionable.xcodeproj \
+            -scheme SessionableScheme \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO
 
   build-web:
     name: Build web
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
         with:
           distribution: 'zulu'
           java-version: 21
+      - name: Set up Gradle (cache)
+        uses: gradle/actions/setup-gradle@748248ddd2a24f49513d8f472f81c3a07d4d50e1 # v4.4.4
       - name: Build web app
         run: ./gradlew :app:webApp:composeCompatibilityBrowserDistribution
