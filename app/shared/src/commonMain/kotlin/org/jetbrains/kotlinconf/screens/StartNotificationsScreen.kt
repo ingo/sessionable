@@ -64,7 +64,7 @@ fun StartNotificationsScreen(
         ) {
             val eventTheme = ActiveEvent.theme
             if (eventTheme != null) {
-                EventLogo(eventTheme, size = 160.dp, modifier = Modifier.fillMaxWidth())
+                EventLogo(eventTheme, size = 96.dp, modifier = Modifier.fillMaxWidth())
             } else {
                 Image(
                     imageVector = vectorResource(Res.drawable.notifications_bell),
