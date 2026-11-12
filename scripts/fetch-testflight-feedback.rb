@@ -3,7 +3,7 @@
 # and writes it as JSON. Needs ASC_KEY_ID and ASC_ISSUER_ID, key at ~/.appstoreconnect/private_keys/AuthKey_<id>.p8
 # (or ASC_KEY_PATH).
 #
-#   scripts/fetch-testflight-feedback.rb com.muschenetz.sessionize build/feedback.json
+#   scripts/fetch-testflight-feedback.rb com.muschenetz.sessionable build/feedback.json
 require "json"
 require "net/http"
 require "jwt"
